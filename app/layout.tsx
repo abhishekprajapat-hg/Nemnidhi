@@ -6,7 +6,7 @@ import { LenisProvider } from "@/components/providers/LenisProvider";
 import { AOSProvider } from "@/components/providers/AOSProvider";
 
 export const metadata: Metadata = {
-  title: "BrightScale Labs | Business & Tech Solutions",
+  title: "Nemnidhi | Business & Tech Solutions",
   description:
     "We build digital solutions that grow your business using the MERN stack and modern growth strategies.",
 };
