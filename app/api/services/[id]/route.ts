@@ -1,55 +1,78 @@
 // app/api/services/[id]/route.ts
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { dbConnect } from "@/lib/mongodb";
 import { Service } from "@/models/Service";
 
-type Params = {
-  params: { id: string };
-};
-
-export async function PUT(req: Request, { params }: Params) {
+export async function GET(req: NextRequest, { params }: any) {
   try {
     await dbConnect();
-    const body = await req.json();
 
-    const updated = await Service.findByIdAndUpdate(
-      params.id,
-      {
-        title: body.title,
-        description: body.description,
-        points: body.points || [],
-      },
-      { new: true }
-    );
+    const service = await Service.findById(params.id);
 
-    if (!updated) {
-      return NextResponse.json({ message: "Not found" }, { status: 404 });
+    if (!service) {
+      return NextResponse.json(
+        { message: "Service not found" },
+        { status: 404 }
+      );
     }
 
-    return NextResponse.json(updated);
-  } catch (err) {
-    console.error("PUT /api/services/[id] error:", err);
+    return NextResponse.json(service, { status: 200 });
+  } catch (error: any) {
+    console.error("GET /api/services/[id] error:", error?.message || error);
     return NextResponse.json(
-      { message: "Failed to update service" },
+      { message: "Failed to fetch service", error: error?.message },
       { status: 500 }
     );
   }
 }
 
-export async function DELETE(req: Request, { params }: Params) {
+export async function PUT(req: NextRequest, { params }: any) {
+  try {
+    const body = await req.json();
+    await dbConnect();
+
+    const service = await Service.findByIdAndUpdate(params.id, body, {
+      new: true,
+    });
+
+    if (!service) {
+      return NextResponse.json(
+        { message: "Service not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(service, { status: 200 });
+  } catch (error: any) {
+    console.error("PUT /api/services/[id] error:", error?.message || error);
+    return NextResponse.json(
+      { message: "Failed to update service", error: error?.message },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req: NextRequest, { params }: any) {
   try {
     await dbConnect();
+
     const deleted = await Service.findByIdAndDelete(params.id);
 
     if (!deleted) {
-      return NextResponse.json({ message: "Not found" }, { status: 404 });
+      return NextResponse.json(
+        { message: "Service not found" },
+        { status: 404 }
+      );
     }
 
-    return NextResponse.json({ success: true });
-  } catch (err) {
-    console.error("DELETE /api/services/[id] error:", err);
     return NextResponse.json(
-      { message: "Failed to delete service" },
+      { message: "Service deleted" },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.error("DELETE /api/services/[id] error:", error?.message || error);
+    return NextResponse.json(
+      { message: "Failed to delete service", error: error?.message },
       { status: 500 }
     );
   }
