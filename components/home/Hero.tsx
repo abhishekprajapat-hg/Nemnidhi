@@ -1,9 +1,46 @@
+// components/home/Hero.tsx
 "use client";
 
 import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 
-export default function Hero() {
+type HeroContent = {
+  badgeText: string;
+  headingMain: string;
+  headingHighlight: string;
+  headingSuffix: string;
+  subheading: string;
+  primaryCtaLabel: string;
+  primaryCtaSub: string;
+  primaryCtaHref: string;
+  secondaryCtaLabel: string;
+  secondaryCtaHref: string;
+  microCopy: string;
+};
+
+type HeroProps = {
+  hero?: HeroContent | null;
+};
+
+export default function Hero({ hero }: HeroProps) {
+  // Fallback defaults if no DB content is provided
+  const content: HeroContent =
+    hero || {
+      badgeText: "Business · Strategy · Technology",
+      headingMain: "We architect",
+      headingHighlight: "black-label digital systems",
+      headingSuffix: "for brands that refuse to look average.",
+      subheading:
+        "Nemnidhi blends senior-level strategy with full-stack MERN execution — crafting websites and platforms that feel meticulously designed, convert quietly, and scale like a serious business asset, not just a pretty brochure.",
+      primaryCtaLabel: "Book a private strategy call",
+      primaryCtaSub: "→ Limited slots",
+      primaryCtaHref: "/contact",
+      secondaryCtaLabel: "View case studies",
+      secondaryCtaHref: "/case-studies",
+      microCopy:
+        "No templates. No noise. Just calm, compound growth engineered in black & gold.",
+    };
+
   return (
     <section
       className="relative overflow-hidden border-b border-zinc-900 bg-[#050509]"
@@ -39,24 +76,21 @@ export default function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-300/80" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-amber-200" />
             </span>
-            <span>Business · Strategy · Technology</span>
+            <span>{content.badgeText}</span>
           </div>
 
           {/* Heading + Subheading */}
           <div className="space-y-4">
             <h1 className="text-balance text-3xl font-semibold leading-tight text-zinc-50 md:text-5xl lg:text-[3.4rem]">
-              We architect{" "}
+              {content.headingMain}{" "}
               <span className="bg-gradient-to-r from-amber-200 via-amber-300 to-yellow-400 bg-clip-text text-transparent">
-                black-label digital systems
+                {content.headingHighlight}
               </span>{" "}
-              for brands that refuse to look average.
+              {content.headingSuffix}
             </h1>
 
             <p className="max-w-xl text-sm text-zinc-300/95 md:text-base">
-              Nemnidhi blends senior-level strategy with full-stack MERN
-              execution — crafting websites and platforms that feel
-              meticulously designed, convert quietly, and scale like a serious
-              business asset, not just a pretty brochure.
+              {content.subheading}
             </p>
           </div>
 
@@ -66,27 +100,35 @@ export default function Hero() {
             data-aos="fade-up"
             data-aos-delay="150"
           >
-            {/* Primary CTA – gold pill */}
+            {/* Primary CTA */}
             <Button
               asChild
               className="rounded-full bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 px-6 py-2 text-[13px] font-semibold tracking-wide text-zinc-950 shadow-[0_18px_45px_rgba(180,120,20,0.75)] transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-[0_22px_55px_rgba(180,120,20,0.95)]"
             >
-              <a href="/contact" className="inline-flex items-center gap-2">
-                <span>Book a private strategy call</span>
+              <a
+                href={content.primaryCtaHref}
+                className="inline-flex items-center gap-2"
+                aria-label={content.primaryCtaLabel}
+              >
+                <span>{content.primaryCtaLabel}</span>
                 <span className="text-[11px] text-zinc-900/80">
-                  → Limited slots
+                  {content.primaryCtaSub}
                 </span>
               </a>
             </Button>
 
-            {/* Secondary CTA – outline */}
+            {/* Secondary CTA */}
             <Button
               asChild
               variant="ghost"
               className="rounded-full border border-zinc-700/80 bg-black/70 px-5 py-2 text-[13px] text-zinc-100 hover:border-amber-300/80 hover:bg-zinc-950/90"
             >
-              <a href="/case-studies" className="inline-flex items-center gap-2">
-                <span>View case studies</span>
+              <a
+                href={content.secondaryCtaHref}
+                className="inline-flex items-center gap-2"
+                aria-label={content.secondaryCtaLabel}
+              >
+                <span>{content.secondaryCtaLabel}</span>
                 <span className="h-1.5 w-1.5 rounded-full bg-amber-300" />
               </a>
             </Button>
@@ -94,8 +136,7 @@ export default function Hero() {
 
           {/* Micro trust line */}
           <p className="text-[11px] uppercase tracking-[0.18em] text-zinc-500">
-            No templates. No noise. Just calm, compound growth engineered in
-            black & gold.
+            {content.microCopy}
           </p>
 
           {/* Stats */}
@@ -129,9 +170,7 @@ export default function Hero() {
                 <span className="text-xl font-semibold text-zinc-50">
                   10+
                 </span>
-                <span className="text-[11px] text-zinc-400">
-                  web builds
-                </span>
+                <span className="text-[11px] text-zinc-400">web builds</span>
               </div>
               <div className="mt-2 text-[11px] text-zinc-400">
                 From boutique brands to growth-stage teams.
@@ -159,7 +198,7 @@ export default function Hero() {
 
         {/* Right – Premium dashboard card */}
         <div
-          className="flex-1 w-full max-w-md md:max-w-lg"
+          className="w-full flex-1 max-w-md md:max-w-lg"
           data-aos="fade-left"
           data-aos-delay="140"
         >
@@ -184,7 +223,7 @@ export default function Hero() {
                     Nemnidhi Performance Suite
                   </div>
                   <div className="text-sm font-semibold text-zinc-50">
-                    Black & Gold acquisition board
+                    Black &amp; Gold acquisition board
                   </div>
                 </div>
                 <div className="rounded-full border border-amber-400/40 bg-gradient-to-r from-amber-500/20 via-yellow-400/20 to-amber-300/20 px-2.5 py-1 text-[10px] font-medium text-amber-100">
@@ -242,21 +281,21 @@ export default function Hero() {
                 <div className="flex flex-col gap-2 text-[10px] text-zinc-200">
                   <div className="flex items-center gap-3">
                     <span className="w-20 text-zinc-400">Visitors</span>
-                    <div className="h-1.5 flex-1 rounded-full bg-zinc-900">
+                    <div className="flex-1 rounded-full bg-zinc-900 h-1.5">
                       <div className="h-full w-[88%] rounded-full bg-zinc-500" />
                     </div>
                     <span>8.1k</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="w-20 text-zinc-400">Leads</span>
-                    <div className="h-1.5 flex-1 rounded-full bg-zinc-900">
+                    <div className="flex-1 rounded-full bg-zinc-900 h-1.5">
                       <div className="h-full w-[46%] rounded-full bg-amber-300" />
                     </div>
                     <span>374</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="w-20 text-zinc-400">Booked</span>
-                    <div className="h-1.5 flex-1 rounded-full bg-zinc-900">
+                    <div className="flex-1 rounded-full bg-zinc-900 h-1.5">
                       <div className="h-full w-[21%] rounded-full bg-yellow-300" />
                     </div>
                     <span>79</span>
@@ -268,7 +307,7 @@ export default function Hero() {
               <div className="flex items-center justify-between rounded-2xl border border-zinc-800 bg-black/90 px-3 py-2.5 text-[10px] text-zinc-200">
                 <span className="flex items-center gap-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-amber-300" />
-                  <span>Curated & monitored by Nemnidhi&apos;s core team</span>
+                  <span>Curated &amp; monitored by Nemnidhi&apos;s core team</span>
                 </span>
                 <span className="bg-gradient-to-r from-amber-200 to-yellow-300 bg-clip-text text-transparent">
                   View full breakdown →

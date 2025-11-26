@@ -1,18 +1,20 @@
+// components/home/ServicesSection.tsx
 "use client";
 
 import Container from "@/components/layout/Container";
 
 type Service = {
+  _id?: string;
   title: string;
   description: string;
   points: string[];
 };
 
-const SERVICES: Service[] = [
-  /* ...same array as before... */
-];
+type ServicesSectionProps = {
+  services: Service[];
+};
 
-export default function ServicesSection() {
+export default function ServicesSection({ services }: ServicesSectionProps) {
   return (
     <section className="border-b border-zinc-900 bg-[#050509]">
       <Container className="py-16 md:py-20">
@@ -50,9 +52,9 @@ export default function ServicesSection() {
 
         {/* Services Grid */}
         <div className="grid gap-6 md:grid-cols-2">
-          {SERVICES.map((service, index) => (
+          {services.map((service, index) => (
             <article
-              key={service.title}
+              key={service._id ?? service.title}
               className="group relative flex flex-col gap-3 overflow-hidden rounded-2xl border border-zinc-900 bg-gradient-to-br from-black via-[#050509] to-zinc-950/80 p-5 shadow-[0_20px_55px_rgba(0,0,0,0.75)] transition duration-200 hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-[0_26px_70px_rgba(0,0,0,0.9)]"
               data-aos="fade-up"
               data-aos-delay={100 + index * 80}
@@ -83,8 +85,8 @@ export default function ServicesSection() {
 
               {/* Points */}
               <ul className="mt-1 space-y-1.5 text-[11px] text-zinc-400">
-                {service.points.map((point) => (
-                  <li key={point} className="flex gap-2">
+                {service.points?.map((point, idx) => (
+                  <li key={idx + point} className="flex gap-2">
                     <span className="mt-[6px] h-[6px] w-[6px] flex-shrink-0 rounded-full bg-gradient-to-br from-amber-300 to-yellow-400 group-hover:scale-110 group-hover:brightness-110" />
                     <span>{point}</span>
                   </li>
