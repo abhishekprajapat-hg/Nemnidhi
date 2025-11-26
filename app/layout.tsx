@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   title: "Nemnidhi | Business & Tech Solutions",
   description:
     "We build digital solutions that grow your business using the MERN stack and modern growth strategies.",
+    icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
