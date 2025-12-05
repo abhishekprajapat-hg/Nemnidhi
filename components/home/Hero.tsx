@@ -1,321 +1,267 @@
-// components/home/Hero.tsx
 "use client";
 
+import { useEffect, useState } from "react";
 import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
+import { motion, AnimatePresence } from "framer-motion";
 
-type HeroContent = {
-  badgeText: string;
-  headingMain: string;
-  headingHighlight: string;
-  headingSuffix: string;
-  subheading: string;
-  primaryCtaLabel: string;
-  primaryCtaSub: string;
-  primaryCtaHref: string;
-  secondaryCtaLabel: string;
-  secondaryCtaHref: string;
-  microCopy: string;
+// Animation Variants
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
 };
 
-type HeroProps = {
-  hero?: HeroContent | null;
+const fadeInUp: any = {
+  hidden: { opacity: 0, y: 30 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 50, damping: 20 },
+  },
 };
 
-export default function Hero({ hero }: HeroProps) {
-  // Fallback defaults if no DB content is provided
-  const content: HeroContent =
-    hero || {
-      badgeText: "Business · Strategy · Technology",
-      headingMain: "We architect",
-      headingHighlight: "black-label digital systems",
-      headingSuffix: "for brands that refuse to look average.",
-      subheading:
-        "Nemnidhi blends senior-level strategy with full-stack MERN execution — crafting websites and platforms that feel meticulously designed, convert quietly, and scale like a serious business asset, not just a pretty brochure.",
-      primaryCtaLabel: "Book a private strategy call",
-      primaryCtaSub: "→ Limited slots",
-      primaryCtaHref: "/contact",
-      secondaryCtaLabel: "View case studies",
-      secondaryCtaHref: "/case-studies",
-      microCopy:
-        "No templates. No noise. Just calm, compound growth engineered in black & gold.",
-    };
+const floatAnimation: any = {
+  animate: {
+    y: [0, -15, 0],
+    rotate: [0, 1, 0],
+    transition: {
+      duration: 6,
+      repeat: Infinity,
+      ease: "easeInOut",
+    },
+  },
+};
+
+export default function Hero({ hero }: any) {
+  const content = hero || {
+    badgeText: "Digital Systems",
+    headingMain: "We engineer",
+    headingSuffix: "for brands built to scale.",
+    subheading:
+      "Senior-level strategy, full-stack MERN execution and aesthetic precision — turning digital presence into profit-driving systems.",
+    primaryCtaLabel: "Book a private strategy call",
+    primaryCtaHref: "/contact",
+    secondaryCtaLabel: "View case studies",
+    secondaryCtaHref: "/case-studies",
+  };
+
+  // Smooth fading words
+  const words = [
+    "High-conversion digital products and services",
+    "Premium brand-scaling ecosystems",
+    "Growth-focused automated systems",
+  ];
+
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % words.length);
+    }, 2600);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <section
-      className="relative overflow-hidden border-b border-zinc-900 bg-[#050509]"
-      data-aos="fade-up"
-    >
-      {/* Background */}
-      <div className="pointer-events-none absolute inset-0">
-        {/* soft gold glows */}
-        <div className="absolute -left-32 -top-10 h-72 w-72 rounded-full bg-amber-500/12 blur-3xl" />
-        <div className="absolute right-[-60px] top-10 h-80 w-80 rounded-full bg-yellow-400/10 blur-3xl" />
-        <div className="absolute bottom-[-80px] left-10 h-72 w-72 rounded-full bg-orange-500/10 blur-3xl" />
-
-        {/* subtle vignette */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(250,204,21,0.12),_transparent_55%)]" />
-
-        {/* hairline grid */}
-        <div className="absolute inset-0 opacity-[0.07] [background-image:radial-gradient(circle_at_1px_1px,#27272a_1px,transparent_0)] [background-size:22px_22px]" />
-
-        {/* bottom gold line */}
-        <div className="absolute bottom-0 left-1/2 h-px w-[70%] -translate-x-1/2 bg-gradient-to-r from-transparent via-amber-300/70 to-transparent" />
+    <section className="relative overflow-hidden border-b border-zinc-800 bg-[#050509]">
+      {/* --- Dynamic Background Ambiance --- */}
+      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden ">
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.4, 0.2],
+            x: [0, 50, 0],
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-[20%] left-[10%] h-[500px] w-[500px] rounded-full bg-amber-500/20 blur-[120px]"
+        />
+        <motion.div
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.1, 0.3, 0.1],
+            x: [0, -50, 0],
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+          className="absolute top-[30%] -right-[10%] h-[400px] w-[400px] rounded-full bg-yellow-600/15 blur-[100px]"
+        />
+        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] mix-blend-overlay"></div>
       </div>
 
-      <Container className="relative flex flex-col items-center gap-12 py-16 md:flex-row md:py-24">
-        {/* Left */}
-        <div
-          className="flex-1 space-y-7"
-          data-aos="fade-right"
-          data-aos-delay="80"
+      <Container className="relative z-10 flex flex-col items-center gap-16 py-24 md:flex-row md:py-32">
+        {/* --- LEFT CONTENT --- */}
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          animate="show"
+          className="flex-1 space-y-8 text-left"
         >
-          {/* Pill */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/60 bg-black/60 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.25em] text-amber-100 shadow-[0_0_26px_rgba(245,158,11,0.55)]">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-300/80" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-amber-200" />
-            </span>
-            <span>{content.badgeText}</span>
-          </div>
+          {/* Badge */}
+          <motion.div
+            variants={fadeInUp}
+            className="flex justify-start"
+          >
+            <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-950/20 px-4 py-1.5 text-[11px] uppercase tracking-wider text-amber-200 backdrop-blur-md transition-colors hover:border-amber-400/50">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+              </span>
+              {content.badgeText}
+            </div>
+          </motion.div>
 
-          {/* Heading + Subheading */}
-          <div className="space-y-4">
-            <h1 className="text-balance text-3xl font-semibold leading-tight text-zinc-50 md:text-5xl lg:text-[3.4rem]">
-              {content.headingMain}{" "}
-              <span className="bg-gradient-to-r from-amber-200 via-amber-300 to-yellow-400 bg-clip-text text-transparent">
-                {content.headingHighlight}
-              </span>{" "}
-              {content.headingSuffix}
-            </h1>
+          {/* Heading */}
+          <motion.h1
+            variants={fadeInUp}
+            className="max-w-3xl text-balance text-5xl font-bold leading-tight text-zinc-50 md:text-7xl"
+          >
+            {content.headingMain}{" "}
+            <span className="relative inline-block">
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={words[index]}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.45, ease: "easeOut" }}
+                  className="relative bg-gradient-to-r from-amber-200 via-amber-300 to-amber-500 bg-clip-text text-transparent inline-block"
+                >
+                  {words[index]}
+                  <span className="animate-pulse">|</span>
+                </motion.span>
+              </AnimatePresence>
+            </span>{" "}
+            {content.headingSuffix}
+          </motion.h1>
 
-            <p className="max-w-xl text-sm text-zinc-300/95 md:text-base">
-              {content.subheading}
-            </p>
-          </div>
+          {/* Subheading */}
+          <motion.p
+            variants={fadeInUp}
+            className="mx-auto max-w-xl text-base text-zinc-400 md:mx-0 md:text-lg leading-relaxed"
+          >
+            {content.subheading}
+          </motion.p>
 
           {/* CTAs */}
-          <div
-            className="flex flex-wrap items-center gap-4"
-            data-aos="fade-up"
-            data-aos-delay="150"
+          <motion.div
+            variants={fadeInUp}
+            className="flex flex-col items-start gap-4 pt-4 sm:flex-row"
           >
-            {/* Primary CTA */}
             <Button
               asChild
-              className="rounded-full bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 px-6 py-2 text-[13px] font-semibold tracking-wide text-zinc-950 shadow-[0_18px_45px_rgba(180,120,20,0.75)] transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-[0_22px_55px_rgba(180,120,20,0.95)]"
+              className="group relative overflow-hidden rounded-full bg-gradient-to-r from-amber-300 to-amber-400 px-8 py-6 text-[14px] font-bold text-zinc-950 shadow-[0_4px_30px_rgba(251,191,36,0.4)] transition-all hover:shadow-[0_8px_40px_rgba(251,191,36,0.6)] hover:scale-[1.02]"
             >
-              <a
-                href={content.primaryCtaHref}
-                className="inline-flex items-center gap-2"
-                aria-label={content.primaryCtaLabel}
-              >
-                <span>{content.primaryCtaLabel}</span>
-                <span className="text-[11px] text-zinc-900/80">
-                  {content.primaryCtaSub}
-                </span>
+              <a href={content.primaryCtaHref}>
+                <span className="relative z-10">{content.primaryCtaLabel}</span>
               </a>
             </Button>
 
-            {/* Secondary CTA */}
             <Button
               asChild
               variant="ghost"
-              className="rounded-full border border-zinc-700/80 bg-black/70 px-5 py-2 text-[13px] text-zinc-100 hover:border-amber-300/80 hover:bg-zinc-950/90"
+              className="rounded-full border border-zinc-700 px-8 py-6 text-[14px] font-medium text-zinc-200 transition-all hover:border-amber-300/50 hover:bg-zinc-900/50 hover:text-amber-200"
             >
-              <a
-                href={content.secondaryCtaHref}
-                className="inline-flex items-center gap-2"
-                aria-label={content.secondaryCtaLabel}
-              >
-                <span>{content.secondaryCtaLabel}</span>
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-300" />
-              </a>
+              <a href={content.secondaryCtaHref}>{content.secondaryCtaLabel}</a>
             </Button>
-          </div>
+          </motion.div>
+        </motion.div>
 
-          {/* Micro trust line */}
-          <p className="text-[11px] uppercase tracking-[0.18em] text-zinc-500">
-            {content.microCopy}
-          </p>
-
-          {/* Stats */}
-          <div
-            className="flex flex-wrap gap-4 pt-4 text-xs md:gap-6"
-            data-aos="fade-up"
-            data-aos-delay="220"
-          >
-            <div className="min-w-[150px] rounded-2xl border border-zinc-800 bg-gradient-to-br from-black via-zinc-950 to-zinc-900 p-3">
-              <div className="text-[11px] uppercase tracking-wide text-zinc-400">
-                Lead Quality
-              </div>
-              <div className="mt-1 flex items-baseline gap-1">
-                <span className="text-xl font-semibold text-amber-300">
-                  30%+
-                </span>
-                <span className="text-[11px] text-amber-100/90">
-                  avg uplift
-                </span>
-              </div>
-              <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-zinc-900">
-                <div className="h-full w-[78%] rounded-full bg-gradient-to-r from-amber-400 to-yellow-300" />
-              </div>
-            </div>
-
-            <div className="min-w-[150px] rounded-2xl border border-zinc-800 bg-gradient-to-br from-black via-zinc-950 to-zinc-900 p-3">
-              <div className="text-[11px] uppercase tracking-wide text-zinc-400">
-                Projects Shipped
-              </div>
-              <div className="mt-1 flex items-baseline gap-1">
-                <span className="text-xl font-semibold text-zinc-50">
-                  10+
-                </span>
-                <span className="text-[11px] text-zinc-400">web builds</span>
-              </div>
-              <div className="mt-2 text-[11px] text-zinc-400">
-                From boutique brands to growth-stage teams.
-              </div>
-            </div>
-
-            <div className="min-w-[150px] rounded-2xl border border-amber-500/40 bg-gradient-to-br from-zinc-950 via-black to-amber-900/20 p-3">
-              <div className="text-[11px] uppercase tracking-wide text-amber-100">
-                Response Time
-              </div>
-              <div className="mt-1 flex items-baseline gap-1">
-                <span className="text-xl font-semibold text-amber-200">
-                  &lt;24h
-                </span>
-                <span className="text-[11px] text-zinc-200/80">
-                  on weekdays
-                </span>
-              </div>
-              <div className="mt-2 text-[11px] text-zinc-300">
-                Direct access, founder-level thinking, no agency fog.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Right – Premium dashboard card */}
-        <div
-          className="w-full flex-1 max-w-md md:max-w-lg"
-          data-aos="fade-left"
-          data-aos-delay="140"
+        {/* --- RIGHT CONTENT (Glass Card) --- */}
+        <motion.div
+          initial={{ opacity: 0, x: 80, scale: 0.9 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ delay: 0.4, duration: 0.8, type: "spring" }}
+          className="w-full max-w-md flex-1 relative perspective-1000"
         >
-          <div className="mx-auto w-full rounded-3xl border border-zinc-800 bg-gradient-to-br from-black via-zinc-950 to-zinc-900 p-5 shadow-[0_22px_70px_rgba(0,0,0,0.85)] backdrop-blur-xl">
-            {/* Top bar */}
-            <div className="mb-4 flex items-center justify-between">
-              <div className="flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-amber-400/90" />
-                <span className="h-2 w-2 rounded-full bg-zinc-500/90" />
-                <span className="h-2 w-2 rounded-full bg-zinc-700/90" />
-              </div>
-              <span className="rounded-full border border-amber-400/40 bg-black/80 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.18em] text-amber-100">
-                Signature View
-              </span>
-            </div>
+          <motion.div variants={floatAnimation} animate="animate">
+            <div className="absolute inset-0 translate-y-8 scale-[0.85] rounded-[2.5rem] bg-gradient-to-tr from-amber-600/30 via-amber-400/10 to-zinc-900 blur-3xl z-0"></div>
 
-            <div className="space-y-4">
-              {/* Header */}
-              <div className="flex items-center justify-between gap-3">
-                <div>
-                  <div className="text-[11px] font-medium text-zinc-400">
-                    Nemnidhi Performance Suite
-                  </div>
-                  <div className="text-sm font-semibold text-zinc-50">
-                    Black &amp; Gold acquisition board
-                  </div>
-                </div>
-                <div className="rounded-full border border-amber-400/40 bg-gradient-to-r from-amber-500/20 via-yellow-400/20 to-amber-300/20 px-2.5 py-1 text-[10px] font-medium text-amber-100">
-                  +32.8% vs last month
-                </div>
-              </div>
+            <div className="relative z-10 rounded-[2.5rem] border border-white/10 bg-zinc-900/60 p-8 backdrop-blur-2xl shadow-[0_30px_70px_-15px_rgba(0,0,0,0.9)] overflow-hidden group transition-all duration-300 hover:border-amber-500/30">
+              <div className="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-white/5 to-transparent skew-x-12 -translate-x-full transition-transform duration-1000 group-hover:translate-x-[200%]"></div>
 
-              {/* Metric cards */}
-              <div className="grid grid-cols-3 gap-3 text-[11px]">
-                <div className="rounded-2xl border border-zinc-800 bg-black/80 p-2.5">
-                  <div className="text-[10px] text-zinc-400">
-                    Website Leads
-                  </div>
-                  <div className="mt-1 text-sm font-semibold text-zinc-50">
-                    184
-                  </div>
-                  <div className="mt-1 text-[10px] text-amber-200">
-                    ↑ 27% this week
-                  </div>
-                </div>
-
-                <div className="rounded-2xl border border-zinc-800 bg-black/80 p-2.5">
-                  <div className="text-[10px] text-zinc-400">
-                    Booking Rate
-                  </div>
-                  <div className="mt-1 text-sm font-semibold text-zinc-50">
-                    18.6%
-                  </div>
-                  <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-zinc-900">
-                    <div className="h-full w-[62%] rounded-full bg-gradient-to-r from-amber-300 to-yellow-300" />
-                  </div>
-                </div>
-
-                <div className="rounded-2xl border border-amber-500/45 bg-gradient-to-br from-black via-zinc-950 to-amber-900/35 p-2.5">
-                  <div className="text-[10px] text-amber-100">
-                    Avg. Response
-                  </div>
-                  <div className="mt-1 text-sm font-semibold text-amber-200">
-                    2h 14m
-                  </div>
-                  <div className="mt-1 text-[10px] text-amber-100/90">
-                    SLA on track
-                  </div>
-                </div>
-              </div>
-
-              {/* Funnel */}
-              <div className="space-y-2 rounded-2xl border border-zinc-800 bg-black/80 p-3">
-                <div className="flex items-center justify-between text-[11px]">
-                  <span className="font-medium text-zinc-100">
-                    Funnel snapshot
-                  </span>
-                  <span className="text-zinc-500">Last 14 days</span>
-                </div>
-                <div className="flex flex-col gap-2 text-[10px] text-zinc-200">
-                  <div className="flex items-center gap-3">
-                    <span className="w-20 text-zinc-400">Visitors</span>
-                    <div className="flex-1 rounded-full bg-zinc-900 h-1.5">
-                      <div className="h-full w-[88%] rounded-full bg-zinc-500" />
+              <div className="space-y-6 relative z-20">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <div className="text-xs font-medium uppercase tracking-wider text-zinc-500 mb-1">
+                      Performance Snapshot
                     </div>
-                    <span>8.1k</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="w-20 text-zinc-400">Leads</span>
-                    <div className="flex-1 rounded-full bg-zinc-900 h-1.5">
-                      <div className="h-full w-[46%] rounded-full bg-amber-300" />
+                    <div className="text-sm text-zinc-300 font-semibold">
+                      Nemnidhi Client System
                     </div>
-                    <span>374</span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className="w-20 text-zinc-400">Booked</span>
-                    <div className="flex-1 rounded-full bg-zinc-900 h-1.5">
-                      <div className="h-full w-[21%] rounded-full bg-yellow-300" />
-                    </div>
-                    <span>79</span>
+                  <div className="h-8 w-8 rounded-full bg-gradient-to-br from-amber-300 to-yellow-600 flex items-center justify-center shadow-lg">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="w-4 h-4 text-zinc-950"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M12.97 3.97a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06l6.22-6.22H3a.75.75 0 0 1 0-1.5h16.19l-6.22-6.22a.75.75 0 0 1 0-1.06Z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
                   </div>
                 </div>
-              </div>
 
-              {/* Bottom strip */}
-              <div className="flex items-center justify-between rounded-2xl border border-zinc-800 bg-black/90 px-3 py-2.5 text-[10px] text-zinc-200">
-                <span className="flex items-center gap-1.5">
-                  <span className="h-1.5 w-1.5 rounded-full bg-amber-300" />
-                  <span>Curated &amp; monitored by Nemnidhi&apos;s core team</span>
-                </span>
-                <span className="bg-gradient-to-r from-amber-200 to-yellow-300 bg-clip-text text-transparent">
-                  View full breakdown →
-                </span>
+                <div className="space-y-2 py-4 border-y border-zinc-800">
+                  <div className="flex items-end justify-between">
+                    <motion.span
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 1.2, type: "spring" }}
+                      className="text-5xl font-bold text-amber-200 tracking-tight"
+                    >
+                      +32.8%
+                    </motion.span>
+                    <span className="mb-1 text-[11px] font-medium uppercase text-zinc-500">
+                      vs last month
+                    </span>
+                  </div>
+
+                  <div className="h-2 rounded-full bg-zinc-800/80 overflow-hidden">
+                    <motion.div
+                      initial={{ width: "0%" }}
+                      animate={{ width: "72%" }}
+                      transition={{
+                        delay: 1.4,
+                        duration: 1.5,
+                        ease: "easeOut",
+                      }}
+                      className="h-full rounded-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-300 relative"
+                    >
+                      <div className="absolute top-0 right-0 h-full w-5 bg-white/40 blur-[4px]"></div>
+                    </motion.div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 pt-2">
+                  <div className="rounded-2xl bg-zinc-950/50 p-4 border border-zinc-800/50">
+                    <div className="text-[10px] text-zinc-500 uppercase">
+                      Conversion Rate
+                    </div>
+                    <div className="text-xl font-semibold text-zinc-200">
+                      4.8% <span className="text-emerald-500 text-sm">↑</span>
+                    </div>
+                  </div>
+                  <div className="rounded-2xl bg-zinc-950/50 p-4 border border-zinc-800/50">
+                    <div className="text-[10px] text-zinc-500 uppercase">
+                      Avg. Session
+                    </div>
+                    <div className="text-xl font-semibold text-zinc-200">
+                      3m 45s
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </Container>
     </section>
   );

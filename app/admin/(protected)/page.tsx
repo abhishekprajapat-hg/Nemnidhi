@@ -62,8 +62,8 @@ export default function AdminDashboardPage() {
               Contact enquiries
             </h2>
             <p className="mt-1 text-[12px] text-zinc-400">
-              View, search, and manage all enquiries from the contact page. Update
-              status and reply directly.
+              View, search, and manage all enquiries from the contact page.
+              Update status and reply directly.
             </p>
             <div className="mt-4 flex items-center justify-between text-[11px] text-zinc-400">
               <span>Go to leads board</span>
@@ -72,6 +72,8 @@ export default function AdminDashboardPage() {
               </span>
             </div>
           </Link>
+
+          
 
           {/* Services CMS (placeholder / future) */}
           <div className="rounded-2xl border border-zinc-800 bg-gradient-to-br from-black via-zinc-950 to-zinc-900 p-5 opacity-80">
@@ -83,8 +85,8 @@ export default function AdminDashboardPage() {
               Services content
             </h2>
             <p className="mt-1 text-[12px] text-zinc-400">
-              Manage the services shown on the homepage without touching code
-              — titles, points, and ordering.
+              Manage the services shown on the homepage without touching code —
+              titles, points, and ordering.
             </p>
             <p className="mt-4 text-[11px] text-zinc-500">
               We&apos;ll wire this up after Services CRUD.
@@ -97,9 +99,7 @@ export default function AdminDashboardPage() {
               <span className="h-1.5 w-1.5 rounded-full bg-zinc-500" />
               Coming soon
             </div>
-            <h2 className="text-sm font-semibold text-zinc-50">
-              Case studies
-            </h2>
+            <h2 className="text-sm font-semibold text-zinc-50">Case studies</h2>
             <p className="mt-1 text-[12px] text-zinc-400">
               Publish and update case studies that sync with the public site,
               including results and stack.
