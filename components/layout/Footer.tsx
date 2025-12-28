@@ -1,4 +1,3 @@
-// components/layout/Footer.tsx
 "use client";
 
 import Container from "./Container";
@@ -56,8 +55,8 @@ export function Footer() {
           </p>
         </div>
 
-        {/* Middle row: nav + contact + socials */}
-        <div className="mb-7 flex flex-col gap-6 border-t border-zinc-900/80 pt-6 md:flex-row md:items-start md:justify-between">
+        {/* Middle row */}
+        <div className="mb-7 flex flex-col gap-6 border-t border-zinc-900/80 pt-6 md:flex-row md:justify-between">
           {/* Navigation */}
           <div className="flex flex-1 flex-wrap gap-6 text-xs">
             <div className="space-y-2">
@@ -95,27 +94,46 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Contact + Socials */}
-          <div className="flex flex-col items-start gap-3 text-xs md:items-end">
-            <div className="space-y-1 text-right md:text-right">
-              <p className="text-[11px] uppercase tracking-[0.18em] text-zinc-500">
-                Contact
-              </p>
-              <p className="text-zinc-300">
-                Prefer email?{" "}
-                <a
-                  href="mailto:info@nemnidhi.com"
-                  className="text-amber-300 hover:text-amber-200"
-                >
-                  info@nemnidhi.com
-                </a>
-              </p>
-              <p className="text-[11px] text-zinc-500">
-                Typically respond within 24 hours on weekdays.
-              </p>
-            </div>
+          {/* Contact Details */}
+          <div className="flex max-w-sm flex-col gap-3 text-xs md:text-right">
+            <p className="text-[11px] uppercase tracking-[0.18em] text-zinc-500">
+              Contact
+            </p>
 
-            <div className="mt-2 flex items-center gap-3 text-zinc-500">
+            <p className="text-zinc-300">
+              📞{" "}
+              <a
+                href="tel:+918269150205"
+                className="text-amber-300 hover:text-amber-200"
+              >
+                +91 82691 50205
+              </a>
+            </p>
+
+            <p className="text-zinc-400 leading-relaxed">
+              📍 14, Uday Nagar,  
+              <br />
+              Indore, Madhya Pradesh – 452018
+            </p>
+
+            <p className="text-zinc-500">
+              🧾 GSTIN:{" "}
+              <span className="text-zinc-300">
+                23CGZPB7175E1Z5
+              </span>
+            </p>
+
+            <p className="text-zinc-300">
+              ✉️{" "}
+              <a
+                href="mailto:info@nemnidhi.com"
+                className="text-amber-300 hover:text-amber-200"
+              >
+                info@nemnidhi.com
+              </a>
+            </p>
+
+            <div className="mt-2 flex items-center gap-3 md:justify-end">
               {socials.map(({ icon: Icon, url, label }) => (
                 <Link
                   key={url}
@@ -131,15 +149,12 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom row: meta */}
+        {/* Bottom row */}
         <div className="flex flex-col gap-3 border-t border-zinc-900/80 pt-4 text-xs text-zinc-500 md:flex-row md:items-center md:justify-between">
-          <p>
-            © {year} Nemnidhi™. All rights reserved.
-          </p>
-          
+          <p>© {year} Nemnidhi™. All rights reserved.</p>
         </div>
 
-        {/* Bottom underline micro detail */}
+        {/* underline */}
         <div className="pointer-events-none mt-4 h-px w-full bg-gradient-to-r from-transparent via-amber-400/40 to-transparent" />
       </Container>
     </footer>
