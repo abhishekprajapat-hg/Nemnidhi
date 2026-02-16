@@ -106,14 +106,14 @@ export function Footer() {
                 href="tel:+918269150205"
                 className="text-amber-300 hover:text-amber-200"
               >
-                +91 82691 50205
+                +91 7000455463
               </a>
             </p>
 
             <p className="text-zinc-400 leading-relaxed">
-              📍 14, Uday Nagar,  
+              📍 B20, 5th Floor Gravity Mall Macanic Nagar
               <br />
-              Indore, Madhya Pradesh – 452018
+              Indore, Madhya Pradesh – 452011
             </p>
 
             <p className="text-zinc-500">
