@@ -111,7 +111,7 @@ export function Footer() {
             </p>
 
             <p className="text-zinc-400 leading-relaxed">
-              📍 B20, 5th Floor Gravity Mall Mechanic Nagar
+              📍 B20, 5th Floor Gravity Mall, Mechanic Nagar
               <br />
               Indore, Madhya Pradesh – 452011
             </p>
