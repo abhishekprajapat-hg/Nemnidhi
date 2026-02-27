@@ -13,13 +13,18 @@ const DEFAULT_PAGE_SHOTS = [
   { label: "Contact", path: "/contact" },
 ];
 
+const NEMNIDHI_MAIN_PAGE_SHOTS = [
+  { label: "Home", path: "/" },
+  { label: "Services", path: "/services" },
+];
+
 const PROJECTS = [
   {
     id: "nemnidhi-main",
     name: "Nemnidhi Main Site",
     domain: "www.nemnidhi.com",
     href: "https://www.nemnidhi.com",
-    pages: DEFAULT_PAGE_SHOTS,
+    pages: NEMNIDHI_MAIN_PAGE_SHOTS,
     summary:
       "Primary marketing site focused on clarity-led positioning, service pages, and conversion-ready user flow.",
   },
