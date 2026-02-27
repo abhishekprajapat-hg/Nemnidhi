@@ -1,17 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { ArrowUpRight, Compass, Sparkles } from "lucide-react";
 import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 
-const fadeIn = {
+const smoothEase: [number, number, number, number] = [0.22, 0.61, 0.36, 1];
+
+const fadeIn: Variants = {
   hidden: { opacity: 0, y: 20 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.22, 0.61, 0.36, 1] },
+    transition: { duration: 0.6, ease: smoothEase },
   },
 };
 
@@ -133,7 +135,7 @@ export default function Hero({ hero }: any) {
           <motion.div
             initial={{ opacity: 0, y: 26, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.7, ease: [0.22, 0.61, 0.36, 1], delay: 0.1 }}
+            transition={{ duration: 0.7, ease: smoothEase, delay: 0.1 }}
             className="theme-card-strong rounded-[2rem] p-6 md:p-7"
           >
             <div className="mb-5 flex items-center justify-between">
