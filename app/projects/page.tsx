@@ -3,12 +3,23 @@ import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 import ProjectPreview from "@/components/projects/ProjectPreview";
 
+const DEFAULT_PAGE_SHOTS = [
+  { label: "Home", path: "/" },
+  { label: "Services", path: "/services" },
+  { label: "Solutions", path: "/solutions" },
+  { label: "Case Studies", path: "/case-studies" },
+  { label: "Projects", path: "/projects" },
+  { label: "About", path: "/about" },
+  { label: "Contact", path: "/contact" },
+];
+
 const PROJECTS = [
   {
     id: "nemnidhi-main",
     name: "Nemnidhi Main Site",
     domain: "www.nemnidhi.com",
     href: "https://www.nemnidhi.com",
+    pages: DEFAULT_PAGE_SHOTS,
     summary:
       "Primary marketing site focused on clarity-led positioning, service pages, and conversion-ready user flow.",
   },
@@ -17,6 +28,7 @@ const PROJECTS = [
     name: "Nemnidhi Cloud",
     domain: "nemnidhi.cloud",
     href: "https://nemnidhi.cloud",
+    pages: DEFAULT_PAGE_SHOTS,
     summary:
       "Cloud deployment endpoint used for platform and infrastructure-backed product delivery.",
   },
@@ -25,6 +37,7 @@ const PROJECTS = [
     name: "Glam by Nemnidhi",
     domain: "glam.nemnidhi.com",
     href: "https://glam.nemnidhi.com",
+    pages: DEFAULT_PAGE_SHOTS,
     summary:
       "Subdomain project for brand-specific presentation and campaign-focused growth execution.",
   },
@@ -70,6 +83,7 @@ export default function ProjectsPage() {
                   href={project.href}
                   name={project.name}
                   domain={project.domain}
+                  pages={project.pages}
                 />
               </div>
             </article>
