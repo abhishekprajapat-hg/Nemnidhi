@@ -6,276 +6,217 @@ const CASE_STUDIES = [
     id: "d2c-revamp",
     client: "D2C skincare brand",
     industry: "D2C / Ecommerce",
-    headline: "From pretty brochure site to a conversion-first Growth site.",
+    headline: "From brochure site to conversion-focused growth asset.",
     context:
-      "The brand had strong word-of-mouth and repeat buyers, but their website behaved like a brochure — slow, confusing flows, and most sales happening via WhatsApp.",
+      "The brand had strong repeat buying but the website did not convert high-intent traffic efficiently.",
     challenge: [
-      "Homepage and product pages weren’t telling a clear story.",
-      "Most serious buyers ended up asking the same questions manually on WhatsApp.",
-      "Founders had no clear view of which campaigns or creators were actually converting.",
+      "No clear narrative from homepage to product pages",
+      "Founders answering repeated buying questions manually",
+      "Weak campaign attribution and limited visibility",
     ],
     approach: [
-      "Mapped their ideal buyer journeys and rewrote the information architecture.",
-      "Rebuilt the site in Next.js with focused landing pages for each major use-case.",
-      "Connected forms, UTM tracking, and basic marketing automation to centralise leads.",
-      "Set up simple decision dashboards for the founder instead of complex reports.",
+      "Mapped customer journeys and rebuilt site architecture",
+      "Shipped focused use-case pages in Next.js",
+      "Connected form capture, UTM tracking, and automation",
+      "Delivered founder dashboard with decision-ready metrics",
     ],
-    outcomesIntro: "Within the first 90 days after launch:",
+    outcomesIntro: "Within 90 days post launch:",
     outcomes: [
-      "2.4x increase in add-to-cart rate across top products.",
-      "36% more enquiries coming from high-intent landing pages vs generic traffic.",
-      "Founders switched off 2 under-performing channels based on clear data.",
+      "2.4x increase in add-to-cart rate on top products",
+      "36% more high-intent enquiries from landing pages",
+      "Eliminated two weak channels using clear data",
     ],
-    stack: "Next.js, Tailwind, headless CMS, analytics + automation stack.",
-    duration: "8 weeks from kickoff to go-live.",
+    stack: "Next.js, Tailwind, headless CMS, analytics automation",
+    duration: "8 weeks",
   },
   {
     id: "b2b-services-leads",
     client: "B2B services firm",
     industry: "B2B / Services",
-    headline: "Cleaning up a cluttered B2B site into a calm sales asset.",
+    headline: "Consolidated a cluttered site into a clear sales asset.",
     context:
-      "A mid-size services firm with solid referrals but weak inbound. Their old website was copy-heavy, split across multiple microsites, and impossible to update without developers.",
+      "A referral-driven business needed a website that could explain offers and qualify inbound leads.",
     challenge: [
-      "Leadership was unclear which offers to lead with online.",
-      "Prospects couldn’t understand the difference between 3 similar services.",
-      "No structured way to capture or qualify inbound leads from the site.",
+      "Confusing overlap between service pages",
+      "Fragmented microsites with inconsistent messaging",
+      "No structured inbound qualification flow",
     ],
     approach: [
-      "Ran a quick positioning + offers workshop with the core team.",
-      "Consolidated 16+ pages into 5 clear offers and 3 solution pathways.",
-      "Designed a new site hierarchy around those offers, not internal departments.",
-      "Implemented structured enquiry forms, routing, and light qualification logic.",
+      "Ran positioning and offer-priority workshop",
+      "Consolidated 16 plus pages into five core offers",
+      "Built a cleaner hierarchy around buyer intent",
+      "Implemented routing and qualification logic",
     ],
-    outcomesIntro: "Over the next 6 months:",
+    outcomesIntro: "Over the next six months:",
     outcomes: [
-      "Lead-to-call rate from the site increased by ~48%.",
-      "Sales team reported ‘less random’ and more relevant enquiries.",
-      "Marketing now updates pages and case studies without developer support.",
+      "Lead-to-call rate increased by around 48%",
+      "Higher relevance of inbound conversations",
+      "Marketing team gained direct publishing control",
     ],
-    stack: "Next.js, CMS, CRM + calendar integration.",
-    duration: "10 weeks including content and stakeholder reviews.",
+    stack: "Next.js, CMS, CRM and calendar integration",
+    duration: "10 weeks",
   },
   {
     id: "ops-os",
     client: "Regional logistics company",
     industry: "Logistics / Operations",
-    headline: "Replacing WhatsApp chaos with a simple internal Ops OS.",
+    headline: "Replaced operational chat chaos with a focused internal OS.",
     context:
-      "Dispatch, customer updates, and escalations were happening across WhatsApp groups, Excel sheets, and calls — leading to delays and repeated mistakes.",
+      "Dispatch updates, escalations, and customer status were spread across chats, calls, and sheets.",
     challenge: [
-      "No single source of truth for active jobs and their status.",
-      "Customer support was constantly chasing ops for updates.",
-      "Leadership had to ‘call someone’ for basic visibility.",
+      "No single source of truth for active jobs",
+      "Support team chasing updates manually",
+      "Leadership visibility dependent on calls",
     ],
     approach: [
-      "Shadowed the team’s current workflows and mapped real bottlenecks.",
-      "Designed a lightweight internal portal for jobs, status, and escalations.",
-      "Built role-based views for ops, customer support, and leadership.",
-      "Documented the new workflow and trained the team in short sprints.",
+      "Mapped existing workflows and recurring failure points",
+      "Designed role-based views for ops and support",
+      "Built lightweight internal portal and escalation flow",
+      "Rolled out with documentation and sprint-based training",
     ],
-    outcomesIntro: "After rolling out in phases:",
+    outcomesIntro: "After phased rollout:",
     outcomes: [
-      "Support team saw a drop in ‘where is my order?’ calls and chats.",
-      "Ops meetings became shorter and more focused on exceptions, not basics.",
-      "Leadership gets a clean daily view without jumping between tools.",
+      "Noticeable reduction in status-chasing calls",
+      "Shorter, exception-focused ops meetings",
+      "Leadership gained daily visibility in one place",
     ],
-    stack: "Custom web app layer + integrations on top of existing tooling.",
-    duration: "6 weeks from discovery to rollout in 2 branches.",
+    stack: "Custom web app layer with integrations",
+    duration: "6 weeks",
   },
 ];
 
 export default function CaseStudiesPage() {
+  const featured = CASE_STUDIES[0];
+  const remaining = CASE_STUDIES.slice(1);
+
   return (
-    <section className="min-h-screen bg-[#050509] text-zinc-50">
-      <Container className="py-16 md:py-24">
-        {/* Header */}
-        <header className="mb-12 space-y-6" data-aos="fade-right">
-          <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/40 bg-black/70 px-3 py-1">
-            <span className="h-1 w-1 rounded-full bg-amber-300" />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-amber-200">
-              Case Studies
-            </p>
-          </div>
-
-          <div className="space-y-4 max-w-3xl">
-            <h1 className="text-3xl font-semibold md:text-4xl lg:text-[2.6rem]">
-              Quiet, compounding wins
-              <span className="block bg-gradient-to-r from-amber-300 via-yellow-300 to-amber-400 bg-clip-text text-transparent">
-                for founders who didn&apos;t want more chaos.
-              </span>
-            </h1>
-            <p className="text-sm text-zinc-300 md:text-base max-w-2xl">
-              These aren&apos;t vanity redesigns. Each engagement started with
-              real bottlenecks — slow sites, scattered tools, unclear offers —
-              and ended in calm systems that support revenue, not just aesthetics.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-4 text-[11px] text-zinc-400">
-            <span className="rounded-full border border-zinc-800 bg-zinc-950 px-3 py-1">
-              D2C, B2B services, ops-heavy businesses
-            </span>
-            <span className="rounded-full border border-zinc-800 bg-zinc-950 px-3 py-1">
-              Strategy → Systems → Ongoing support
-            </span>
-          </div>
+    <section className="theme-section min-h-screen">
+      <Container className="py-16 md:py-22">
+        <header className="mb-12 space-y-5">
+          <p className="theme-pill">Case Studies</p>
+          <h1 className="max-w-4xl text-4xl text-slate-50 md:text-5xl">
+            Real systems work, not cosmetic redesigns.
+          </h1>
+          <p className="max-w-2xl text-sm leading-relaxed text-slate-300 md:text-base">
+            Each engagement started with practical constraints and ended with a
+            clearer growth engine for the team.
+          </p>
         </header>
 
-        {/* Featured case study */}
-        {CASE_STUDIES[0] && (
-          <section
-            className="mb-14 grid gap-8 rounded-3xl border border-zinc-900 bg-gradient-to-br from-black via-zinc-950 to-zinc-900/90 p-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1.4fr)] md:p-8"
-            data-aos="fade-up"
-            data-aos-delay="80"
-          >
-            <div className="space-y-4 pr-2">
-              <div className="inline-flex items-center gap-2 text-[11px] text-zinc-400">
-                <span className="rounded-full border border-amber-400/60 bg-amber-500/10 px-2.5 py-1 text-[10px] font-medium text-amber-100">
-                  Featured case study
+        {featured && (
+          <section className="theme-card-strong mb-12 grid gap-6 rounded-3xl p-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] md:p-6">
+            <div className="space-y-4">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-full border border-cyan-200/45 bg-cyan-200/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-cyan-100">
+                  Featured
                 </span>
-                <span className="rounded-full border border-zinc-700 bg-zinc-900 px-2 py-1">
-                  {CASE_STUDIES[0].industry}
+                <span className="rounded-full border border-white/15 bg-white/[0.03] px-2.5 py-1 text-[11px] text-slate-300">
+                  {featured.industry}
                 </span>
               </div>
 
-              <h2 className="text-xl font-semibold text-zinc-50 md:text-2xl">
-                {CASE_STUDIES[0].headline}
+              <h2 className="text-2xl font-semibold text-slate-100 md:text-3xl">
+                {featured.headline}
               </h2>
+              <p className="text-sm leading-relaxed text-slate-300">{featured.context}</p>
 
-              <p className="text-[13px] text-zinc-300">
-                {CASE_STUDIES[0].context}
-              </p>
-
-              <div className="text-[11px] text-zinc-400">
-                <p className="font-medium text-zinc-300">Client</p>
-                <p className="mt-0.5">{CASE_STUDIES[0].client}</p>
-                <p className="mt-1 text-[10px] uppercase tracking-[0.16em] text-zinc-500">
-                  Duration: {CASE_STUDIES[0].duration}
-                </p>
+              <div className="text-xs text-slate-400">
+                <p className="font-medium text-slate-200">{featured.client}</p>
+                <p className="mt-1">Duration: {featured.duration}</p>
+                <p className="mt-1">Stack: {featured.stack}</p>
               </div>
 
-              <Button
-                asChild
-                className="mt-2 rounded-full bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 px-5 py-2 text-[11px] font-semibold text-zinc-950"
-              >
+              <Button asChild>
                 <a href="/contact?from=case-study-featured">
-                  Explore a similar path for your brand
+                  Explore a similar engagement
                 </a>
               </Button>
             </div>
 
-            <div className="space-y-4 border-l border-zinc-800/80 pl-5 md:pl-7 text-[12px] text-zinc-400">
+            <div className="space-y-5 border-t border-white/10 pt-5 md:border-l md:border-t-0 md:pl-6 md:pt-0 [border-color:var(--line)]">
               <div>
-                <p className="font-medium text-zinc-300 mb-1">Challenges</p>
-                <ul className="space-y-1.5">
-                  {CASE_STUDIES[0].challenge.map((item) => (
-                    <li key={item} className="flex gap-2">
-                      <span className="mt-[6px] h-[4px] w-[4px] rounded-full bg-zinc-600" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <p className="font-medium text-zinc-300 mb-1">Approach</p>
-                <ul className="space-y-1.5">
-                  {CASE_STUDIES[0].approach.map((item) => (
-                    <li key={item} className="flex gap-2">
-                      <span className="mt-[6px] h-[4px] w-[4px] rounded-full bg-amber-300" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <p className="font-medium text-zinc-300 mb-1">Outcomes</p>
-                <p className="mb-1 text-[11px] text-zinc-500">
-                  {CASE_STUDIES[0].outcomesIntro}
+                <p className="mb-2 text-[11px] uppercase tracking-[0.16em] text-slate-400">
+                  Challenges
                 </p>
-                <ul className="space-y-1.5">
-                  {CASE_STUDIES[0].outcomes.map((item) => (
+                <ul className="space-y-1.5 text-xs text-slate-300">
+                  {featured.challenge.map((item) => (
                     <li key={item} className="flex gap-2">
-                      <span className="mt-[6px] h-[4px] w-[4px] rounded-full bg-emerald-400" />
+                      <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-slate-500" />
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <p className="pt-1 text-[10px] text-zinc-500">
-                Stack: {CASE_STUDIES[0].stack}
-              </p>
+              <div>
+                <p className="mb-2 text-[11px] uppercase tracking-[0.16em] text-slate-400">
+                  Approach
+                </p>
+                <ul className="space-y-1.5 text-xs text-slate-300">
+                  {featured.approach.map((item) => (
+                    <li key={item} className="flex gap-2">
+                      <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-gradient-to-br from-cyan-300 to-orange-300" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <p className="mb-1 text-[11px] uppercase tracking-[0.16em] text-slate-400">
+                  Outcomes
+                </p>
+                <p className="mb-2 text-xs text-cyan-100">{featured.outcomesIntro}</p>
+                <ul className="space-y-1.5 text-xs text-slate-300">
+                  {featured.outcomes.map((item) => (
+                    <li key={item} className="flex gap-2">
+                      <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-emerald-300" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </section>
         )}
 
-        {/* Timeline of other case studies */}
-        <section className="space-y-10 border-t border-zinc-900/80 pt-10">
-          <div className="space-y-2" data-aos="fade-right">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-500">
-              More quiet wins
-            </p>
-            <p className="text-[12px] text-zinc-400 max-w-xl">
-              Different industries, same pattern: clarify the offer, simplify
-              the stack, and ship systems that keep working long after launch.
-            </p>
-          </div>
+        <section className="space-y-6">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
+            More examples
+          </p>
+          <div className="grid gap-6 md:grid-cols-2">
+            {remaining.map((cs) => (
+              <article key={cs.id} className="theme-card rounded-3xl p-5 md:p-6">
+                <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
+                  {cs.industry}
+                </p>
+                <h2 className="mt-1 text-xl font-semibold text-slate-100">{cs.headline}</h2>
+                <p className="mt-2 text-sm leading-relaxed text-slate-300">{cs.context}</p>
 
-          <div className="relative ml-5 space-y-10">
-            <div className="absolute left-[7px] top-1 h-full w-px bg-gradient-to-b from-zinc-700 via-zinc-800 to-zinc-900" />
-            {CASE_STUDIES.slice(1).map((cs, index) => (
-              <article
-                key={cs.id}
-                className="relative pl-8"
-                data-aos="fade-up"
-                data-aos-delay={60 + index * 40}
-              >
-                {/* node */}
-                <div className="absolute -left-[5px] top-1 flex h-4 w-4 items-center justify-center rounded-full bg-zinc-950">
-                  <span className="h-2.5 w-2.5 rounded-full bg-gradient-to-br from-amber-300 via-yellow-300 to-amber-500" />
-                </div>
-
-                <div className="flex flex-col gap-2 md:flex-row md:items-baseline md:justify-between">
-                  <div className="space-y-1">
-                    <p className="text-[11px] uppercase tracking-[0.16em] text-zinc-500">
-                      {cs.industry}
+                <div className="mt-4 grid gap-4 text-xs text-slate-300">
+                  <div>
+                    <p className="mb-2 text-[11px] uppercase tracking-[0.16em] text-slate-400">
+                      Challenges
                     </p>
-                    <h2 className="text-sm md:text-base font-semibold text-zinc-50">
-                      {cs.headline}
-                    </h2>
-                    <p className="text-[12px] text-zinc-300 max-w-xl">
-                      {cs.context}
-                    </p>
-                  </div>
-                  <p className="text-[11px] text-zinc-500 mt-1 md:mt-0">
-                    {cs.client} • {cs.duration}
-                  </p>
-                </div>
-
-                <div className="mt-4 grid gap-6 text-[11px] text-zinc-400 md:grid-cols-2">
-                  <div className="space-y-2">
-                    <p className="font-medium text-zinc-300">Challenges</p>
                     <ul className="space-y-1.5">
                       {cs.challenge.map((item) => (
                         <li key={item} className="flex gap-2">
-                          <span className="mt-[6px] h-[4px] w-[4px] rounded-full bg-zinc-600" />
+                          <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-slate-500" />
                           <span>{item}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
-                  <div className="space-y-2">
-                    <p className="font-medium text-zinc-300">Outcomes</p>
-                    <p className="text-[11px] text-zinc-500">
-                      {cs.outcomesIntro}
+
+                  <div>
+                    <p className="mb-1 text-[11px] uppercase tracking-[0.16em] text-slate-400">
+                      Outcomes
                     </p>
+                    <p className="mb-2 text-xs text-cyan-100">{cs.outcomesIntro}</p>
                     <ul className="space-y-1.5">
                       {cs.outcomes.map((item) => (
                         <li key={item} className="flex gap-2">
-                          <span className="mt-[6px] h-[4px] w-[4px] rounded-full bg-emerald-400" />
+                          <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-emerald-300" />
                           <span>{item}</span>
                         </li>
                       ))}
@@ -283,30 +224,24 @@ export default function CaseStudiesPage() {
                   </div>
                 </div>
 
-                <p className="mt-3 text-[10px] text-zinc-500">
-                  Stack: {cs.stack}
+                <p className="mt-4 text-xs text-slate-400">
+                  {cs.client} | {cs.duration} | {cs.stack}
                 </p>
               </article>
             ))}
           </div>
         </section>
 
-        {/* Footer CTA */}
-        <div className="mt-14 border-t border-zinc-900/80 pt-8 text-center space-y-3">
-          <p className="text-[12px] text-zinc-400">
-            Want to see something closer to your industry?
+        <div className="mt-12 rounded-3xl border border-white/10 bg-white/[0.03] p-6 text-center [border-color:var(--line)]">
+          <p className="text-sm text-slate-300">
+            Want a deeper walkthrough relevant to your industry?
           </p>
-          <p className="text-sm text-zinc-300">
-            We can walk you through relevant work privately, under NDA if
-            needed, and talk through what &quot;success&quot; would mean for you.
+          <p className="mt-1 text-xs text-slate-400">
+            We can share related work privately and map what success should mean
+            for your team.
           </p>
-          <Button
-            asChild
-            className="mt-2 rounded-full bg-zinc-100 px-6 py-2 text-[11px] font-semibold text-zinc-950"
-          >
-            <a href="/contact?from=case-studies">
-              Talk through a similar engagement
-            </a>
+          <Button asChild className="mt-4">
+            <a href="/contact?from=case-studies">Talk through a similar path</a>
           </Button>
         </div>
       </Container>

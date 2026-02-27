@@ -4,14 +4,28 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { LenisProvider } from "@/components/providers/LenisProvider";
 import { AOSProvider } from "@/components/providers/AOSProvider";
+import { Manrope, Syne } from "next/font/google";
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-body",
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+const syne = Syne({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["500", "600", "700", "800"],
+});
 
 export const metadata: Metadata = {
-  title: "Nemnidhi | Business & Tech Solutions",
+  title: "Nemnidhi | Digital Growth Systems",
   description:
-    "We build digital solutions that grow your business using the MERN stack and modern growth strategies.",
-    icons: {
-    icon: "/favicon.png",
-    apple: "/favicon.png",
+    "Nemnidhi designs conversion-focused websites, growth systems, and operational tools for founders and SMEs.",
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    shortcut: ["/favicon.svg"],
+    apple: [{ url: "/favicon.svg", type: "image/svg+xml" }],
   },
 };
 
@@ -22,10 +36,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-slate-950 text-slate-50">
+      <body className={`${manrope.variable} ${syne.variable} site-shell min-h-screen`}>
         <LenisProvider>
           <AOSProvider>
-            <div className="flex min-h-screen flex-col">
+            <div className="relative flex min-h-screen flex-col overflow-x-clip">
               <Navbar />
               <main className="flex-1">{children}</main>
               <Footer />

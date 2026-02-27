@@ -6,68 +6,69 @@ const SOLUTIONS = [
     id: "conversion-site",
     label: "Solution 01",
     name: "Conversion-first website rebuild",
-    tagline: "Turn your website into a calm, always-on sales asset.",
+    tagline: "Turn your website into a calm, always-on sales channel.",
     bestFor: [
-      "SMEs with dated, slow, or DIY websites",
-      "Founders who get leads from WhatsApp but not from their site",
-      "Brands ready to look and feel premium in their category",
+      "SMEs with outdated or slow websites",
+      "Founders who rely on chats instead of site leads",
+      "Brands ready to look premium in their category",
     ],
     whatWeDo: [
-      "Re-architect your site around clear offers & user journeys",
-      "Design a fast, premium front-end in Next.js + Tailwind",
-      "Plug in analytics, form tracking, and basic automations",
-      "Set up a simple system to ship updates without chaos",
+      "Clarify offers and re-map visitor flows",
+      "Design and build in Next.js for speed and trust",
+      "Connect analytics and capture high-intent actions",
+      "Set up a simple content and update workflow",
     ],
     outcomes: [
-      "Cleaner story: visitors finally ‘get’ what you do",
-      "Higher quality inbound leads vs random enquiries",
-      "Website that actually supports sales, not just looks nice",
+      "Clear story and sharper first impression",
+      "Better quality inbound conversations",
+      "A site that actively supports sales",
     ],
     highlight: "Most requested",
   },
   {
     id: "growth-engine",
     label: "Solution 02",
-    name: "Growth & lead-generation engine",
-    tagline: "Build a reliable flow of qualified conversations, not vanity traffic.",
+    name: "Growth and lead-generation engine",
+    tagline:
+      "Create a reliable stream of qualified conversations instead of vanity traffic.",
     bestFor: [
-      "Teams who tried ads but don’t know what’s working",
-      "Agencies and service brands who sell on calls",
-      "Founders tired of juggling 10 tools with no clear view",
+      "Teams running campaigns without visibility",
+      "Service brands that sell through calls",
+      "Founders juggling too many disconnected tools",
     ],
     whatWeDo: [
-      "Map your ideal customer journeys and key conversion points",
-      "Set up landing pages, lead magnets, and nurture flows",
-      "Integrate CRM, calendars, and notifications for your team",
-      "Create simple dashboards to track what really matters",
+      "Map ideal customer journeys and conversion steps",
+      "Build focused landing pages and nurture routes",
+      "Integrate CRM, calendars, and notification loops",
+      "Set up dashboards for decision-making",
     ],
     outcomes: [
-      "Steady pipeline of conversations with the right people",
-      "Less manual follow-up and lead leakage",
-      "Clarity on which channels actually move revenue",
+      "Steadier pipeline of qualified leads",
+      "Less lead leakage and manual follow-up",
+      "Clarity on channels that drive revenue",
     ],
-    highlight: "For growth-focused teams",
+    highlight: "Growth focused",
   },
   {
     id: "ops-os",
     label: "Solution 03",
-    name: "Ops OS for growing teams",
-    tagline: "Replace scattered spreadsheets and chats with one calm operating layer.",
+    name: "Ops OS for scaling teams",
+    tagline: "Replace scattered workflows with one reliable operating layer.",
     bestFor: [
-      "Founders running projects from WhatsApp + Excel",
-      "Teams with repeated delivery mistakes or delays",
-      "Businesses scaling beyond founder-only coordination",
+      "Teams managing projects via chat and sheets",
+      "Businesses facing repeated delivery delays",
+      "Founder-led operations that need structure",
     ],
     whatWeDo: [
-      "Audit your current tools, bottlenecks, and workflows",
-      "Design a lean internal system (dashboards, tasks, requests)",
-      "Build custom portals / tools where off-the-shelf falls short",
-      "Document the new way of working so it sticks",
+      "Audit tools and operational bottlenecks",
+      "Design a lean internal workflow system",
+      "Build custom dashboards and role-based views",
+      "Document and train the team for adoption",
     ],
     outcomes: [
-      "Less fire-fighting, more predictable delivery",
-      "Everyone knows where work lives and what’s next",
-      "Leadership gets a single view instead of chasing updates",
+      "More predictable delivery and fewer escalations",
+      "Shared visibility across teams",
+      "Leadership decisions based on real-time signals",
     ],
     highlight: "Operational calm",
   },
@@ -75,172 +76,109 @@ const SOLUTIONS = [
 
 export default function SolutionsPage() {
   return (
-    <section className="min-h-screen bg-[#050509] text-zinc-50">
-      <Container className="py-16 md:py-24">
-        {/* Header */}
-        <header className="mb-12 space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/40 bg-black/70 px-3 py-1">
-            <span className="h-1 w-1 rounded-full bg-amber-300" />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-amber-200">
-              Solutions
-            </p>
-          </div>
-
-          <div className="space-y-4 max-w-3xl">
-            <h1 className="text-3xl font-semibold md:text-4xl lg:text-[2.6rem]">
-              Business & tech solutions
-              <span className="block bg-gradient-to-r from-amber-300 via-yellow-300 to-amber-400 bg-clip-text text-transparent">
-                built to compound quietly in the background.
-              </span>
-            </h1>
-            <p className="text-sm text-zinc-300 md:text-base max-w-2xl">
-              Instead of one-off projects, Nemnidhi designs end-to-end solutions:
-              clear offers, calm systems, and digital experiences that actually
-              support your sales and operations — not fight them.
-            </p>
-          </div>
-
-          <div className="grid gap-4 text-[12px] text-zinc-400 md:grid-cols-3">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.18em] text-zinc-500">
-                How we think
-              </p>
-              <p className="mt-1">
-                Strategy first, stack second. We pick tools and tech only after
-                your business model is clear.
-              </p>
-            </div>
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.18em] text-zinc-500">
-                Who it&apos;s for
-              </p>
-              <p className="mt-1">
-                SMEs, founders, and lean teams who want compound growth — not
-                noisy dashboards and more chaos.
-              </p>
-            </div>
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.18em] text-zinc-500">
-                Next step
-              </p>
-              <p className="mt-1">
-                Pick the solution that feels closest to your reality and we&apos;ll
-                calibrate it together on a call.
-              </p>
-            </div>
-          </div>
+    <section className="theme-section min-h-screen">
+      <Container className="py-16 md:py-22">
+        <header className="mb-12 space-y-5">
+          <p className="theme-pill">Solutions</p>
+          <h1 className="max-w-4xl text-4xl text-slate-50 md:text-5xl">
+            End-to-end business systems designed to compound quietly.
+          </h1>
+          <p className="max-w-2xl text-sm leading-relaxed text-slate-300 md:text-base">
+            Instead of one-off tasks, we build integrated solutions: offer clarity,
+            conversion flow, and operational reliability.
+          </p>
         </header>
 
-        {/* Solutions list – big sections, no cards */}
-        <div className="space-y-12 border-t border-zinc-900/80 pt-10">
-          {SOLUTIONS.map((solution, index) => (
+        <div className="space-y-6">
+          {SOLUTIONS.map((solution) => (
             <section
               key={solution.id}
-              className="relative grid gap-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1.4fr)]"
+              className="theme-card grid gap-6 rounded-3xl p-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] md:p-6"
             >
-              {/* Left column – name / meta */}
-              <div className="space-y-3 pr-4">
-                <div className="inline-flex items-center gap-2 text-[11px] text-zinc-500">
-                  <span className="rounded-full border border-zinc-700 bg-zinc-950/80 px-2.5 py-1 uppercase tracking-[0.18em]">
+              <div className="space-y-4">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="rounded-full border border-white/15 bg-white/[0.03] px-2.5 py-1 text-[11px] uppercase tracking-[0.14em] text-slate-300">
                     {solution.label}
                   </span>
-                  {solution.highlight && (
-                    <span className="rounded-full border border-amber-400/60 bg-amber-500/10 px-2 py-0.5 text-[10px] font-medium text-amber-100">
-                      {solution.highlight}
-                    </span>
-                  )}
+                  <span className="rounded-full border border-cyan-200/45 bg-cyan-200/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-cyan-100">
+                    {solution.highlight}
+                  </span>
                 </div>
 
-                <h2 className="text-lg md:text-xl font-semibold text-zinc-50">
-                  {solution.name}
-                </h2>
-                <p className="text-[12px] md:text-[13px] text-amber-200">
-                  {solution.tagline}
-                </p>
+                <div className="space-y-2">
+                  <h2 className="text-2xl font-semibold text-slate-100">
+                    {solution.name}
+                  </h2>
+                  <p className="text-sm text-cyan-100">{solution.tagline}</p>
+                </div>
 
-                <div className="mt-3 space-y-1 text-[11px] text-zinc-400">
-                  <p className="font-medium text-zinc-300">Best suited for</p>
-                  <ul className="space-y-1">
+                <div>
+                  <p className="mb-2 text-[11px] uppercase tracking-[0.16em] text-slate-400">
+                    Best For
+                  </p>
+                  <ul className="space-y-1.5 text-xs text-slate-300">
                     {solution.bestFor.map((item) => (
                       <li key={item} className="flex gap-2">
-                        <span className="mt-[6px] h-[5px] w-[5px] rounded-full bg-gradient-to-br from-amber-300 to-yellow-400" />
+                        <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-gradient-to-br from-cyan-300 to-orange-300" />
                         <span>{item}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="pt-3">
-                  <Button
-                    asChild
-                    className="rounded-full bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 px-5 py-2 text-[11px] font-semibold text-zinc-950"
+                <Button asChild className="mt-2">
+                  <a
+                    href={`/contact?from=solutions&solution=${encodeURIComponent(
+                      solution.id
+                    )}`}
                   >
-                    <a
-                      href={`/contact?from=solutions&solution=${encodeURIComponent(
-                        solution.id
-                      )}`}
-                    >
-                      Explore this solution for your brand
-                    </a>
-                  </Button>
-                </div>
+                    Explore this solution
+                  </a>
+                </Button>
               </div>
 
-              {/* Right column – what we do / outcomes */}
-              <div className="space-y-5 border-l border-zinc-900/80 pl-5 md:pl-7">
-                <div className="space-y-2 text-[11px] md:text-[12px] text-zinc-400">
-                  <p className="font-medium text-zinc-300">
-                    What we typically design and build
+              <div className="space-y-5 border-t border-white/10 pt-5 md:border-l md:border-t-0 md:pl-6 md:pt-0 [border-color:var(--line)]">
+                <div>
+                  <p className="mb-2 text-[11px] uppercase tracking-[0.16em] text-slate-400">
+                    What We Build
                   </p>
-                  <ul className="space-y-1.5">
+                  <ul className="space-y-1.5 text-xs text-slate-300">
                     {solution.whatWeDo.map((item) => (
                       <li key={item} className="flex gap-2">
-                        <span className="mt-[6px] h-[4px] w-[4px] rounded-full bg-zinc-600" />
+                        <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-slate-500" />
                         <span>{item}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="space-y-2 text-[11px] md:text-[12px] text-zinc-400">
-                  <p className="font-medium text-zinc-300">
-                    What this should feel like in 6–12 months
+                <div>
+                  <p className="mb-2 text-[11px] uppercase tracking-[0.16em] text-slate-400">
+                    Expected Outcomes
                   </p>
-                  <ul className="space-y-1.5">
+                  <ul className="space-y-1.5 text-xs text-slate-300">
                     {solution.outcomes.map((item) => (
                       <li key={item} className="flex gap-2">
-                        <span className="mt-[6px] h-[4px] w-[4px] rounded-full bg-emerald-400" />
+                        <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-emerald-300" />
                         <span>{item}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
-
-                {/* subtle index / progression hint */}
-                <p className="pt-1 text-[10px] uppercase tracking-[0.16em] text-zinc-500">
-                  Path {index + 1} of {SOLUTIONS.length}
-                </p>
               </div>
             </section>
           ))}
         </div>
 
-        {/* Footer CTA */}
-        <div className="mt-14 border-t border-zinc-900/80 pt-8 text-center space-y-3">
-          <p className="text-[12px] text-zinc-400">
-            Not sure which solution you fit into?
+        <div className="mt-12 rounded-3xl border border-white/10 bg-white/[0.03] p-6 text-center [border-color:var(--line)]">
+          <p className="text-sm text-slate-300">
+            Not sure which path fits your current stage?
           </p>
-          <p className="text-sm text-zinc-300">
-            Share your current situation and we&apos;ll suggest the simplest
-            starting point — even if it&apos;s not with us.
+          <p className="mt-1 text-xs text-slate-400">
+            Share your context and we will recommend the simplest starting point.
           </p>
-          <Button
-            asChild
-            className="mt-2 rounded-full bg-zinc-100 px-6 py-2 text-[11px] font-semibold text-zinc-950"
-          >
-            <a href="/contact?from=solutions-undecided">
-              Talk through where you are today
-            </a>
+          <Button asChild className="mt-4">
+            <a href="/contact?from=solutions-undecided">Talk through your options</a>
           </Button>
         </div>
       </Container>

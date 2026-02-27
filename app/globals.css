@@ -1,3 +1,178 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --bg-1: #050a14;
+  --bg-2: #081227;
+  --bg-3: #102344;
+  --surface: rgba(12, 21, 39, 0.72);
+  --surface-strong: rgba(14, 27, 51, 0.9);
+  --line: rgba(140, 168, 211, 0.22);
+  --text-main: #e7f0ff;
+  --text-muted: #90a2bf;
+  --accent-cyan: #41d6ff;
+  --accent-sun: #ffb56a;
+  --accent-lime: #91f3ad;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    min-height: 100%;
+  }
+
+  body {
+    margin: 0;
+    color: var(--text-main);
+    font-family: var(--font-body), "Segoe UI", sans-serif;
+    background:
+      radial-gradient(circle at 10% 15%, rgba(65, 214, 255, 0.17), transparent 38%),
+      radial-gradient(circle at 88% 18%, rgba(255, 181, 106, 0.16), transparent 40%),
+      linear-gradient(160deg, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display), "Segoe UI", sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background: rgba(65, 214, 255, 0.34);
+    color: #001220;
+  }
+}
+
+@layer components {
+  .site-shell {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .site-shell::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.36;
+    background-image:
+      linear-gradient(to right, rgba(138, 164, 204, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(138, 164, 204, 0.08) 1px, transparent 1px);
+    background-size: 48px 48px;
+    -webkit-mask-image: radial-gradient(circle at center, black 38%, transparent 100%);
+    mask-image: radial-gradient(circle at center, black 38%, transparent 100%);
+  }
+
+  .theme-section {
+    position: relative;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .theme-card {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 24px 60px rgba(2, 6, 16, 0.45);
+  }
+
+  .theme-card-strong {
+    border: 1px solid var(--line);
+    background: var(--surface-strong);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 28px 72px rgba(2, 6, 16, 0.58);
+  }
+
+  .theme-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(65, 214, 255, 0.44);
+    background: rgba(5, 15, 29, 0.72);
+    padding: 0.32rem 0.8rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #b4ebff;
+  }
+
+  .text-muted {
+    color: var(--text-muted);
+  }
+
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(186, 238, 255, 0.55);
+    background: linear-gradient(
+      120deg,
+      rgba(65, 214, 255, 0.95) 0%,
+      rgba(255, 181, 106, 0.95) 100%
+    );
+    padding: 0.72rem 1.25rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #041226;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+    box-shadow: 0 16px 36px rgba(65, 214, 255, 0.25);
+  }
+
+  .cta-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 20px 42px rgba(255, 181, 106, 0.32);
+  }
+
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.72rem 1.25rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #dce8ff;
+    transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+  }
+
+  .cta-secondary:hover {
+    transform: translateY(-1px);
+    border-color: rgba(65, 214, 255, 0.65);
+    background: rgba(65, 214, 255, 0.1);
+  }
+
+  .soft-divider {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(125, 146, 180, 0),
+      rgba(125, 146, 180, 0.5),
+      rgba(125, 146, 180, 0)
+    );
+  }
+}

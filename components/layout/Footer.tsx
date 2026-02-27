@@ -1,161 +1,133 @@
 "use client";
 
-import Container from "./Container";
 import Link from "next/link";
-import { SiLinkedin, SiInstagram, SiGithub, SiX } from "react-icons/si";
+import { Mail, MapPin, Phone } from "lucide-react";
+import { SiGithub, SiInstagram, SiLinkedin, SiX } from "react-icons/si";
+import Container from "./Container";
+
+const navPrimary = [
+  { href: "/services", label: "Services" },
+  { href: "/solutions", label: "Solutions" },
+  { href: "/case-studies", label: "Case Studies" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
+
+const navSecondary = [
+  { href: "/privacy", label: "Privacy" },
+  { href: "/terms", label: "Terms" },
+];
+
+const socials = [
+  { icon: SiLinkedin, url: "https://www.linkedin.com", label: "LinkedIn" },
+  { icon: SiInstagram, url: "https://www.instagram.com", label: "Instagram" },
+  { icon: SiGithub, url: "https://www.github.com", label: "GitHub" },
+  { icon: SiX, url: "https://www.twitter.com", label: "X" },
+];
 
 export function Footer() {
   const year = new Date().getFullYear();
 
-  const navPrimary = [
-    { href: "/services", label: "Services" },
-    { href: "/solutions", label: "Solutions" },
-    { href: "/case-studies", label: "Case Studies" },
-    { href: "/about", label: "About" },
-    { href: "/contact", label: "Contact" },
-  ];
-
-  const navSecondary = [
-    { href: "/privacy", label: "Privacy" },
-    { href: "/terms", label: "Terms" },
-  ];
-
-  const socials = [
-    { icon: SiLinkedin, url: "https://www.linkedin.com", label: "LinkedIn" },
-    { icon: SiInstagram, url: "https://www.instagram.com", label: "Instagram" },
-    { icon: SiGithub, url: "https://www.github.com", label: "GitHub" },
-    { icon: SiX, url: "https://www.twitter.com", label: "X (Twitter)" },
-  ];
-
   return (
-    <footer className="relative border-t border-zinc-900 bg-[#050509]">
-      {/* gold glow gradient bar */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/70 to-transparent" />
-
-      <Container className="py-10 text-sm text-zinc-400">
-        {/* Top row: brand + statement */}
-        <div className="mb-7 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 via-yellow-400 to-amber-500 text-base font-bold text-zinc-900 shadow-[0_0_22px_rgba(180,120,20,0.7)]">
-              N
-            </div>
-            <div>
-              <h3 className="text-base font-semibold text-zinc-100">
-                Nemnidhi — Business & Tech Studio
-              </h3>
-              <p className="text-[11px] uppercase tracking-[0.18em] text-zinc-500">
-                Calm digital systems for serious founders
-              </p>
-            </div>
-          </div>
-
-          <p className="max-w-md text-xs text-zinc-500">
-            We help SMEs and founders turn messy websites and scattered tools
-            into clear, conversion-focused experiences and quiet, reliable systems.
-          </p>
-        </div>
-
-        {/* Middle row */}
-        <div className="mb-7 flex flex-col gap-6 border-t border-zinc-900/80 pt-6 md:flex-row md:justify-between">
-          {/* Navigation */}
-          <div className="flex flex-1 flex-wrap gap-6 text-xs">
-            <div className="space-y-2">
-              <p className="text-[11px] uppercase tracking-[0.18em] text-zinc-500">
-                Navigate
-              </p>
-              <div className="flex flex-wrap gap-3">
-                {navPrimary.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="text-zinc-400 transition hover:text-amber-300"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
+    <footer className="theme-section border-t border-white/10 bg-[#050b17]/85 [border-color:var(--line)]">
+      <Container className="py-12 text-sm">
+        <div className="mb-10 grid gap-8 border-b border-white/10 pb-8 [border-color:var(--line)] md:grid-cols-[1.2fr_1fr]">
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-cyan-100/45 bg-[linear-gradient(140deg,rgba(65,214,255,0.96),rgba(255,181,106,0.92))] text-sm font-black text-[#031326] shadow-[0_16px_34px_rgba(65,214,255,0.24)]">
+                N
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-slate-50">Nemnidhi</p>
+                <p className="text-[10px] uppercase tracking-[0.22em] text-slate-400">
+                  Strategy. Build. Growth.
+                </p>
               </div>
             </div>
 
-            <div className="space-y-2">
-              <p className="text-[11px] uppercase tracking-[0.18em] text-zinc-500">
-                Legal
-              </p>
-              <div className="flex flex-wrap gap-3">
-                {navSecondary.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="text-zinc-500 transition hover:text-amber-300"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
+            <p className="max-w-xl text-[13px] leading-relaxed text-slate-300">
+              We design conversion-ready websites, lead systems, and internal
+              operations tools for founders who want long-term clarity instead of
+              short-term noise.
+            </p>
           </div>
 
-          {/* Contact Details */}
-          <div className="flex max-w-sm flex-col gap-3 text-xs md:text-right">
-            <p className="text-[11px] uppercase tracking-[0.18em] text-zinc-500">
+          <div className="theme-card rounded-2xl p-5">
+            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-cyan-100">
               Contact
             </p>
-
-            <p className="text-zinc-300">
-              📞{" "}
-              <a
-                href="tel:+918269150205"
-                className="text-amber-300 hover:text-amber-200"
-              >
-                +91 7000455463
-              </a>
-            </p>
-
-            <p className="text-zinc-400 leading-relaxed">
-              📍 B20, 5th Floor Gravity Mall, Mechanic Nagar
-              <br />
-              Indore, Madhya Pradesh – 452011
-            </p>
-
-            <p className="text-zinc-500">
-              🧾 GSTIN:{" "}
-              <span className="text-zinc-300">
-                23CGZPB7175E1Z5
-              </span>
-            </p>
-
-            <p className="text-zinc-300">
-              ✉️{" "}
-              <a
-                href="mailto:info@nemnidhi.com"
-                className="text-amber-300 hover:text-amber-200"
-              >
-                info@nemnidhi.com
-              </a>
-            </p>
-
-            <div className="mt-2 flex items-center gap-3 md:justify-end">
-              {socials.map(({ icon: Icon, url, label }) => (
-                <Link
-                  key={url}
-                  href={url}
-                  target="_blank"
-                  aria-label={label}
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-zinc-800 bg-zinc-950 text-zinc-400 text-[13px] transition hover:border-amber-400/60 hover:text-amber-300"
+            <ul className="space-y-3 text-[13px] text-slate-300">
+              <li className="flex items-start gap-2.5">
+                <Phone className="mt-0.5 h-4 w-4 text-cyan-200" />
+                <a href="tel:+917000455463" className="hover:text-cyan-100">
+                  +91 70004 55463
+                </a>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Mail className="mt-0.5 h-4 w-4 text-cyan-200" />
+                <a
+                  href="mailto:info@nemnidhi.com"
+                  className="break-all hover:text-cyan-100"
                 >
-                  <Icon className="h-3.5 w-3.5" />
+                  info@nemnidhi.com
+                </a>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <MapPin className="mt-0.5 h-4 w-4 text-cyan-200" />
+                <span className="text-slate-400">
+                  B20, 5th Floor Gravity Mall, Mechanic Nagar, Indore, MP 452011
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="grid gap-7 border-b border-white/10 pb-8 [border-color:var(--line)] md:grid-cols-[1fr_auto] md:items-end">
+          <div className="space-y-4">
+            <div className="flex flex-wrap gap-2 text-xs">
+              {navPrimary.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-slate-300 transition hover:border-cyan-200/55 hover:text-cyan-100"
+                >
+                  {item.label}
                 </Link>
               ))}
             </div>
+
+            <div className="flex flex-wrap gap-3 text-[12px] text-slate-400">
+              {navSecondary.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="transition hover:text-slate-200"
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <span className="text-slate-500">GSTIN: 23CGZPB7175E1Z5</span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {socials.map(({ icon: Icon, url, label }) => (
+              <Link
+                key={url}
+                href={url}
+                target="_blank"
+                aria-label={label}
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-slate-300 transition hover:border-cyan-200/55 hover:text-cyan-100"
+              >
+                <Icon className="h-3.5 w-3.5" />
+              </Link>
+            ))}
           </div>
         </div>
 
-        {/* Bottom row */}
-        <div className="flex flex-col gap-3 border-t border-zinc-900/80 pt-4 text-xs text-zinc-500 md:flex-row md:items-center md:justify-between">
-          <p>© {year} Nemnidhi™. All rights reserved.</p>
+        <div className="pt-5 text-xs text-slate-500">
+          <p>Copyright {year} Nemnidhi. All rights reserved.</p>
         </div>
-
-        {/* underline */}
-        <div className="pointer-events-none mt-4 h-px w-full bg-gradient-to-r from-transparent via-amber-400/40 to-transparent" />
       </Container>
     </footer>
   );
