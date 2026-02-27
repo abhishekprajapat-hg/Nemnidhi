@@ -18,6 +18,11 @@ const NEMNIDHI_MAIN_PAGE_SHOTS = [
   { label: "Services", path: "/services" },
 ];
 
+const GLAM_PAGE_SHOTS = [
+  { label: "Home", path: "/" },
+  { label: "Shop", path: "/products" },
+];
+
 const PROJECTS = [
   {
     id: "nemnidhi-main",
@@ -42,7 +47,7 @@ const PROJECTS = [
     name: "Glam by Nemnidhi",
     domain: "glam.nemnidhi.com",
     href: "https://glam.nemnidhi.com",
-    pages: DEFAULT_PAGE_SHOTS,
+    pages: GLAM_PAGE_SHOTS,
     summary:
       "Subdomain project for brand-specific presentation and campaign-focused growth execution.",
   },
