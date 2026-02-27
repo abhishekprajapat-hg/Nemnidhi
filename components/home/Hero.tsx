@@ -32,9 +32,19 @@ export default function Hero({ hero }: any) {
       "Senior strategy plus full-stack execution for founders and SMEs that are done with confusing websites and scattered tools.",
     primaryCtaLabel: "Book a strategy call",
     primaryCtaHref: "/contact",
-    secondaryCtaLabel: "See case studies",
-    secondaryCtaHref: "/case-studies",
+    secondaryCtaLabel: "View projects",
+    secondaryCtaHref: "/projects",
   };
+
+  const secondaryHref =
+    content.secondaryCtaHref === "/case-studies"
+      ? "/projects"
+      : content.secondaryCtaHref;
+  const secondaryLabel =
+    typeof content.secondaryCtaLabel === "string" &&
+    content.secondaryCtaLabel.toLowerCase().includes("case studies")
+      ? "View projects"
+      : content.secondaryCtaLabel;
 
   const [index, setIndex] = useState(0);
 
@@ -97,8 +107,8 @@ export default function Hero({ hero }: any) {
                 </a>
               </Button>
               <Button asChild variant="outline">
-                <a href={content.secondaryCtaHref}>
-                  {content.secondaryCtaLabel}
+                <a href={secondaryHref}>
+                  {secondaryLabel}
                   <Compass className="h-3.5 w-3.5" />
                 </a>
               </Button>

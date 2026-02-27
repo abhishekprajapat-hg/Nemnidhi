@@ -10,14 +10,14 @@ export default function ServicesPage() {
     <section className="theme-section min-h-screen">
       <Container className="py-16 md:py-22">
         <header className="mb-12 space-y-5">
-          <p className="theme-pill">Service Plans</p>
+          <p className="theme-pill">Services</p>
           <h1 className="max-w-4xl text-4xl text-slate-50 md:text-5xl">
-            Structured plans for founders who want clear execution, not random
+            Structured delivery for founders who want clear execution, not random
             projects.
           </h1>
           <p className="max-w-2xl text-sm leading-relaxed text-slate-300 md:text-base">
-            Choose a level based on where your business is today. Each plan is
-            built around outcomes, decision speed, and system clarity.
+            Each engagement is built around outcomes, decision speed, and
+            system clarity.
           </p>
         </header>
 
@@ -41,9 +41,6 @@ export default function ServicesPage() {
                   </h2>
                   <p className="mt-1 text-sm text-cyan-100">{plan.tagline}</p>
                 </div>
-                <span className="rounded-full border border-cyan-200/45 bg-cyan-200/10 px-3 py-1 text-xs font-semibold text-cyan-100">
-                  {plan.price}
-                </span>
               </div>
 
               <div className="space-y-4 text-sm text-slate-300">

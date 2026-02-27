@@ -3,7 +3,6 @@ import Hero from "@/components/home/Hero";
 import ServicesSection from "@/components/home/ServicesSection";
 import ProcessSection from "@/components/home/ProcessSection";
 import TechStackStrip from "@/components/home/TechStackStrip";
-import CaseStudiesSection from "@/components/home/CaseStudiesSection";
 import ContactStrip from "@/components/layout/ContactStrip";
 
 import { dbConnect } from "@/lib/mongodb";
@@ -50,7 +49,6 @@ export default async function HomePage() {
       <ServicesSection services={services} />
       <ProcessSection />
       <TechStackStrip />
-      <CaseStudiesSection />
       <ContactStrip />
     </>
   );
