@@ -18,6 +18,8 @@ const NEMNIDHI_MAIN_PAGE_SHOTS = [
   { label: "Services", path: "/services" },
 ];
 
+const NEMNIDHI_CLOUD_PAGE_SHOTS = [{ label: "Control Home", path: "/" }];
+
 const GLAM_PAGE_SHOTS = [
   { label: "Home", path: "/" },
   { label: "Shop", path: "/products" },
@@ -38,7 +40,7 @@ const PROJECTS = [
     name: "Nemnidhi Cloud",
     domain: "nemnidhi.cloud",
     href: "https://nemnidhi.cloud",
-    pages: DEFAULT_PAGE_SHOTS,
+    pages: NEMNIDHI_CLOUD_PAGE_SHOTS,
     summary:
       "Cloud deployment endpoint used for platform and infrastructure-backed product delivery.",
   },
