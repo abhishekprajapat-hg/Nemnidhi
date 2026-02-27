@@ -25,6 +25,8 @@ const PROJECTS = [
     name: "Glam by Nemnidhi",
     domain: "glam.nemnidhi.com",
     href: "https://glam.nemnidhi.com",
+    staticPreviewSrc: "/project-previews/glam-home.png",
+    staticPreviewAlt: "Glam by Nemnidhi homepage preview",
     summary:
       "Subdomain project for brand-specific presentation and campaign-focused growth execution.",
   },
@@ -66,7 +68,11 @@ export default function ProjectsPage() {
                   </Button>
                 </div>
 
-                <ProjectPreview href={project.href} />
+                <ProjectPreview
+                  href={project.href}
+                  staticPreviewSrc={project.staticPreviewSrc}
+                  staticPreviewAlt={project.staticPreviewAlt}
+                />
               </div>
             </article>
           ))}

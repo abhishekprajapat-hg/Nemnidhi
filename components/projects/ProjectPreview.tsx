@@ -1,8 +1,14 @@
 type ProjectPreviewProps = {
   href: string;
+  staticPreviewSrc?: string;
+  staticPreviewAlt?: string;
 };
 
-export default function ProjectPreview({ href }: ProjectPreviewProps) {
+export default function ProjectPreview({
+  href,
+  staticPreviewSrc,
+  staticPreviewAlt,
+}: ProjectPreviewProps) {
   return (
     <div className="border-t border-white/10 bg-[#020812] p-3 md:border-l md:border-t-0 [border-color:var(--line)]">
       <div className="mb-2 flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-[11px] text-slate-300 [border-color:var(--line)]">
@@ -18,13 +24,22 @@ export default function ProjectPreview({ href }: ProjectPreviewProps) {
       </div>
 
       <div className="relative overflow-hidden rounded-xl border border-white/10 bg-black [border-color:var(--line)]">
-        <iframe
-          src={href}
-          title="Project preview"
-          loading="lazy"
-          className="h-[360px] w-full"
-          referrerPolicy="no-referrer"
-        />
+        {staticPreviewSrc ? (
+          <img
+            src={staticPreviewSrc}
+            alt={staticPreviewAlt || "Project preview"}
+            loading="lazy"
+            className="h-[360px] w-full object-cover object-top"
+          />
+        ) : (
+          <iframe
+            src={href}
+            title="Project preview"
+            loading="lazy"
+            className="h-[360px] w-full"
+            referrerPolicy="no-referrer"
+          />
+        )}
       </div>
     </div>
   );
