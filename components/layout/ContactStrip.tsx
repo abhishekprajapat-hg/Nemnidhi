@@ -1,12 +1,10 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "@/components/layout/Container";
 
 export default function ContactStrip() {
   return (
-    <section className="enterprise-strip px-6 py-8 md:px-0 md:py-10">
+    <section className="enterprise-strip deferred-section px-6 py-8 md:px-0 md:py-10">
       <Container>
         <div className="relative z-10 flex flex-col items-center justify-between gap-6 text-center md:flex-row md:text-left">
           <div className="w-full md:w-[50%]">

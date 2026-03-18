@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type ProjectPreviewProps = {
   href: string;
   staticPreviewSrc?: string;
@@ -20,12 +22,15 @@ export default function ProjectPreview({
 
       <div className="relative overflow-hidden rounded-lg border border-[#E9E9E9] bg-white">
         {staticPreviewSrc ? (
-          <img
-            src={staticPreviewSrc}
-            alt={staticPreviewAlt || "Project preview"}
-            loading="lazy"
-            className="h-[360px] w-full object-cover object-top"
-          />
+          <div className="relative h-[360px] w-full">
+            <Image
+              src={staticPreviewSrc}
+              alt={staticPreviewAlt || "Project preview"}
+              fill
+              sizes="(min-width: 768px) 52vw, 100vw"
+              className="object-cover object-top"
+            />
+          </div>
         ) : (
           <iframe
             src={href}

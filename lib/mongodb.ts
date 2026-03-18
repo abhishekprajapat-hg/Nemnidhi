@@ -7,11 +7,17 @@ if (!MONGODB_URI) {
   throw new Error("Please add MONGODB_URI to .env.local");
 }
 
-let cached = (global as any).mongoose;
+type MongooseCache = {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+};
 
-if (!cached) {
-  cached = (global as any).mongoose = { conn: null, promise: null };
+declare global {
+  var mongooseCache: MongooseCache | undefined;
 }
+
+const cached = globalThis.mongooseCache ?? { conn: null, promise: null };
+globalThis.mongooseCache = cached;
 
 export async function dbConnect() {
   if (cached.conn) return cached.conn;

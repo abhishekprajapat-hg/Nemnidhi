@@ -6,6 +6,10 @@ import { useRouter } from "next/navigation";
 import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 
+type LoginResponse = {
+  message?: string;
+};
+
 export default function AdminLoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -26,7 +30,7 @@ export default function AdminLoginPage() {
       });
 
       const contentType = res.headers.get("content-type") || "";
-      let data: any = null;
+      let data: LoginResponse | null = null;
       if (contentType.includes("application/json")) {
         data = await res.json();
       }
@@ -36,8 +40,8 @@ export default function AdminLoginPage() {
       }
 
       router.push("/admin");
-    } catch (err: any) {
-      setError(err.message || "Login failed");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Login failed");
     } finally {
       setSubmitting(false);
     }

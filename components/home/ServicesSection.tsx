@@ -1,5 +1,3 @@
-"use client";
-
 import { ArrowUpRight } from "lucide-react";
 import Container from "@/components/layout/Container";
 
@@ -16,7 +14,7 @@ type ServicesSectionProps = {
 
 export default function ServicesSection({ services }: ServicesSectionProps) {
   return (
-    <section className="theme-section">
+    <section className="theme-section deferred-section">
       <Container className="py-10 md:py-14">
         <div className="mb-8 space-y-4 text-center md:text-left">
           <p className="section-eyebrow">Solutions</p>
@@ -32,8 +30,6 @@ export default function ServicesSection({ services }: ServicesSectionProps) {
             <article
               key={service._id ?? service.title}
               className="theme-card flex h-full flex-col p-5 transition hover:-translate-y-1"
-              data-aos="fade-up"
-              data-aos-delay={100 + index * 60}
             >
               <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-[#EDF8FD] text-sm font-bold text-[#003464]">
                 {String(index + 1).padStart(2, "0")}

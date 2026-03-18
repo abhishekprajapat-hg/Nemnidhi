@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import Container from "@/components/layout/Container";
 import {
@@ -49,7 +47,7 @@ const STACK_GROUPS = [
 
 export default function TechStackStrip() {
   return (
-    <section className="theme-section">
+    <section className="theme-section deferred-section">
       <Container className="py-10 md:py-14">
         <div className="mb-8 space-y-4 text-center md:text-left">
           <p className="section-eyebrow">Resources</p>
@@ -61,13 +59,11 @@ export default function TechStackStrip() {
         </div>
 
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {STACK_GROUPS.map((group, index) => (
+          {STACK_GROUPS.map((group) => (
             <Link
               key={group.label}
               href={group.href}
               className="theme-card flex h-full flex-col p-5 transition hover:-translate-y-1"
-              data-aos="fade-up"
-              data-aos-delay={100 + index * 60}
             >
               <h3 className="text-xl font-semibold text-[#003464]">{group.label}</h3>
               <p className="mt-3 text-sm leading-7 text-[#333333]">{group.description}</p>

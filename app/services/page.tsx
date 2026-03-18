@@ -1,13 +1,10 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 import { SERVICE_PLANS } from "@/lib/plans";
 
 export default function ServicesPage() {
   return (
-    <section className="theme-section min-h-screen">
+    <section className="theme-section deferred-section min-h-screen">
       <Container className="py-10 md:py-14">
         <header className="mb-10 space-y-4">
           <p className="section-eyebrow">Products</p>
@@ -20,14 +17,10 @@ export default function ServicesPage() {
         </header>
 
         <div className="grid gap-5 md:grid-cols-2">
-          {SERVICE_PLANS.map((plan, index) => (
-            <motion.article
+          {SERVICE_PLANS.map((plan) => (
+            <article
               key={plan.id}
               className="theme-card p-5 md:p-6"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.25 }}
-              transition={{ duration: 0.45, delay: index * 0.06 }}
             >
               <div className="mb-4 flex items-start justify-between gap-4">
                 <div>
@@ -82,7 +75,7 @@ export default function ServicesPage() {
                   </a>
                 </Button>
               </div>
-            </motion.article>
+            </article>
           ))}
         </div>
       </Container>

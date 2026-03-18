@@ -1,5 +1,3 @@
-"use client";
-
 import { Layers, Rocket, ShieldCheck, Workflow } from "lucide-react";
 import Container from "@/components/layout/Container";
 
@@ -28,7 +26,7 @@ const STEPS = [
 
 export default function ProcessSection() {
   return (
-    <section className="plain-section border-t border-[#E9E9E9]">
+    <section className="plain-section deferred-section border-t border-[#E9E9E9]">
       <Container className="py-10 md:py-14">
         <div className="mb-10 grid items-center gap-8 md:grid-cols-2">
           <h2 className="section-title max-w-2xl">
@@ -51,15 +49,10 @@ export default function ProcessSection() {
         </div>
 
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {STEPS.map((step, index) => {
+          {STEPS.map((step) => {
             const Icon = step.icon;
             return (
-              <article
-                key={step.title}
-                className="theme-card p-6"
-                data-aos="fade-up"
-                data-aos-delay={100 + index * 60}
-              >
+              <article key={step.title} className="theme-card p-6">
                 <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-md bg-[#EDF8FD] text-[#0D8AFD]">
                   <Icon className="h-6 w-6" />
                 </div>

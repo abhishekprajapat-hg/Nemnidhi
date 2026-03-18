@@ -18,6 +18,10 @@ type Submission = {
   createdAt?: string;
 };
 
+type StatusUpdateResponse = {
+  message?: string;
+};
+
 export default function ContactAdminPage() {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(true);
@@ -49,7 +53,7 @@ export default function ContactAdminPage() {
         throw new Error(text || "Failed to fetch submissions");
       }
 
-      const data = await res.json();
+      const data: Submission[] = await res.json();
       setSubmissions(data);
 
       if (!selected && data.length > 0) {
@@ -59,8 +63,8 @@ export default function ContactAdminPage() {
         const fresh = data.find((s: Submission) => s._id === selected._id);
         if (fresh) setSelected(fresh);
       }
-    } catch (err: any) {
-      setError(err.message || "Something went wrong");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -134,7 +138,7 @@ export default function ContactAdminPage() {
       });
 
       const contentType = res.headers.get("content-type") || "";
-      let data: any = null;
+      let data: StatusUpdateResponse | null = null;
       if (contentType.includes("application/json")) {
         data = await res.json();
       }

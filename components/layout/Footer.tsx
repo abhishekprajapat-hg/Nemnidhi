@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowUpRight, Mail, MapPin, Phone, Sparkles } from "lucide-react";
 import { SiLinkedin, SiX } from "react-icons/si";
@@ -27,7 +25,7 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-[#E7DEC9] bg-[linear-gradient(180deg,#FDFBF7_0%,#F6EFE3_100%)]">
+    <footer className="deferred-section border-t border-[#E7DEC9] bg-[linear-gradient(180deg,#FDFBF7_0%,#F6EFE3_100%)]">
       <Container className="py-12 md:py-14">
         <div className="mb-7 rounded-2xl border border-[#E6D7BC] bg-[linear-gradient(140deg,#092D52_0%,#0F4678_60%,#155A96_100%)] p-6 text-white shadow-[0_20px_40px_rgba(9,34,61,0.24)] md:flex md:items-end md:justify-between md:gap-8">
           <div>

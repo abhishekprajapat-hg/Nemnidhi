@@ -30,7 +30,7 @@ const METRICS = [
 
 export default function ProjectSpotlightSection() {
   return (
-    <section className="plain-section border-t border-[#E9E9E9]">
+    <section className="plain-section deferred-section border-t border-[#E9E9E9]">
       <Container className="py-12 md:py-16">
         <div className="grid gap-6 md:grid-cols-[1.1fr_0.9fr] md:items-stretch">
           <article className="rounded-2xl border border-[#E9E9E9] bg-white p-6 md:p-8">

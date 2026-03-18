@@ -1,5 +1,4 @@
-"use client";
-
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
@@ -33,6 +32,10 @@ export default function Hero({ hero }: HeroProps) {
   const heading = [content.headingMain, content.headingHighlight, content.headingSuffix]
     .filter(Boolean)
     .join(" ");
+  const primaryCtaHref = content.primaryCtaHref ?? "/contact";
+  const primaryCtaLabel = content.primaryCtaLabel ?? "Book Live Demo";
+  const secondaryCtaHref = content.secondaryCtaHref ?? "/projects";
+  const secondaryCtaLabel = content.secondaryCtaLabel ?? "View Projects";
 
   return (
     <section className="border-b border-[#E9E9E9] bg-[#F0F0F0] px-6 py-10 text-center md:px-0 md:text-left">
@@ -43,26 +46,26 @@ export default function Hero({ hero }: HeroProps) {
             <p className="text-base leading-7 text-[#333333]">{content.subheading}</p>
             <div className="flex flex-wrap justify-center gap-4 pt-2 md:justify-start">
               <Button asChild>
-                <a href={content.primaryCtaHref}>
-                  {content.primaryCtaLabel}
+                <Link href={primaryCtaHref}>
+                  {primaryCtaLabel}
                   <ArrowRight className="h-4 w-4" />
-                </a>
+                </Link>
               </Button>
               <Button asChild variant="outline">
-                <a href={content.secondaryCtaHref}>{content.secondaryCtaLabel}</a>
+                <Link href={secondaryCtaHref}>{secondaryCtaLabel}</Link>
               </Button>
             </div>
           </div>
 
           <div className="relative flex w-full justify-end md:col-span-6">
-            <div className="relative w-full overflow-hidden rounded-xl border border-[#E9E9E9] bg-black pb-[60%] shadow-[0_20px_40px_rgba(0,0,0,0.12)]">
+            <div className="relative w-full overflow-hidden rounded-xl border border-[#E9E9E9] bg-black pb-[78%] shadow-[0_20px_40px_rgba(0,0,0,0.12)] sm:pb-[66%] md:pb-[60%]">
               <video
                 className="absolute left-0 top-0 h-full w-full object-cover"
                 autoPlay
                 loop
                 muted
                 playsInline
-                preload="auto"
+                preload="metadata"
                 poster="/videos/nemnidhi-hero-v3-poster.jpg"
                 aria-label="Nemnidhi hero video"
               >
@@ -71,24 +74,24 @@ export default function Hero({ hero }: HeroProps) {
 
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#001b36]/85 via-[#001b36]/35 to-transparent" />
 
-              <div className="absolute left-4 top-4 rounded-md border border-white/35 bg-[#003464]/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-white md:left-5 md:top-5">
+              <div className="absolute left-3 top-3 rounded-md border border-white/35 bg-[#003464]/70 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-white sm:left-4 sm:top-4 sm:px-3 sm:text-[11px] md:left-5 md:top-5">
                 Live Project View
               </div>
 
-              <div className="absolute inset-x-0 bottom-0 p-4 text-white md:p-6">
-                <p className="text-xl font-semibold leading-tight md:text-2xl">Website. Automation. Growth Stack.</p>
-                <p className="mt-1 text-sm text-[#DCEEFF] md:text-base">
+              <div className="absolute inset-x-0 bottom-0 p-3 text-white sm:p-4 md:p-6">
+                <p className="text-lg font-semibold leading-tight sm:text-xl md:text-2xl">Website. Automation. Growth Stack.</p>
+                <p className="mt-1 hidden text-sm text-[#DCEEFF] sm:block md:text-base">
                   Built for founder-led teams that want clear execution and compounding systems.
                 </p>
 
-                <div className="mt-3 flex flex-wrap gap-2">
+                <div className="mt-2 flex flex-wrap gap-2 sm:mt-3">
                   <span className="rounded-md border border-white/30 bg-white/10 px-2.5 py-1 text-xs text-[#EAF5FF]">
                     Conversion Web
                   </span>
                   <span className="rounded-md border border-white/30 bg-white/10 px-2.5 py-1 text-xs text-[#EAF5FF]">
                     CRM Automation
                   </span>
-                  <span className="rounded-md border border-white/30 bg-white/10 px-2.5 py-1 text-xs text-[#EAF5FF]">
+                  <span className="hidden rounded-md border border-white/30 bg-white/10 px-2.5 py-1 text-xs text-[#EAF5FF] sm:inline-flex">
                     Ops Dashboard
                   </span>
                 </div>

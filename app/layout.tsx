@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { LenisProvider } from "@/components/providers/LenisProvider";
-import { AOSProvider } from "@/components/providers/AOSProvider";
 import { Open_Sans, Inter } from "next/font/google";
 
 const openSans = Open_Sans({
@@ -37,15 +35,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${openSans.variable} ${inter.variable} site-shell min-h-screen`}>
-        <LenisProvider>
-          <AOSProvider>
-            <div className="relative flex min-h-screen flex-col overflow-x-clip bg-white">
-              <Navbar />
-              <main className="flex-1 pb-24 md:pb-0">{children}</main>
-              <Footer />
-            </div>
-          </AOSProvider>
-        </LenisProvider>
+        <div className="relative flex min-h-screen flex-col overflow-x-clip bg-white">
+          <Navbar />
+          <main className="flex-1 pb-24 md:pb-0">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
