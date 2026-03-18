@@ -1,33 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Container from "@/components/layout/Container";
 
 export default function ContactStrip() {
   return (
-    <section className="theme-section border-y border-white/10 [border-color:var(--line)]">
-      <Container className="py-8">
-        <div
-          className="theme-card-strong flex flex-col gap-5 rounded-3xl px-5 py-5 md:flex-row md:items-center md:justify-between md:px-7"
-          data-aos="fade-up"
-        >
-          <div className="space-y-2">
-            <p className="theme-pill w-fit">Ready To Build</p>
-            <p className="max-w-2xl text-sm text-slate-200 md:text-base">
-              If your website and systems are slowing growth, we can usually spot
-              two or three high-leverage fixes on a short call.
+    <section className="enterprise-strip px-6 py-8 md:px-0 md:py-10">
+      <Container>
+        <div className="relative z-10 flex flex-col items-center justify-between gap-6 text-center md:flex-row md:text-left">
+          <div className="w-full md:w-[50%]">
+            <h2 className="text-3xl font-bold text-white md:text-4xl">Make better a reality</h2>
+          </div>
+          <div className="w-full md:w-[34%]">
+            <p className="text-base text-white/90">
+              Driving creativity in product development and business operations.
             </p>
           </div>
-
-          <div className="flex flex-wrap items-center gap-3">
-            <Link href="/contact" className="cta-primary">
-              Book a strategy call
-              <ArrowUpRight className="h-3.5 w-3.5" />
+          <div className="w-full md:flex md:w-[16%] md:justify-end">
+            <Link href="/contact" className="cta-primary w-full justify-center bg-[#0D8AFD] hover:bg-[#0066CC] md:w-auto">
+              Book Live Demo
+              <ArrowRight className="h-4 w-4" />
             </Link>
-            <span className="text-xs text-slate-400">
-              No hard pitch. Just a clear plan for what to fix first.
-            </span>
           </div>
         </div>
       </Container>

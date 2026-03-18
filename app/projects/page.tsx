@@ -2,68 +2,36 @@ import { ExternalLink } from "lucide-react";
 import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 import ProjectPreview from "@/components/projects/ProjectPreview";
-
-const PROJECTS = [
-  {
-    id: "nemnidhi-main",
-    name: "Nemnidhi Main Site",
-    domain: "www.nemnidhi.com",
-    href: "https://www.nemnidhi.com",
-    summary:
-      "Primary marketing site focused on clarity-led positioning, service pages, and conversion-ready user flow.",
-  },
-  {
-    id: "nemnidhi-cloud",
-    name: "Nemnidhi Cloud",
-    domain: "nemnidhi.cloud",
-    href: "https://nemnidhi.cloud",
-    summary:
-      "Cloud deployment endpoint used for platform and infrastructure-backed product delivery.",
-  },
-  {
-    id: "glam-nemnidhi",
-    name: "Glam by Nemnidhi",
-    domain: "glam.nemnidhi.com",
-    href: "https://glam.nemnidhi.com",
-    staticPreviewSrc: "/project-previews/glam-home.png",
-    staticPreviewAlt: "Glam by Nemnidhi homepage preview",
-    summary:
-      "Subdomain project for brand-specific presentation and campaign-focused growth execution.",
-  },
-];
+import { PROJECTS } from "@/lib/projects";
 
 export default function ProjectsPage() {
   return (
     <section className="theme-section min-h-screen">
-      <Container className="py-16 md:py-22">
-        <header className="mb-12 space-y-5">
-          <p className="theme-pill">Projects</p>
-          <h1 className="max-w-4xl text-4xl text-slate-50 md:text-5xl">
-            Live builds across the Nemnidhi ecosystem.
-          </h1>
-          <p className="max-w-2xl text-sm leading-relaxed text-slate-300 md:text-base">
-            Explore active web properties and open each project directly. Inline previews
-            are shown below for quick scanning.
+      <Container className="py-10 md:py-14">
+        <header className="mb-10 space-y-4">
+          <p className="section-eyebrow">Customers</p>
+          <h1 className="section-title max-w-4xl">Live builds across the Nemnidhi ecosystem.</h1>
+          <p className="max-w-3xl section-copy">
+            Explore active web properties and open each project directly. Inline previews are shown for quick scanning.
           </p>
         </header>
 
-        <div className="grid gap-7">
+        <div className="grid gap-6">
           {PROJECTS.map((project) => (
             <article
               key={project.id}
-              className="theme-card-strong overflow-hidden rounded-3xl border border-white/10 [border-color:var(--line)]"
+              id={project.id}
+              className="theme-card-strong overflow-hidden border border-[#E9E9E9]"
             >
               <div className="grid gap-0 md:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)]">
                 <div className="space-y-4 p-5 md:p-6">
-                  <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
-                    {project.domain}
-                  </p>
-                  <h2 className="text-2xl font-semibold text-slate-100">{project.name}</h2>
-                  <p className="text-sm leading-relaxed text-slate-300">{project.summary}</p>
+                  <p className="section-eyebrow">{project.domain}</p>
+                  <h2 className="text-2xl font-semibold text-[#003464]">{project.name}</h2>
+                  <p className="text-sm leading-7 text-[#333333]">{project.summary}</p>
                   <Button asChild>
                     <a href={project.href} target="_blank" rel="noreferrer">
                       Open project
-                      <ExternalLink className="h-3.5 w-3.5" />
+                      <ExternalLink className="h-4 w-4" />
                     </a>
                   </Button>
                 </div>
@@ -78,11 +46,11 @@ export default function ProjectsPage() {
           ))}
         </div>
 
-        <div className="mt-12 rounded-3xl border border-white/10 bg-white/[0.03] p-6 text-center [border-color:var(--line)]">
-          <p className="text-sm text-slate-300">
+        <div className="theme-card mt-10 p-6 text-center">
+          <p className="text-base text-[#333333]">
             Need a project page like this for client portfolios or product demos?
           </p>
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-sm text-[#505662]">
             We can build the structure and connect it to your internal workflow.
           </p>
           <Button asChild className="mt-4">

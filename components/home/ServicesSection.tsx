@@ -17,65 +17,43 @@ type ServicesSectionProps = {
 export default function ServicesSection({ services }: ServicesSectionProps) {
   return (
     <section className="theme-section">
-      <Container className="py-16 md:py-20">
-        <div
-          className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between"
-          data-aos="fade-up"
-        >
-          <div className="space-y-3">
-            <p className="theme-pill">Core Services</p>
-            <h2 className="max-w-3xl text-3xl text-slate-50 md:text-4xl">
-              Strategy, product, and engineering in one execution layer.
-            </h2>
-          </div>
-
-          <p className="max-w-md text-sm leading-relaxed text-slate-300">
-            We work with founders who need measurable progress: stronger lead
-            flow, cleaner operations, and digital assets that keep compounding
-            after launch.
+      <Container className="py-10 md:py-14">
+        <div className="mb-8 space-y-4 text-center md:text-left">
+          <p className="section-eyebrow">Solutions</p>
+          <h2 className="section-title">Shift your orbit with Nemnidhi</h2>
+          <p className="mx-auto max-w-3xl section-copy md:mx-0">
+            Discover solutions engineered to streamline operations, improve collaboration, and accelerate
+            business growth.
           </p>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {services.map((service, index) => (
             <article
               key={service._id ?? service.title}
-              className="theme-card group rounded-3xl p-5 md:p-6"
+              className="theme-card flex h-full flex-col p-5 transition hover:-translate-y-1"
               data-aos="fade-up"
-              data-aos-delay={100 + index * 70}
+              data-aos-delay={100 + index * 60}
             >
-              <div className="mb-4 flex items-start justify-between gap-3">
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-slate-400">
-                    Service {String(index + 1).padStart(2, "0")}
-                  </p>
-                  <h3 className="mt-1 text-lg font-semibold text-slate-100">
-                    {service.title}
-                  </h3>
-                </div>
-                <span className="rounded-full border border-cyan-200/45 bg-cyan-200/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-cyan-100">
-                  Delivery
-                </span>
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-[#EDF8FD] text-sm font-bold text-[#003464]">
+                {String(index + 1).padStart(2, "0")}
               </div>
+              <h3 className="text-xl font-semibold text-[#003464]">{service.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-[#333333]">{service.description}</p>
 
-              <p className="text-sm leading-relaxed text-slate-300">
-                {service.description}
-              </p>
-
-              <ul className="mt-4 space-y-2.5 text-xs text-slate-300">
-                {service.points?.map((point) => (
-                  <li key={point} className="flex gap-2.5">
-                    <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-gradient-to-br from-cyan-300 to-orange-300" />
+              <ul className="mt-4 space-y-2 text-sm text-[#505662]">
+                {(service.points || []).slice(0, 3).map((point) => (
+                  <li key={point} className="flex items-start gap-2">
+                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[#0D8AFD]" />
                     <span>{point}</span>
                   </li>
                 ))}
               </ul>
 
-              <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4 text-[11px] [border-color:var(--line)]">
-                <span className="text-slate-400">Strategy + execution partner</span>
-                <span className="inline-flex items-center gap-1 text-cyan-100 opacity-80 transition group-hover:opacity-100">
-                  Tailored scope
-                  <ArrowUpRight className="h-3 w-3" />
+              <div className="mt-auto pt-5">
+                <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#0D8AFD]">
+                  Learn more
+                  <ArrowUpRight className="h-4 w-4" />
                 </span>
               </div>
             </article>

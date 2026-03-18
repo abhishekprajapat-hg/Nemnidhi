@@ -1,189 +1,115 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion, type Variants } from "framer-motion";
-import { ArrowUpRight, Compass, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 
-const smoothEase: [number, number, number, number] = [0.22, 0.61, 0.36, 1];
-
-const fadeIn: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: smoothEase },
-  },
+type HeroContent = {
+  headingMain?: string;
+  headingHighlight?: string;
+  headingSuffix?: string;
+  subheading?: string;
+  primaryCtaLabel?: string;
+  primaryCtaHref?: string;
+  secondaryCtaLabel?: string;
+  secondaryCtaHref?: string;
 };
 
-const phrases = [
-  "high-conversion websites",
-  "scalable growth systems",
-  "calm operations platforms",
-];
+type HeroProps = {
+  hero?: HeroContent | null;
+};
 
-export default function Hero({ hero }: any) {
+export default function Hero({ hero }: HeroProps) {
   const content = hero || {
-    badgeText: "Digital Systems Studio",
-    headingMain: "We design",
-    headingSuffix: "for brands that want steady, compounding growth.",
+    headingMain: "The future of Work, Today",
     subheading:
-      "Senior strategy plus full-stack execution for founders and SMEs that are done with confusing websites and scattered tools.",
-    primaryCtaLabel: "Book a strategy call",
+      "Nemnidhi builds enterprise software and growth systems that are intelligent, adaptive, and designed for long-term scale.",
+    primaryCtaLabel: "Book Live Demo",
     primaryCtaHref: "/contact",
-    secondaryCtaLabel: "View projects",
+    secondaryCtaLabel: "View Projects",
     secondaryCtaHref: "/projects",
   };
 
-  const secondaryHref =
-    content.secondaryCtaHref === "/case-studies"
-      ? "/projects"
-      : content.secondaryCtaHref;
-  const secondaryLabel =
-    typeof content.secondaryCtaLabel === "string" &&
-    content.secondaryCtaLabel.toLowerCase().includes("case studies")
-      ? "View projects"
-      : content.secondaryCtaLabel;
-
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setIndex((prev) => (prev + 1) % phrases.length);
-    }, 2400);
-    return () => window.clearInterval(timer);
-  }, []);
+  const heading = [content.headingMain, content.headingHighlight, content.headingSuffix]
+    .filter(Boolean)
+    .join(" ");
 
   return (
-    <section className="theme-section overflow-hidden">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-32 top-10 h-72 w-72 rounded-full bg-cyan-300/20 blur-[100px]" />
-        <div className="absolute -right-32 top-16 h-80 w-80 rounded-full bg-orange-300/20 blur-[120px]" />
-        <div className="absolute bottom-[-120px] left-1/3 h-72 w-72 rounded-full bg-emerald-300/10 blur-[120px]" />
-      </div>
-
-      <Container className="relative z-10 py-16 md:py-24">
-        <div className="grid gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
-          <motion.div
-            variants={fadeIn}
-            initial="hidden"
-            animate="show"
-            className="space-y-7"
-          >
-            <div className="theme-pill">
-              <Sparkles className="h-3.5 w-3.5" />
-              {content.badgeText}
-            </div>
-
-            <h1 className="max-w-4xl text-4xl leading-[1.05] text-slate-50 md:text-6xl">
-              {content.headingMain}{" "}
-              <span className="inline-block bg-[linear-gradient(120deg,#7de7ff,#ffd39f)] bg-clip-text text-transparent">
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={phrases[index]}
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -12 }}
-                    transition={{ duration: 0.35, ease: "easeOut" }}
-                    className="inline-block"
-                  >
-                    {phrases[index]}
-                  </motion.span>
-                </AnimatePresence>
-              </span>{" "}
-              {content.headingSuffix}
-            </h1>
-
-            <p className="max-w-2xl text-[15px] leading-relaxed text-slate-300 md:text-[17px]">
-              {content.subheading}
-            </p>
-
-            <div className="flex flex-wrap items-center gap-3 pt-2">
+    <section className="border-b border-[#E9E9E9] bg-[#F0F0F0] px-6 py-10 text-center md:px-0 md:text-left">
+      <Container className="relative">
+        <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-10">
+          <div className="z-10 space-y-6 md:col-span-4">
+            <h1 className="text-4xl font-bold leading-tight text-[#003464] md:text-5xl">{heading}</h1>
+            <p className="text-base leading-7 text-[#333333]">{content.subheading}</p>
+            <div className="flex flex-wrap justify-center gap-4 pt-2 md:justify-start">
               <Button asChild>
                 <a href={content.primaryCtaHref}>
                   {content.primaryCtaLabel}
-                  <ArrowUpRight className="h-3.5 w-3.5" />
+                  <ArrowRight className="h-4 w-4" />
                 </a>
               </Button>
               <Button asChild variant="outline">
-                <a href={secondaryHref}>
-                  {secondaryLabel}
-                  <Compass className="h-3.5 w-3.5" />
-                </a>
+                <a href={content.secondaryCtaHref}>{content.secondaryCtaLabel}</a>
               </Button>
             </div>
+          </div>
 
-            <div className="grid gap-3 pt-2 text-xs text-slate-300 sm:grid-cols-3">
-              <div className="theme-card rounded-2xl px-4 py-3">
-                <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
-                  Typical launch
-                </p>
-                <p className="mt-1 text-base font-semibold text-cyan-100">
-                  6-10 weeks
-                </p>
-              </div>
-              <div className="theme-card rounded-2xl px-4 py-3">
-                <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
-                  Focus
-                </p>
-                <p className="mt-1 text-base font-semibold text-cyan-100">
-                  Revenue outcomes
-                </p>
-              </div>
-              <div className="theme-card rounded-2xl px-4 py-3">
-                <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
-                  Team model
-                </p>
-                <p className="mt-1 text-base font-semibold text-cyan-100">
-                  Senior-led delivery
-                </p>
-              </div>
-            </div>
-          </motion.div>
+          <div className="relative flex w-full justify-end md:col-span-6">
+            <div className="relative w-full overflow-hidden rounded-xl border border-[#E9E9E9] bg-black pb-[60%] shadow-[0_20px_40px_rgba(0,0,0,0.12)]">
+              <video
+                className="absolute left-0 top-0 h-full w-full object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                poster="/videos/nemnidhi-hero-v3-poster.jpg"
+                aria-label="Nemnidhi hero video"
+              >
+                <source src="/videos/nemnidhi-hero-v3.mp4" type="video/mp4" />
+              </video>
 
-          <motion.div
-            initial={{ opacity: 0, y: 26, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.7, ease: smoothEase, delay: 0.1 }}
-            className="theme-card-strong rounded-[2rem] p-6 md:p-7"
-          >
-            <div className="mb-5 flex items-center justify-between">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-                Growth Snapshot
-              </p>
-              <span className="rounded-full border border-cyan-200/55 bg-cyan-200/15 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-cyan-100">
-                Live Plan
-              </span>
-            </div>
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#001b36]/85 via-[#001b36]/35 to-transparent" />
 
-            <div className="space-y-4">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
-                  Lead quality score
-                </p>
-                <p className="mt-1 text-3xl font-semibold text-slate-100">82 / 100</p>
-                <div className="mt-3 h-2 rounded-full bg-slate-900/70">
-                  <div className="h-2 w-[82%] rounded-full bg-gradient-to-r from-cyan-300 via-sky-300 to-orange-300" />
-                </div>
+              <div className="absolute left-4 top-4 rounded-md border border-white/35 bg-[#003464]/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-white md:left-5 md:top-5">
+                Live Project View
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                  <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
-                    Conversion lift
-                  </p>
-                  <p className="mt-1 text-2xl font-semibold text-emerald-200">+31%</p>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                  <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
-                    Ops time saved
-                  </p>
-                  <p className="mt-1 text-2xl font-semibold text-emerald-200">11 hrs/wk</p>
+              <div className="absolute inset-x-0 bottom-0 p-4 text-white md:p-6">
+                <p className="text-xl font-semibold leading-tight md:text-2xl">Website. Automation. Growth Stack.</p>
+                <p className="mt-1 text-sm text-[#DCEEFF] md:text-base">
+                  Built for founder-led teams that want clear execution and compounding systems.
+                </p>
+
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <span className="rounded-md border border-white/30 bg-white/10 px-2.5 py-1 text-xs text-[#EAF5FF]">
+                    Conversion Web
+                  </span>
+                  <span className="rounded-md border border-white/30 bg-white/10 px-2.5 py-1 text-xs text-[#EAF5FF]">
+                    CRM Automation
+                  </span>
+                  <span className="rounded-md border border-white/30 bg-white/10 px-2.5 py-1 text-xs text-[#EAF5FF]">
+                    Ops Dashboard
+                  </span>
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
+        </div>
+
+        <div className="mt-10 grid gap-4 sm:grid-cols-3">
+          <div className="theme-card p-5 text-center">
+            <p className="text-4xl font-bold text-[#003464]">2000+</p>
+            <p className="mt-1 text-sm text-[#333333]">Brands trust Nemnidhi</p>
+          </div>
+          <div className="theme-card p-5 text-center">
+            <p className="text-4xl font-bold text-[#003464]">100%</p>
+            <p className="mt-1 text-sm text-[#333333]">Go-live commitment rate</p>
+          </div>
+          <div className="theme-card p-5 text-center">
+            <p className="text-4xl font-bold text-[#003464]">99%</p>
+            <p className="mt-1 text-sm text-[#333333]">Retention across programs</p>
+          </div>
         </div>
       </Container>
     </section>

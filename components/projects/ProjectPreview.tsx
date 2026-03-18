@@ -10,20 +10,15 @@ export default function ProjectPreview({
   staticPreviewAlt,
 }: ProjectPreviewProps) {
   return (
-    <div className="border-t border-white/10 bg-[#020812] p-3 md:border-l md:border-t-0 [border-color:var(--line)]">
-      <div className="mb-2 flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-[11px] text-slate-300 [border-color:var(--line)]">
+    <div className="border-t border-[#E9E9E9] bg-[#F9F9F9] p-3 md:border-l md:border-t-0">
+      <div className="mb-2 flex items-center justify-between rounded-lg border border-[#E9E9E9] bg-white px-3 py-2 text-xs text-[#333333]">
         <span>Live Preview</span>
-        <a
-          href={href}
-          target="_blank"
-          rel="noreferrer"
-          className="text-cyan-100 transition hover:text-cyan-200"
-        >
+        <a href={href} target="_blank" rel="noreferrer" className="text-[#0D8AFD] transition hover:text-[#003464]">
           Open in new tab
         </a>
       </div>
 
-      <div className="relative overflow-hidden rounded-xl border border-white/10 bg-black [border-color:var(--line)]">
+      <div className="relative overflow-hidden rounded-lg border border-[#E9E9E9] bg-white">
         {staticPreviewSrc ? (
           <img
             src={staticPreviewSrc}

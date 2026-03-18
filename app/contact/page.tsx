@@ -13,6 +13,10 @@ type FormState = {
   message: string;
 };
 
+type ContactApiResponse = {
+  message?: string;
+};
+
 export default function ContactPage() {
   const [form, setForm] = useState<FormState>({
     name: "",
@@ -48,7 +52,7 @@ export default function ContactPage() {
       });
 
       const contentType = res.headers.get("content-type") || "";
-      let data: any = null;
+      let data: ContactApiResponse | null = null;
 
       if (contentType.includes("application/json")) {
         data = await res.json();
@@ -67,8 +71,8 @@ export default function ContactPage() {
         timeline: "",
         message: "",
       });
-    } catch (err: any) {
-      setError(err.message || "Failed to submit. Please try again.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to submit. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -76,63 +80,47 @@ export default function ContactPage() {
 
   return (
     <section className="theme-section min-h-screen">
-      <Container className="py-16 md:py-22">
+      <Container className="py-10 md:py-14">
         <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
           <div className="space-y-6">
-            <p className="theme-pill">Contact</p>
-            <h1 className="max-w-3xl text-4xl text-slate-50 md:text-5xl">
-              Share your current bottleneck. We will map the next move.
-            </h1>
-            <p className="max-w-xl text-sm leading-relaxed text-slate-300 md:text-base">
-              Tell us where your website, growth flow, or operations are stuck and
-              what success looks like in the next 6 to 12 months.
+            <p className="section-eyebrow">Contact Us</p>
+            <h1 className="section-title max-w-3xl">Tell us your bottleneck and we will map the next move.</h1>
+            <p className="max-w-xl section-copy">
+              Share where your website, growth flow, or operations are blocked and what success looks like in the next
+              6 to 12 months.
             </p>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="theme-card rounded-2xl p-4">
-                <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
-                  Typical response
-                </p>
-                <p className="mt-1 text-lg font-semibold text-cyan-100">
-                  Under 24 hours
-                </p>
-                <p className="mt-2 text-xs text-slate-300">
-                  We reply with direct feedback, not a template pitch.
-                </p>
+              <div className="theme-card p-4">
+                <p className="section-eyebrow">Typical response</p>
+                <p className="mt-1 text-lg font-semibold text-[#003464]">Under 24 hours</p>
+                <p className="mt-2 text-sm text-[#333333]">We reply with direct feedback, not a template pitch.</p>
               </div>
-              <div className="theme-card rounded-2xl p-4">
-                <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
-                  Best fit
-                </p>
-                <p className="mt-1 text-lg font-semibold text-cyan-100">
-                  SMEs and founder-led teams
-                </p>
-                <p className="mt-2 text-xs text-slate-300">
-                  Especially teams planning a serious rebuild or system upgrade.
-                </p>
+              <div className="theme-card p-4">
+                <p className="section-eyebrow">Best fit</p>
+                <p className="mt-1 text-lg font-semibold text-[#003464]">SMEs and founder-led teams</p>
+                <p className="mt-2 text-sm text-[#333333]">Especially teams planning a serious rebuild or system upgrade.</p>
               </div>
             </div>
 
-            <p className="text-sm text-slate-400">
+            <p className="text-sm text-[#505662]">
               Prefer email:{" "}
-              <a className="text-cyan-100 hover:text-cyan-50" href="mailto:hello@nemnidhi.com">
+              <a className="text-[#0D8AFD] hover:text-[#003464]" href="mailto:hello@nemnidhi.com">
                 hello@nemnidhi.com
               </a>
             </p>
           </div>
 
-          <div className="theme-card-strong rounded-3xl p-5 md:p-6">
-            <p className="mb-5 text-xs uppercase tracking-[0.16em] text-slate-400">
-              Intake Form
-            </p>
+          <div className="theme-card-strong p-5 md:p-6">
+            <p className="mb-5 section-eyebrow">Intake Form</p>
 
             {error && (
-              <div className="mb-4 rounded-xl border border-red-400/40 bg-red-400/10 px-3 py-2 text-xs text-red-100">
+              <div className="mb-4 rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-700">
                 {error}
               </div>
             )}
             {success && (
-              <div className="mb-4 rounded-xl border border-emerald-400/40 bg-emerald-400/10 px-3 py-2 text-xs text-emerald-100">
+              <div className="mb-4 rounded-lg border border-emerald-300 bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
                 {success}
               </div>
             )}
@@ -140,11 +128,11 @@ export default function ContactPage() {
             <form onSubmit={handleSubmit} className="space-y-4 text-sm">
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-slate-300">
-                    Name <span className="text-red-300">*</span>
+                  <label className="text-xs font-medium text-[#505662]">
+                    Name <span className="text-red-500">*</span>
                   </label>
                   <input
-                    className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-3 py-2.5 text-sm text-slate-100 outline-none transition focus:border-cyan-200/70"
+                    className="w-full rounded-lg border border-[#E9E9E9] bg-white px-3 py-2.5 text-sm text-[#333333] outline-none transition focus:border-[#0D8AFD]"
                     value={form.name}
                     onChange={(e) => handleChange("name", e.target.value)}
                     placeholder="Your name"
@@ -152,12 +140,12 @@ export default function ContactPage() {
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-slate-300">
-                    Work email <span className="text-red-300">*</span>
+                  <label className="text-xs font-medium text-[#505662]">
+                    Work email <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="email"
-                    className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-3 py-2.5 text-sm text-slate-100 outline-none transition focus:border-cyan-200/70"
+                    className="w-full rounded-lg border border-[#E9E9E9] bg-white px-3 py-2.5 text-sm text-[#333333] outline-none transition focus:border-[#0D8AFD]"
                     value={form.email}
                     onChange={(e) => handleChange("email", e.target.value)}
                     placeholder="you@company.com"
@@ -167,11 +155,9 @@ export default function ContactPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-slate-300">
-                  Company / brand
-                </label>
+                <label className="text-xs font-medium text-[#505662]">Company / brand</label>
                 <input
-                  className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-3 py-2.5 text-sm text-slate-100 outline-none transition focus:border-cyan-200/70"
+                  className="w-full rounded-lg border border-[#E9E9E9] bg-white px-3 py-2.5 text-sm text-[#333333] outline-none transition focus:border-[#0D8AFD]"
                   value={form.company}
                   onChange={(e) => handleChange("company", e.target.value)}
                   placeholder="Your company"
@@ -180,67 +166,42 @@ export default function ContactPage() {
 
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-slate-300">
-                    Indicative budget
-                  </label>
+                  <label className="text-xs font-medium text-[#505662]">Indicative budget</label>
                   <select
-                    className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-3 py-2.5 text-sm text-slate-100 outline-none transition focus:border-cyan-200/70"
+                    className="w-full rounded-lg border border-[#E9E9E9] bg-white px-3 py-2.5 text-sm text-[#333333] outline-none transition focus:border-[#0D8AFD]"
                     value={form.budget}
                     onChange={(e) => handleChange("budget", e.target.value)}
                   >
-                    <option value="" className="bg-slate-900">
-                      Select range
-                    </option>
-                    <option value="below-50k" className="bg-slate-900">
-                      Below INR 50,000
-                    </option>
-                    <option value="50k-1l" className="bg-slate-900">
-                      INR 50,000 to INR 1,00,000
-                    </option>
-                    <option value="1l-3l" className="bg-slate-900">
-                      INR 1,00,000 to INR 3,00,000
-                    </option>
-                    <option value="3l-plus" className="bg-slate-900">
-                      INR 3,00,000 and above
-                    </option>
+                    <option value="">Select range</option>
+                    <option value="below-50k">Below INR 50,000</option>
+                    <option value="50k-1l">INR 50,000 to INR 1,00,000</option>
+                    <option value="1l-3l">INR 1,00,000 to INR 3,00,000</option>
+                    <option value="3l-plus">INR 3,00,000 and above</option>
                   </select>
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-slate-300">
-                    Ideal timeline
-                  </label>
+                  <label className="text-xs font-medium text-[#505662]">Ideal timeline</label>
                   <select
-                    className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-3 py-2.5 text-sm text-slate-100 outline-none transition focus:border-cyan-200/70"
+                    className="w-full rounded-lg border border-[#E9E9E9] bg-white px-3 py-2.5 text-sm text-[#333333] outline-none transition focus:border-[#0D8AFD]"
                     value={form.timeline}
                     onChange={(e) => handleChange("timeline", e.target.value)}
                   >
-                    <option value="" className="bg-slate-900">
-                      Select timeline
-                    </option>
-                    <option value="asap" className="bg-slate-900">
-                      ASAP (2-4 weeks)
-                    </option>
-                    <option value="1-3-months" className="bg-slate-900">
-                      1-3 months
-                    </option>
-                    <option value="3-plus-months" className="bg-slate-900">
-                      3+ months
-                    </option>
-                    <option value="exploring" className="bg-slate-900">
-                      Just exploring
-                    </option>
+                    <option value="">Select timeline</option>
+                    <option value="asap">ASAP (2-4 weeks)</option>
+                    <option value="1-3-months">1-3 months</option>
+                    <option value="3-plus-months">3+ months</option>
+                    <option value="exploring">Just exploring</option>
                   </select>
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-slate-300">
-                  What are you looking to build or improve?{" "}
-                  <span className="text-red-300">*</span>
+                <label className="text-xs font-medium text-[#505662]">
+                  What are you looking to build or improve? <span className="text-red-500">*</span>
                 </label>
                 <textarea
-                  className="min-h-[130px] w-full rounded-xl border border-white/15 bg-white/[0.03] px-3 py-2.5 text-sm text-slate-100 outline-none transition focus:border-cyan-200/70"
+                  className="min-h-[130px] w-full rounded-lg border border-[#E9E9E9] bg-white px-3 py-2.5 text-sm text-[#333333] outline-none transition focus:border-[#0D8AFD]"
                   value={form.message}
                   onChange={(e) => handleChange("message", e.target.value)}
                   placeholder="Share your current bottleneck and what success would look like."
@@ -248,7 +209,7 @@ export default function ContactPage() {
                 />
               </div>
 
-              <div className="flex flex-col gap-2 border-t border-white/10 pt-4 text-xs text-slate-400 [border-color:var(--line)] sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-2 border-t border-[#E9E9E9] pt-4 text-xs text-[#666666] sm:flex-row sm:items-center sm:justify-between">
                 <Button type="submit" disabled={submitting}>
                   {submitting ? "Sending..." : "Submit enquiry"}
                 </Button>

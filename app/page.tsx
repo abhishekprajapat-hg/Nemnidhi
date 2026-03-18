@@ -1,5 +1,6 @@
 // app/page.tsx
 import Hero from "@/components/home/Hero";
+import ProjectSpotlightSection from "@/components/home/ProjectSpotlightSection";
 import ServicesSection from "@/components/home/ServicesSection";
 import ProcessSection from "@/components/home/ProcessSection";
 import TechStackStrip from "@/components/home/TechStackStrip";
@@ -9,10 +10,17 @@ import { dbConnect } from "@/lib/mongodb";
 import { Service } from "@/models/Service";
 import { HeroSettings } from "@/models/HeroSettings";
 
+type ServiceDoc = {
+  _id: { toString: () => string };
+  title: string;
+  description: string;
+  points: string[];
+};
+
 async function getServices() {
   await dbConnect();
   const docs = await Service.find().sort({ createdAt: 1 }).lean();
-  return docs.map((doc: any) => ({
+  return (docs as ServiceDoc[]).map((doc) => ({
     _id: doc._id.toString(),
     title: doc.title,
     description: doc.description,
@@ -46,6 +54,7 @@ export default async function HomePage() {
   return (
     <>
       <Hero hero={hero} />
+      <ProjectSpotlightSection />
       <ServicesSection services={services} />
       <ProcessSection />
       <TechStackStrip />

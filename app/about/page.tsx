@@ -50,100 +50,76 @@ const PROCESS = [
 export default function AboutPage() {
   return (
     <section className="theme-section min-h-screen">
-      <Container className="py-16 md:py-22">
-        <header className="mb-12 space-y-5">
-          <p className="theme-pill">About Nemnidhi</p>
-          <h1 className="max-w-4xl text-4xl text-slate-50 md:text-5xl">
-            A compact digital partner for founders building for the long term.
+      <Container className="py-10 md:py-14">
+        <header className="mb-10 space-y-4">
+          <p className="section-eyebrow">About Nemnidhi</p>
+          <h1 className="section-title max-w-4xl">
+            A focused innovation partner for teams building for long-term growth.
           </h1>
-          <p className="max-w-2xl text-sm leading-relaxed text-slate-300 md:text-base">
-            We help teams replace messy websites and fragmented systems with
-            focused experiences that increase trust, improve conversion, and reduce
-            operational noise.
+          <p className="max-w-3xl section-copy">
+            We help companies replace fragmented websites and internal workflows with clear digital systems that
+            improve trust, conversion, and execution quality.
           </p>
         </header>
 
         <div className="mb-10 grid gap-5 md:grid-cols-3">
-          <div className="theme-card rounded-3xl p-5">
-            <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
-              Base
-            </p>
-            <p className="mt-1 text-lg font-semibold text-slate-100">India</p>
-            <p className="mt-2 text-xs leading-relaxed text-slate-300">
-              Remote-first collaboration across time zones.
-            </p>
+          <div className="theme-card p-5">
+            <p className="section-eyebrow">Base</p>
+            <p className="mt-2 text-lg font-semibold text-[#003464]">India</p>
+            <p className="mt-2 text-sm text-[#333333]">Remote-first collaboration across time zones.</p>
           </div>
-          <div className="theme-card rounded-3xl p-5">
-            <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
-              Typical clients
-            </p>
-            <p className="mt-1 text-lg font-semibold text-slate-100">
-              SMEs and founder-led teams
-            </p>
-            <p className="mt-2 text-xs leading-relaxed text-slate-300">
+          <div className="theme-card p-5">
+            <p className="section-eyebrow">Typical clients</p>
+            <p className="mt-2 text-lg font-semibold text-[#003464]">SMEs and founder-led teams</p>
+            <p className="mt-2 text-sm text-[#333333]">
               Businesses that need senior execution without enterprise overhead.
             </p>
           </div>
-          <div className="theme-card rounded-3xl p-5">
-            <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
-              What we bring
-            </p>
-            <p className="mt-1 text-lg font-semibold text-slate-100">
-              Strategy + build continuity
-            </p>
-            <p className="mt-2 text-xs leading-relaxed text-slate-300">
-              Product thinking, UX, development, and systems under one delivery arc.
+          <div className="theme-card p-5">
+            <p className="section-eyebrow">What we bring</p>
+            <p className="mt-2 text-lg font-semibold text-[#003464]">Strategy + build continuity</p>
+            <p className="mt-2 text-sm text-[#333333]">
+              Product thinking, UX, engineering, and systems under one delivery arc.
             </p>
           </div>
         </div>
 
-        <section className="mb-12">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
-            Principles
-          </p>
+        <section className="mb-10">
+          <p className="mb-4 section-eyebrow">Principles</p>
           <div className="grid gap-5 md:grid-cols-2">
             {PRINCIPLES.map((item, index) => (
-              <article key={item.title} className="theme-card rounded-3xl p-5">
-                <p className="text-[11px] uppercase tracking-[0.16em] text-cyan-100">
-                  Principle {String(index + 1).padStart(2, "0")}
-                </p>
-                <h2 className="mt-2 text-xl font-semibold text-slate-100">{item.title}</h2>
-                <p className="mt-2 text-sm leading-relaxed text-slate-300">{item.body}</p>
+              <article key={item.title} className="theme-card p-5">
+                <p className="section-eyebrow">Principle {String(index + 1).padStart(2, "0")}</p>
+                <h2 className="mt-2 text-xl font-semibold text-[#003464]">{item.title}</h2>
+                <p className="mt-2 text-sm leading-7 text-[#333333]">{item.body}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="mb-12">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
-            Engagement Flow
-          </p>
+        <section className="mb-10">
+          <p className="mb-4 section-eyebrow">Engagement Flow</p>
           <div className="grid gap-5 md:grid-cols-2">
             {PROCESS.map((step) => (
-              <article key={step.step} className="theme-card rounded-3xl p-5">
+              <article key={step.step} className="theme-card p-5">
                 <div className="mb-3 flex items-center justify-between">
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-cyan-200/50 bg-cyan-200/10 text-xs font-semibold text-cyan-100">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-[#EDF8FD] text-xs font-semibold text-[#003464]">
                     {step.step}
                   </span>
-                  <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
-                    {step.label}
-                  </p>
+                  <p className="section-eyebrow">{step.label}</p>
                 </div>
-                <h3 className="text-lg font-semibold text-slate-100">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-300">{step.body}</p>
+                <h3 className="text-lg font-semibold text-[#003464]">{step.title}</h3>
+                <p className="mt-2 text-sm leading-7 text-[#333333]">{step.body}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="theme-card rounded-3xl p-6">
-          <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
-            Studio model
-          </p>
-          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-300 md:text-base">
-            Nemnidhi stays intentionally lean: senior strategy and engineering at
-            the center, with specialist collaborators engaged when needed. You get
-            direct access to decision-makers, clear priorities, and faster delivery.
+        <section className="theme-card p-6">
+          <p className="section-eyebrow">Studio model</p>
+          <p className="mt-2 max-w-3xl text-sm leading-7 text-[#333333] md:text-base">
+            Nemnidhi stays intentionally lean: senior strategy and engineering at the core, with specialist
+            collaborators engaged only when needed.
           </p>
           <Button asChild className="mt-5">
             <a href="/contact?from=about">Start a conversation</a>

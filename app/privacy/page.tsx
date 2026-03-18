@@ -38,39 +38,33 @@ const SECTIONS = [
   },
   {
     title: "6. Contact",
-    body: [
-      "For privacy-related requests, contact us at info@nemnidhi.com.",
-    ],
+    body: ["For privacy-related requests, contact us at info@nemnidhi.com."],
   },
 ];
 
 export default function PrivacyPage() {
   return (
     <section className="theme-section min-h-screen">
-      <Container className="py-16 md:py-22">
-        <header className="mb-10 space-y-4">
-          <p className="theme-pill">Legal</p>
-          <h1 className="text-4xl text-slate-50 md:text-5xl">Privacy Policy</h1>
-          <p className="max-w-3xl text-sm leading-relaxed text-slate-300 md:text-base">
-            This page explains how Nemnidhi collects, uses, and protects
-            information when you interact with our website and services.
+      <Container className="py-10 md:py-14">
+        <header className="mb-8 space-y-4">
+          <p className="section-eyebrow">Legal</p>
+          <h1 className="section-title">Privacy Policy</h1>
+          <p className="max-w-3xl section-copy">
+            This page explains how Nemnidhi collects, uses, and protects information when you interact with our website
+            and services.
           </p>
         </header>
 
-        <div className="theme-card rounded-3xl p-5 md:p-7">
-          <p className="mb-6 text-xs uppercase tracking-[0.16em] text-slate-400">
-            Last updated: February 23, 2026
-          </p>
+        <div className="theme-card p-5 md:p-7">
+          <p className="mb-6 section-eyebrow">Last updated: February 23, 2026</p>
 
           <div className="space-y-7">
             {SECTIONS.map((section) => (
               <section key={section.title} className="space-y-3">
-                <h2 className="text-xl font-semibold text-slate-100">
-                  {section.title}
-                </h2>
+                <h2 className="text-xl font-semibold text-[#003464]">{section.title}</h2>
                 <div className="space-y-2">
                   {section.body.map((paragraph) => (
-                    <p key={paragraph} className="text-sm leading-relaxed text-slate-300">
+                    <p key={paragraph} className="text-sm leading-7 text-[#333333]">
                       {paragraph}
                     </p>
                   ))}

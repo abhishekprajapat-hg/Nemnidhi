@@ -8,24 +8,22 @@ import { SERVICE_PLANS } from "@/lib/plans";
 export default function ServicesPage() {
   return (
     <section className="theme-section min-h-screen">
-      <Container className="py-16 md:py-22">
-        <header className="mb-12 space-y-5">
-          <p className="theme-pill">Services</p>
-          <h1 className="max-w-4xl text-4xl text-slate-50 md:text-5xl">
-            Structured delivery for founders who want clear execution, not random
-            projects.
+      <Container className="py-10 md:py-14">
+        <header className="mb-10 space-y-4">
+          <p className="section-eyebrow">Products</p>
+          <h1 className="section-title max-w-4xl">
+            Structured delivery programs for teams that need clarity and speed.
           </h1>
-          <p className="max-w-2xl text-sm leading-relaxed text-slate-300 md:text-base">
-            Each engagement is built around outcomes, decision speed, and
-            system clarity.
+          <p className="max-w-3xl section-copy">
+            Every engagement is designed around outcomes, practical implementation, and sustained execution quality.
           </p>
         </header>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2">
           {SERVICE_PLANS.map((plan, index) => (
             <motion.article
               key={plan.id}
-              className="theme-card rounded-3xl p-5 md:p-6"
+              className="theme-card p-5 md:p-6"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.25 }}
@@ -33,25 +31,19 @@ export default function ServicesPage() {
             >
               <div className="mb-4 flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
-                    {plan.badge ?? "Plan"}
-                  </p>
-                  <h2 className="mt-1 text-xl font-semibold text-slate-100">
-                    {plan.name}
-                  </h2>
-                  <p className="mt-1 text-sm text-cyan-100">{plan.tagline}</p>
+                  <p className="section-eyebrow">{plan.badge ?? "Plan"}</p>
+                  <h2 className="mt-1 text-2xl font-semibold text-[#003464]">{plan.name}</h2>
+                  <p className="mt-1 text-sm font-semibold text-[#0D8AFD]">{plan.tagline}</p>
                 </div>
               </div>
 
-              <div className="space-y-4 text-sm text-slate-300">
+              <div className="space-y-4 text-sm text-[#333333]">
                 <div>
-                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">
-                    Best For
-                  </p>
-                  <ul className="space-y-1.5 text-xs">
+                  <p className="mb-2 section-eyebrow">Best For</p>
+                  <ul className="space-y-1.5">
                     {plan.bestFor.map((item) => (
                       <li key={item} className="flex gap-2">
-                        <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-gradient-to-br from-cyan-300 to-orange-300" />
+                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[#0D8AFD]" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -59,13 +51,11 @@ export default function ServicesPage() {
                 </div>
 
                 <div>
-                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">
-                    Includes
-                  </p>
-                  <ul className="space-y-1.5 text-xs">
+                  <p className="mb-2 section-eyebrow">Includes</p>
+                  <ul className="space-y-1.5">
                     {plan.includes.map((item) => (
                       <li key={item} className="flex gap-2">
-                        <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-slate-500" />
+                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[#A9B7BD]" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -73,13 +63,11 @@ export default function ServicesPage() {
                 </div>
 
                 <div>
-                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">
-                    Outcomes
-                  </p>
-                  <ul className="space-y-1.5 text-xs">
+                  <p className="mb-2 section-eyebrow">Outcomes</p>
+                  <ul className="space-y-1.5">
                     {plan.outcomes.map((item) => (
                       <li key={item} className="flex gap-2">
-                        <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-emerald-300" />
+                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[#003464]" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -90,9 +78,7 @@ export default function ServicesPage() {
               <div className="mt-6">
                 <Button asChild>
                   <a href={`/contact?plan=${encodeURIComponent(plan.id)}`}>
-                    {plan.highlight === "custom"
-                      ? "Discuss a custom engagement"
-                      : "Discuss this plan"}
+                    {plan.highlight === "custom" ? "Discuss a custom engagement" : "Discuss this plan"}
                   </a>
                 </Button>
               </div>
