@@ -21,9 +21,9 @@ export const metadata: Metadata = {
   description:
     "Nemnidhi builds enterprise-ready digital systems, product experiences, and growth infrastructure for scaling teams.",
   icons: {
-    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
-    shortcut: ["/favicon.svg"],
-    apple: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    icon: [{ url: "/favicon.svg?v=2", type: "image/svg+xml" }],
+    shortcut: ["/favicon.svg?v=2"],
+    apple: [{ url: "/favicon.svg?v=2", type: "image/svg+xml" }],
   },
 };
 

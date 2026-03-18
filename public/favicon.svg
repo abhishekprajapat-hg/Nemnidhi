@@ -1,13 +1,18 @@
 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="nemnidhiGradient" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#41D6FF" />
-      <stop offset="1" stop-color="#FFB56A" />
+    <linearGradient id="nemnidhiBg" x1="10" y1="8" x2="54" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#082D54" />
+      <stop offset="0.58" stop-color="#0A3A69" />
+      <stop offset="1" stop-color="#12508D" />
+    </linearGradient>
+    <linearGradient id="nemnidhiAccent" x1="43" y1="12" x2="51" y2="20" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8EACB" />
+      <stop offset="1" stop-color="#D2B177" />
     </linearGradient>
   </defs>
-  <rect x="6" y="6" width="52" height="52" rx="14" fill="url(#nemnidhiGradient)" />
-  <path
-    d="M20 45V19H27.5L36.5 32.5V19H44V45H36.5L27.5 31.5V45H20Z"
-    fill="#031326"
-  />
+  <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#nemnidhiBg)" />
+  <rect x="5" y="5" width="54" height="54" rx="15" stroke="#D8BE8A" stroke-opacity="0.9" stroke-width="1.5" />
+  <rect x="7.5" y="7.5" width="49" height="49" rx="12.5" stroke="white" stroke-opacity="0.14" />
+  <path d="M18.5 44.5V19.5H25.5L38.25 35V19.5H45.5V44.5H38.75L25.75 28.7V44.5H18.5Z" fill="#F8EACB" />
+  <circle cx="47" cy="17" r="4" fill="url(#nemnidhiAccent)" />
 </svg>

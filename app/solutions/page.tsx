@@ -1,7 +1,19 @@
 import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 
-const SOLUTIONS = [
+type SolutionItem = {
+  id: string;
+  label: string;
+  name: string;
+  tagline: string;
+  bestFor: string[];
+  whatWeDo: string[];
+  outcomes: string[];
+  highlight: string;
+  ctaLabel?: string;
+};
+
+const SOLUTIONS: SolutionItem[] = [
   {
     id: "conversion-site",
     label: "Solution 01",
@@ -71,6 +83,30 @@ const SOLUTIONS = [
     ],
     highlight: "Operational calm",
   },
+  {
+    id: "custom-solution",
+    label: "Solution 04",
+    name: "Custom solution design and build",
+    tagline: "Shape a tailored mix of website, automation, dashboards, and workflows around your exact bottleneck.",
+    bestFor: [
+      "Teams whose needs span both customer-facing and internal systems",
+      "Businesses that do not fit a fixed package cleanly",
+      "Founders who want a phased roadmap before full implementation",
+    ],
+    whatWeDo: [
+      "Audit your current stack, user flow, and delivery friction points",
+      "Define a right-sized scope with staged priorities and ownership",
+      "Combine product, automation, and operations work into one practical build plan",
+      "Implement the system and document how the team should run it after launch",
+    ],
+    outcomes: [
+      "A solution mapped to your actual operating model",
+      "Less rework from choosing the wrong delivery path",
+      "Clear visibility from first release to long-term scale",
+    ],
+    highlight: "Tailored fit",
+    ctaLabel: "Discuss a custom solution",
+  },
 ];
 
 export default function SolutionsPage() {
@@ -121,7 +157,7 @@ export default function SolutionsPage() {
 
                 <Button asChild className="mt-2">
                   <a href={`/contact?from=solutions&solution=${encodeURIComponent(solution.id)}`}>
-                    Explore this solution
+                    {getSolutionCtaLabel(solution)}
                   </a>
                 </Button>
               </div>
@@ -167,4 +203,8 @@ export default function SolutionsPage() {
       </Container>
     </section>
   );
+}
+
+function getSolutionCtaLabel(solution: SolutionItem) {
+  return solution.ctaLabel ?? "Explore this solution";
 }
