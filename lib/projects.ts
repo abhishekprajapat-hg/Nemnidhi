@@ -11,7 +11,7 @@ export type ProjectItem = {
 export const PROJECTS: ProjectItem[] = [
   {
     id: "nemnidhi-main",
-    name: "Nemnidhi Main Site",
+    name: "Nemnidhi | The Future of Work, Today",
     domain: "www.nemnidhi.com",
     href: "https://www.nemnidhi.com",
     summary:
@@ -19,7 +19,7 @@ export const PROJECTS: ProjectItem[] = [
   },
   {
     id: "nemnidhi-cloud",
-    name: "Nemnidhi Cloud",
+    name: "Samvid-OS",
     domain: "nemnidhi.cloud",
     href: "https://nemnidhi.cloud",
     summary:
@@ -27,7 +27,7 @@ export const PROJECTS: ProjectItem[] = [
   },
   {
     id: "glam-nemnidhi",
-    name: "Glam by Nemnidhi",
+    name: "NEMNIDHI",
     domain: "glam.nemnidhi.com",
     href: "https://glam.nemnidhi.com",
     staticPreviewSrc: "/project-previews/glam-home.png",
@@ -37,7 +37,7 @@ export const PROJECTS: ProjectItem[] = [
   },
   {
     id: "finedge-nemnidhi",
-    name: "Finedge by Nemnidhi",
+    name: "FinEdge Academy",
     domain: "finedge.nemnidhi.com",
     href: "https://finedge.nemnidhi.com",
     summary:
@@ -45,7 +45,7 @@ export const PROJECTS: ProjectItem[] = [
   },
   {
     id: "nemnidhi-tech",
-    name: "Nemnidhi Tech",
+    name: "Shri Jain Shwetambar Mandir | Jain Seva, Calendar and Library",
     domain: "nemnidhi.tech",
     href: "https://nemnidhi.tech",
     summary:
