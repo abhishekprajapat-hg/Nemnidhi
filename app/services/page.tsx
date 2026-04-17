@@ -25,18 +25,18 @@ export default function ServicesPage() {
               <div className="mb-4 flex items-start justify-between gap-4">
                 <div>
                   <p className="section-eyebrow">{plan.badge ?? "Plan"}</p>
-                  <h2 className="mt-1 text-2xl font-semibold text-[#003464]">{plan.name}</h2>
-                  <p className="mt-1 text-sm font-semibold text-[#0D8AFD]">{plan.tagline}</p>
+                  <h2 className="mt-1 text-2xl font-semibold text-[#E7F0FF]">{plan.name}</h2>
+                  <p className="mt-1 text-sm font-semibold text-[#66AAFF]">{plan.tagline}</p>
                 </div>
               </div>
 
-              <div className="space-y-4 text-sm text-[#333333]">
+              <div className="space-y-4 text-sm text-[#AABFD4]">
                 <div>
                   <p className="mb-2 section-eyebrow">Best For</p>
                   <ul className="space-y-1.5">
                     {plan.bestFor.map((item) => (
                       <li key={item} className="flex gap-2">
-                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[#0D8AFD]" />
+                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[#66AAFF]" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -48,7 +48,7 @@ export default function ServicesPage() {
                   <ul className="space-y-1.5">
                     {plan.includes.map((item) => (
                       <li key={item} className="flex gap-2">
-                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[#A9B7BD]" />
+                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[#3A5675]" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -60,7 +60,7 @@ export default function ServicesPage() {
                   <ul className="space-y-1.5">
                     {plan.outcomes.map((item) => (
                       <li key={item} className="flex gap-2">
-                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[#003464]" />
+                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[#E7F0FF]" />
                         <span>{item}</span>
                       </li>
                     ))}

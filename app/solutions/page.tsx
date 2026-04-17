@@ -130,25 +130,25 @@ export default function SolutionsPage() {
             >
               <div className="space-y-4">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-md border border-[#E9E9E9] bg-white px-2.5 py-1 text-xs text-[#505662]">
+                  <span className="rounded-md border border-[#2A3E56] bg-[#111a28] px-2.5 py-1 text-xs text-[#8095AC]">
                     {solution.label}
                   </span>
-                  <span className="rounded-md bg-[#EDF8FD] px-2.5 py-1 text-xs font-semibold text-[#003464]">
+                  <span className="rounded-md bg-[#152338] px-2.5 py-1 text-xs font-semibold text-[#CFE3FF]">
                     {solution.highlight}
                   </span>
                 </div>
 
                 <div className="space-y-2">
-                  <h2 className="text-2xl font-semibold text-[#003464]">{solution.name}</h2>
-                  <p className="text-sm font-semibold text-[#0D8AFD]">{solution.tagline}</p>
+                  <h2 className="text-2xl font-semibold text-[#E7F0FF]">{solution.name}</h2>
+                  <p className="text-sm font-semibold text-[#66AAFF]">{solution.tagline}</p>
                 </div>
 
                 <div>
                   <p className="mb-2 section-eyebrow">Best For</p>
-                  <ul className="space-y-1.5 text-sm text-[#333333]">
+                  <ul className="space-y-1.5 text-sm text-[#AABFD4]">
                     {solution.bestFor.map((item) => (
                       <li key={item} className="flex gap-2">
-                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[#0D8AFD]" />
+                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[#66AAFF]" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -162,13 +162,13 @@ export default function SolutionsPage() {
                 </Button>
               </div>
 
-              <div className="space-y-5 border-t border-[#E9E9E9] pt-5 md:border-l md:border-t-0 md:pl-6 md:pt-0">
+              <div className="space-y-5 border-t border-[#2A3E56] pt-5 md:border-l md:border-t-0 md:pl-6 md:pt-0">
                 <div>
                   <p className="mb-2 section-eyebrow">What We Build</p>
-                  <ul className="space-y-1.5 text-sm text-[#333333]">
+                  <ul className="space-y-1.5 text-sm text-[#AABFD4]">
                     {solution.whatWeDo.map((item) => (
                       <li key={item} className="flex gap-2">
-                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[#A9B7BD]" />
+                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[#3A5675]" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -177,10 +177,10 @@ export default function SolutionsPage() {
 
                 <div>
                   <p className="mb-2 section-eyebrow">Expected Outcomes</p>
-                  <ul className="space-y-1.5 text-sm text-[#333333]">
+                  <ul className="space-y-1.5 text-sm text-[#AABFD4]">
                     {solution.outcomes.map((item) => (
                       <li key={item} className="flex gap-2">
-                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[#003464]" />
+                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[#E7F0FF]" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -192,8 +192,8 @@ export default function SolutionsPage() {
         </div>
 
         <div className="theme-card mt-10 p-6 text-center">
-          <p className="text-base text-[#333333]">Not sure which path fits your current stage?</p>
-          <p className="mt-1 text-sm text-[#505662]">
+          <p className="text-base text-[#AABFD4]">Not sure which path fits your current stage?</p>
+          <p className="mt-1 text-sm text-[#8095AC]">
             Share your context and we will recommend the simplest starting point.
           </p>
           <Button asChild className="mt-4">

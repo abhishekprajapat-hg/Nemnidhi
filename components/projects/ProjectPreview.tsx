@@ -12,15 +12,15 @@ export default function ProjectPreview({
   staticPreviewAlt,
 }: ProjectPreviewProps) {
   return (
-    <div className="border-t border-[#E9E9E9] bg-[#F9F9F9] p-3 md:border-l md:border-t-0">
-      <div className="mb-2 flex items-center justify-between rounded-lg border border-[#E9E9E9] bg-white px-3 py-2 text-xs text-[#333333]">
+    <div className="border-t border-[#3A5675]/34 bg-[linear-gradient(180deg,rgba(18,29,43,0.88)_0%,rgba(13,22,34,0.9)_55%,rgba(20,16,15,0.82)_100%)] p-3 md:border-l md:border-t-0">
+      <div className="surface-3d-soft mb-2 flex items-center justify-between rounded-lg border border-[#3A5675]/36 px-3 py-2 text-xs text-[#AABFD4]">
         <span>Live Preview</span>
-        <a href={href} target="_blank" rel="noreferrer" className="text-[#0D8AFD] transition hover:text-[#003464]">
+        <a href={href} target="_blank" rel="noreferrer" className="text-[#76B5FF] transition hover:text-[#66AAFF]">
           Open in new tab
         </a>
       </div>
 
-      <div className="relative overflow-hidden rounded-lg border border-[#E9E9E9] bg-white">
+      <div className="surface-3d relative overflow-hidden rounded-lg border border-[#3A5675]/36 bg-[#111a28]">
         {staticPreviewSrc ? (
           <div className="relative h-[360px] w-full">
             <Image

@@ -61,10 +61,10 @@ export default function PrivacyPage() {
           <div className="space-y-7">
             {SECTIONS.map((section) => (
               <section key={section.title} className="space-y-3">
-                <h2 className="text-xl font-semibold text-[#003464]">{section.title}</h2>
+                <h2 className="text-xl font-semibold text-[#E7F0FF]">{section.title}</h2>
                 <div className="space-y-2">
                   {section.body.map((paragraph) => (
-                    <p key={paragraph} className="text-sm leading-7 text-[#333333]">
+                    <p key={paragraph} className="text-sm leading-7 text-[#AABFD4]">
                       {paragraph}
                     </p>
                   ))}
@@ -77,3 +77,4 @@ export default function PrivacyPage() {
     </section>
   );
 }
+

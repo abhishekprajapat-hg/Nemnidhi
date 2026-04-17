@@ -21,13 +21,13 @@ export default function ProjectsPage() {
             <article
               key={project.id}
               id={project.id}
-              className="theme-card-strong overflow-hidden border border-[#E9E9E9]"
+              className="theme-card-strong overflow-hidden border border-[#2A3E56]"
             >
               <div className="grid gap-0 md:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)]">
                 <div className="space-y-4 p-5 md:p-6">
                   <p className="section-eyebrow">{project.domain}</p>
-                  <h2 className="text-2xl font-semibold text-[#003464]">{project.name}</h2>
-                  <p className="text-sm leading-7 text-[#333333]">{project.summary}</p>
+                  <h2 className="text-2xl font-semibold text-[#E7F0FF]">{project.name}</h2>
+                  <p className="text-sm leading-7 text-[#AABFD4]">{project.summary}</p>
                   <Button asChild>
                     <a href={project.href} target="_blank" rel="noreferrer">
                       Open project
@@ -47,10 +47,10 @@ export default function ProjectsPage() {
         </div>
 
         <div className="theme-card mt-10 p-6 text-center">
-          <p className="text-base text-[#333333]">
+          <p className="text-base text-[#AABFD4]">
             Need a project page like this for client portfolios or product demos?
           </p>
-          <p className="mt-1 text-sm text-[#505662]">
+          <p className="mt-1 text-sm text-[#8095AC]">
             We can build the structure and connect it to your internal workflow.
           </p>
           <Button asChild className="mt-4">

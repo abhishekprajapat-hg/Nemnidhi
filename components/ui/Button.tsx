@@ -12,14 +12,14 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const baseStyles =
-  "inline-flex items-center justify-center gap-2 rounded-lg px-6 py-2.5 text-base font-semibold transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D8AFD]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:pointer-events-none disabled:opacity-60";
+  "button-3d inline-flex items-center justify-center gap-2 rounded-xl px-6 py-2.5 text-base font-semibold transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A70DF]/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F1826] disabled:pointer-events-none disabled:opacity-60";
 
 const variants: Record<ButtonVariant, string> = {
   solid:
-    "border border-transparent bg-[#0D8AFD] text-white hover:bg-[#003464]",
+    "border border-[#1A66B3]/75 bg-[linear-gradient(145deg,#33DEC0,#004DC5)] text-[#EAF2FF] hover:brightness-[1.02]",
   outline:
-    "border border-[#A6A6A6] bg-white text-[#333333] hover:border-[#0D8AFD] hover:text-[#0D8AFD]",
-  ghost: "border border-transparent text-[#333333] hover:bg-[#F0F0F0]",
+    "border border-[#3A5675]/72 bg-[linear-gradient(162deg,#131E2E_0%,#0F1826_100%)] text-[#D5E6FF] hover:border-[#24B89A] hover:text-[#76B5FF]",
+  ghost: "border border-transparent bg-[#111a28]/70 text-[#B8CBE0] hover:border-[#3A5675] hover:bg-[#111a28]/90",
 };
 
 export function Button({

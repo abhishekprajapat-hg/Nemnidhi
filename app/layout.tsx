@@ -2,18 +2,19 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { Open_Sans, Inter } from "next/font/google";
+import AtmosphereCanvas from "@/components/three/AtmosphereCanvas";
+import { Manrope, Space_Grotesk } from "next/font/google";
 
-const openSans = Open_Sans({
+const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-body",
   weight: ["400", "500", "600", "700", "800"],
 });
 
-const inter = Inter({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-display",
-  weight: ["500", "600", "700", "800"],
+  weight: ["500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -34,10 +35,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${openSans.variable} ${inter.variable} site-shell min-h-screen`}>
-        <div className="relative flex min-h-screen flex-col overflow-x-clip bg-white">
+      <body className={`${manrope.variable} ${spaceGrotesk.variable} site-shell min-h-screen`}>
+        <AtmosphereCanvas />
+        <div className="scene-root relative flex min-h-screen flex-col overflow-x-clip">
           <Navbar />
-          <main className="flex-1 pb-24 md:pb-0">{children}</main>
+          <main className="relative z-[2] flex-1 pb-24 md:pb-0">{children}</main>
           <Footer />
         </div>
       </body>

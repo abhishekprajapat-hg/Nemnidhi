@@ -26,24 +26,24 @@ const STEPS = [
 
 export default function ProcessSection() {
   return (
-    <section className="plain-section deferred-section border-t border-[#E9E9E9]">
+    <section className="plain-section deferred-section border-t border-[#3A5675]/28">
       <Container className="py-10 md:py-14">
         <div className="mb-10 grid items-center gap-8 md:grid-cols-2">
           <h2 className="section-title max-w-2xl">
             We are a key innovation partner for iconic and emerging brands.
           </h2>
           <div className="grid grid-cols-3 gap-5">
-            <div className="text-center">
-              <p className="text-4xl font-bold text-[#003464]">2000+</p>
-              <p className="mt-1 text-sm text-[#333333]">Brands</p>
+            <div className="theme-card p-4 text-center">
+              <p className="text-4xl font-bold text-[#69AEFF]">2000+</p>
+              <p className="mt-1 text-sm text-[#AABFD4]">Brands</p>
             </div>
-            <div className="text-center">
-              <p className="text-4xl font-bold text-[#003464]">100%</p>
-              <p className="mt-1 text-sm text-[#333333]">Go-live</p>
+            <div className="theme-card p-4 text-center">
+              <p className="text-4xl font-bold text-[#69AEFF]">100%</p>
+              <p className="mt-1 text-sm text-[#AABFD4]">Go-live</p>
             </div>
-            <div className="text-center">
-              <p className="text-4xl font-bold text-[#003464]">99%</p>
-              <p className="mt-1 text-sm text-[#333333]">Retention</p>
+            <div className="theme-card p-4 text-center">
+              <p className="text-4xl font-bold text-[#69AEFF]">99%</p>
+              <p className="mt-1 text-sm text-[#AABFD4]">Retention</p>
             </div>
           </div>
         </div>
@@ -53,11 +53,11 @@ export default function ProcessSection() {
             const Icon = step.icon;
             return (
               <article key={step.title} className="theme-card p-6">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-md bg-[#EDF8FD] text-[#0D8AFD]">
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-md bg-[linear-gradient(150deg,#152338,#132334)] text-[#76B5FF]">
                   <Icon className="h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-semibold text-[#003464]">{step.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-[#333333]">{step.body}</p>
+                <h3 className="text-xl font-semibold text-[#E7F0FF]">{step.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-[#AABFD4]">{step.body}</p>
               </article>
             );
           })}

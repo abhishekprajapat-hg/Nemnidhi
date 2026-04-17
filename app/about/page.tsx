@@ -65,20 +65,20 @@ export default function AboutPage() {
         <div className="mb-10 grid gap-5 md:grid-cols-3">
           <div className="theme-card p-5">
             <p className="section-eyebrow">Base</p>
-            <p className="mt-2 text-lg font-semibold text-[#003464]">India</p>
-            <p className="mt-2 text-sm text-[#333333]">Remote-first collaboration across time zones.</p>
+            <p className="mt-2 text-lg font-semibold text-[#E7F0FF]">India</p>
+            <p className="mt-2 text-sm text-[#AABFD4]">Remote-first collaboration across time zones.</p>
           </div>
           <div className="theme-card p-5">
             <p className="section-eyebrow">Typical clients</p>
-            <p className="mt-2 text-lg font-semibold text-[#003464]">SMEs and founder-led teams</p>
-            <p className="mt-2 text-sm text-[#333333]">
+            <p className="mt-2 text-lg font-semibold text-[#E7F0FF]">SMEs and founder-led teams</p>
+            <p className="mt-2 text-sm text-[#AABFD4]">
               Businesses that need senior execution without enterprise overhead.
             </p>
           </div>
           <div className="theme-card p-5">
             <p className="section-eyebrow">What we bring</p>
-            <p className="mt-2 text-lg font-semibold text-[#003464]">Strategy + build continuity</p>
-            <p className="mt-2 text-sm text-[#333333]">
+            <p className="mt-2 text-lg font-semibold text-[#E7F0FF]">Strategy + build continuity</p>
+            <p className="mt-2 text-sm text-[#AABFD4]">
               Product thinking, UX, engineering, and systems under one delivery arc.
             </p>
           </div>
@@ -90,8 +90,8 @@ export default function AboutPage() {
             {PRINCIPLES.map((item, index) => (
               <article key={item.title} className="theme-card p-5">
                 <p className="section-eyebrow">Principle {String(index + 1).padStart(2, "0")}</p>
-                <h2 className="mt-2 text-xl font-semibold text-[#003464]">{item.title}</h2>
-                <p className="mt-2 text-sm leading-7 text-[#333333]">{item.body}</p>
+                <h2 className="mt-2 text-xl font-semibold text-[#E7F0FF]">{item.title}</h2>
+                <p className="mt-2 text-sm leading-7 text-[#AABFD4]">{item.body}</p>
               </article>
             ))}
           </div>
@@ -103,13 +103,13 @@ export default function AboutPage() {
             {PROCESS.map((step) => (
               <article key={step.step} className="theme-card p-5">
                 <div className="mb-3 flex items-center justify-between">
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-[#EDF8FD] text-xs font-semibold text-[#003464]">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-[#152338] text-xs font-semibold text-[#CFE3FF]">
                     {step.step}
                   </span>
                   <p className="section-eyebrow">{step.label}</p>
                 </div>
-                <h3 className="text-lg font-semibold text-[#003464]">{step.title}</h3>
-                <p className="mt-2 text-sm leading-7 text-[#333333]">{step.body}</p>
+                <h3 className="text-lg font-semibold text-[#E7F0FF]">{step.title}</h3>
+                <p className="mt-2 text-sm leading-7 text-[#AABFD4]">{step.body}</p>
               </article>
             ))}
           </div>
@@ -117,7 +117,7 @@ export default function AboutPage() {
 
         <section className="theme-card p-6">
           <p className="section-eyebrow">Studio model</p>
-          <p className="mt-2 max-w-3xl text-sm leading-7 text-[#333333] md:text-base">
+          <p className="mt-2 max-w-3xl text-sm leading-7 text-[#AABFD4] md:text-base">
             Nemnidhi stays intentionally lean: senior strategy and engineering at the core, with specialist
             collaborators engaged only when needed.
           </p>

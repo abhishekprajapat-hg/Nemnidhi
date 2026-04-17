@@ -63,23 +63,23 @@ export default function TechStackStrip() {
             <Link
               key={group.label}
               href={group.href}
-              className="theme-card flex h-full flex-col p-5 transition hover:-translate-y-1"
+              className="theme-card flex h-full flex-col p-5"
             >
-              <h3 className="text-xl font-semibold text-[#003464]">{group.label}</h3>
-              <p className="mt-3 text-sm leading-7 text-[#333333]">{group.description}</p>
+              <h3 className="text-xl font-semibold text-[#E7F0FF]">{group.label}</h3>
+              <p className="mt-3 text-sm leading-7 text-[#AABFD4]">{group.description}</p>
 
               <div className="mt-5 flex flex-wrap gap-2">
                 {group.items.map((Icon, iconIndex) => (
                   <span
                     key={`${group.label}-${iconIndex}`}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#E9E9E9] bg-white text-[#0D8AFD]"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#3A5675]/42 bg-[linear-gradient(160deg,rgba(21,33,49,0.95),rgba(14,24,37,0.9)_65%,rgba(23,18,16,0.82))] text-[#76B5FF]"
                   >
                     <Icon className="h-4 w-4" />
                   </span>
                 ))}
               </div>
 
-              <span className="mt-auto pt-5 text-sm font-semibold text-[#0D8AFD]">Explore section</span>
+              <span className="mt-auto pt-5 text-sm font-semibold text-[#66AAFF]">Explore section</span>
             </Link>
           ))}
         </div>

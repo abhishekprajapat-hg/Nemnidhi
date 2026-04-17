@@ -29,25 +29,25 @@ export default function ServicesSection({ services }: ServicesSectionProps) {
           {services.map((service, index) => (
             <article
               key={service._id ?? service.title}
-              className="theme-card flex h-full flex-col p-5 transition hover:-translate-y-1"
+              className="theme-card flex h-full flex-col p-5"
             >
-              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-[#EDF8FD] text-sm font-bold text-[#003464]">
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-[linear-gradient(150deg,#152338,#132334)] text-sm font-bold text-[#CFE1FF]">
                 {String(index + 1).padStart(2, "0")}
               </div>
-              <h3 className="text-xl font-semibold text-[#003464]">{service.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-[#333333]">{service.description}</p>
+              <h3 className="text-xl font-semibold text-[#E7F0FF]">{service.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-[#AABFD4]">{service.description}</p>
 
-              <ul className="mt-4 space-y-2 text-sm text-[#505662]">
+              <ul className="mt-4 space-y-2 text-sm text-[#8095AC]">
                 {(service.points || []).slice(0, 3).map((point) => (
                   <li key={point} className="flex items-start gap-2">
-                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[#0D8AFD]" />
+                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[#76B5FF]" />
                     <span>{point}</span>
                   </li>
                 ))}
               </ul>
 
               <div className="mt-auto pt-5">
-                <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#0D8AFD]">
+                <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#66AAFF]">
                   Learn more
                   <ArrowUpRight className="h-4 w-4" />
                 </span>
