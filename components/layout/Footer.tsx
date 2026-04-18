@@ -26,7 +26,7 @@ export function Footer() {
 
   return (
     <footer className="deferred-section border-t border-[#3A5675]/38 bg-transparent">
-      <Container className="py-12 md:py-14">
+      <Container className="pt-12 pb-[calc(6rem+env(safe-area-inset-bottom))] md:py-14">
         <div className="surface-3d mb-7 overflow-hidden rounded-2xl border border-[#5b8ab4]/55 bg-[linear-gradient(145deg,#33DEC0,#004DC5)] p-6 text-white md:flex md:items-end md:justify-between md:gap-8">
           <div>
             <p className="inline-flex items-center gap-2 rounded-full border border-white/45 bg-white/14 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-[#EAF2FF]">

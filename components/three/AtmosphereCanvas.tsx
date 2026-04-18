@@ -3,328 +3,330 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-type CodeCard = {
-  mesh: THREE.Mesh;
+type QuantumQubit = {
+  node: THREE.Mesh;
+  halo: THREE.Mesh;
   base: THREE.Vector3;
-  baseRotX: number;
-  baseRotY: number;
+  phase: number;
   speed: number;
-  drift: number;
-  rollSpeed: number;
 };
 
-type SymbolNode = {
-  sprite: THREE.Sprite;
-  radius: number;
+type QuantumRing = {
+  mesh: THREE.Mesh;
   speed: number;
   phase: number;
-  yOffset: number;
+  wobble: number;
 };
 
-function drawRoundedRect(
-  ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  width: number,
-  height: number,
-  radius: number
-) {
-  const r = Math.min(radius, width / 2, height / 2);
-  ctx.beginPath();
-  ctx.moveTo(x + r, y);
-  ctx.lineTo(x + width - r, y);
-  ctx.quadraticCurveTo(x + width, y, x + width, y + r);
-  ctx.lineTo(x + width, y + height - r);
-  ctx.quadraticCurveTo(x + width, y + height, x + width - r, y + height);
-  ctx.lineTo(x + r, y + height);
-  ctx.quadraticCurveTo(x, y + height, x, y + height - r);
-  ctx.lineTo(x, y + r);
-  ctx.quadraticCurveTo(x, y, x + r, y);
-  ctx.closePath();
+type QuantumLink = {
+  line: THREE.Line;
+  a: QuantumQubit;
+  b: QuantumQubit;
+  phase: number;
+  speed: number;
+};
+
+type QuantumPulse = {
+  mesh: THREE.Mesh;
+  radius: number;
+  height: number;
+  depthScale: number;
+  phase: number;
+  speed: number;
+};
+
+type QuantumCore = {
+  group: THREE.Group;
+  topPlate: THREE.Mesh;
+  qubits: QuantumQubit[];
+  rings: QuantumRing[];
+  links: QuantumLink[];
+  pulses: QuantumPulse[];
+  dust: THREE.Points;
+};
+
+function trackMeshDisposables(mesh: THREE.Mesh, geometries: THREE.BufferGeometry[], materials: THREE.Material[]) {
+  geometries.push(mesh.geometry);
+  if (Array.isArray(mesh.material)) {
+    mesh.material.forEach((material) => materials.push(material));
+  } else {
+    materials.push(mesh.material);
+  }
 }
 
-function createCodeTexture(title: string, lines: string[], accent: string) {
-  const canvas = document.createElement("canvas");
-  canvas.width = 900;
-  canvas.height = 460;
-
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return null;
-
-  const width = canvas.width;
-  const height = canvas.height;
-
-  const panelGradient = ctx.createLinearGradient(0, 0, width, height);
-  panelGradient.addColorStop(0, "rgba(10, 22, 36, 0.98)");
-  panelGradient.addColorStop(1, "rgba(7, 14, 24, 0.98)");
-  ctx.fillStyle = panelGradient;
-  drawRoundedRect(ctx, 0, 0, width, height, 28);
-  ctx.fill();
-
-  ctx.strokeStyle = "rgba(110, 162, 219, 0.65)";
-  ctx.lineWidth = 3;
-  drawRoundedRect(ctx, 1.5, 1.5, width - 3, height - 3, 27);
-  ctx.stroke();
-
-  ctx.fillStyle = "rgba(26, 46, 73, 0.85)";
-  ctx.fillRect(0, 0, width, 86);
-
-  const dots = ["#ff6b6b", "#f5c15f", "#3dd598"];
-  dots.forEach((dot, index) => {
-    ctx.fillStyle = dot;
-    ctx.beginPath();
-    ctx.arc(40 + index * 26, 43, 8, 0, Math.PI * 2);
-    ctx.fill();
-  });
-
-  ctx.font = "700 30px 'JetBrains Mono', 'Consolas', monospace";
-  ctx.fillStyle = "#DCEEFF";
-  ctx.fillText(title, 130, 52);
-
-  ctx.font = "600 26px 'JetBrains Mono', 'Consolas', monospace";
-  lines.forEach((line, index) => {
-    const y = 140 + index * 52;
-
-    if (line.includes("const") || line.includes("function") || line.includes("return")) {
-      const keyword = line.includes("const") ? "const" : line.includes("function") ? "function" : "return";
-      const remainder = line.replace(keyword, "").trimStart();
-      ctx.fillStyle = "#4EC6FF";
-      ctx.fillText(keyword, 42, y);
-      const keywordWidth = ctx.measureText(`${keyword} `).width;
-      ctx.fillStyle = "#CDE6FF";
-      ctx.fillText(remainder, 42 + keywordWidth, y);
-    } else {
-      ctx.fillStyle = index % 2 === 0 ? "#CDE6FF" : "#9BD8FF";
-      ctx.fillText(line, 42, y);
-    }
-  });
-
-  ctx.fillStyle = accent;
-  ctx.fillRect(0, height - 8, width, 8);
-
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  texture.anisotropy = 8;
-  return texture;
+function trackLineDisposables(line: THREE.Line, geometries: THREE.BufferGeometry[], materials: THREE.Material[]) {
+  geometries.push(line.geometry);
+  if (Array.isArray(line.material)) {
+    line.material.forEach((material) => materials.push(material));
+  } else {
+    materials.push(line.material);
+  }
 }
 
-function createSymbolTexture(symbol: string, color: string) {
-  const canvas = document.createElement("canvas");
-  canvas.width = 260;
-  canvas.height = 260;
+function setLineEndpoints(line: THREE.Line, a: THREE.Vector3, b: THREE.Vector3) {
+  const positions = line.geometry.getAttribute("position");
+  if (!(positions instanceof THREE.BufferAttribute)) return;
 
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return null;
-
-  const radial = ctx.createRadialGradient(130, 130, 10, 130, 130, 130);
-  radial.addColorStop(0, "rgba(19, 44, 74, 0.92)");
-  radial.addColorStop(1, "rgba(8, 16, 26, 0.14)");
-
-  ctx.fillStyle = radial;
-  ctx.beginPath();
-  ctx.arc(130, 130, 118, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.strokeStyle = "rgba(126, 188, 255, 0.58)";
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.arc(130, 130, 116, 0, Math.PI * 2);
-  ctx.stroke();
-
-  ctx.font = "700 84px 'JetBrains Mono', 'Consolas', monospace";
-  ctx.fillStyle = color;
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText(symbol, 130, 130);
-
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  texture.anisotropy = 8;
-  return texture;
+  positions.setXYZ(0, a.x, a.y, a.z);
+  positions.setXYZ(1, b.x, b.y, b.z);
+  positions.needsUpdate = true;
 }
 
-function createCodeCards(
+function createQuantumCore(
   sceneRoot: THREE.Group,
   geometries: THREE.BufferGeometry[],
   materials: THREE.Material[],
-  textures: THREE.Texture[],
   lowPower: boolean
 ) {
-  const cards: CodeCard[] = [];
-  const specs = [
-    {
-      title: "api/lease-automation.ts",
-      lines: ["const pipeline = await crm.connect();", "pipeline.syncTenantRecords();", "return pipeline.deploy('secure');"],
-      accent: "rgba(78, 198, 255, 0.9)",
-      pos: [-4.1, 1.8, -4.4],
-      speed: 0.58,
-      drift: 0.36,
-      rollSpeed: 0.0009,
-    },
-    {
-      title: "security/audit-log.ts",
-      lines: ["function verifyAccess(role, scope) {", "  if (!scope.allowed) throw new Error();", "  return audit.write(role, scope);"],
-      accent: "rgba(61, 213, 152, 0.9)",
-      pos: [3.9, 2.2, -4.0],
-      speed: 0.66,
-      drift: 0.31,
-      rollSpeed: -0.001,
-    },
-    {
-      title: "ops/dashboard-state.ts",
-      lines: ["const kpi = metrics.computeQuarterly();", "kpi.riskIndex = model.forecast();", "publish(kpi, 'exec-command');"],
-      accent: "rgba(141, 176, 255, 0.9)",
-      pos: [4.6, -1.5, -5.2],
-      speed: 0.53,
-      drift: 0.33,
-      rollSpeed: 0.0008,
-    },
-    {
-      title: "crm/workflow-engine.ts",
-      lines: ["const queue = await events.pull();", "queue.forEach(runWorkflowStep);", "commit('go-live-ready');"],
-      accent: "rgba(118, 208, 255, 0.9)",
-      pos: [-2.4, -2.4, -3.8],
-      speed: 0.63,
-      drift: 0.27,
-      rollSpeed: -0.0011,
-    },
-    {
-      title: "infra/replication.ts",
-      lines: ["const mirror = vault.cloneRegion('ap-south');", "mirror.encryptAtRest();", "monitor.replicationHealth(mirror);"],
-      accent: "rgba(56, 214, 193, 0.9)",
-      pos: [0.2, 3.0, -4.8],
-      speed: 0.74,
-      drift: 0.29,
-      rollSpeed: 0.0009,
-    },
-    {
-      title: "deploy/pipeline.ts",
-      lines: ["const release = ci.buildTaggedCommit();", "release.runSmokeSuite();", "release.promote('production');"],
-      accent: "rgba(168, 204, 255, 0.9)",
-      pos: [1.2, -2.9, -4.2],
-      speed: 0.69,
-      drift: 0.25,
-      rollSpeed: -0.0009,
-    },
+  const group = new THREE.Group();
+  group.position.set(0, 0, -2.6);
+  sceneRoot.add(group);
+
+  const chipBase = new THREE.Mesh(
+    new THREE.BoxGeometry(3.2, 0.5, 3.2),
+    new THREE.MeshPhysicalMaterial({
+      color: "#102437",
+      roughness: 0.42,
+      metalness: 0.55,
+      clearcoat: 0.36,
+      clearcoatRoughness: 0.26,
+      reflectivity: 0.8,
+    })
+  );
+  chipBase.position.y = -0.35;
+  group.add(chipBase);
+  trackMeshDisposables(chipBase, geometries, materials);
+
+  const topPlate = new THREE.Mesh(
+    new THREE.BoxGeometry(2.42, 0.18, 2.42),
+    new THREE.MeshStandardMaterial({
+      color: "#1c3a57",
+      emissive: "#2d9cff",
+      emissiveIntensity: 0.6,
+      roughness: 0.28,
+      metalness: 0.5,
+    })
+  );
+  topPlate.position.y = 0.05;
+  group.add(topPlate);
+  trackMeshDisposables(topPlate, geometries, materials);
+
+  const pinMaterial = new THREE.MeshStandardMaterial({
+    color: "#8ab5d8",
+    emissive: "#193753",
+    emissiveIntensity: 0.25,
+    roughness: 0.4,
+    metalness: 0.72,
+  });
+  materials.push(pinMaterial);
+
+  const pinCount = lowPower ? 10 : 16;
+  for (let i = 0; i < pinCount; i += 1) {
+    const angle = (i / pinCount) * Math.PI * 2;
+    const pin = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.24, 6), pinMaterial);
+    pin.position.set(Math.cos(angle) * 1.34, -0.04, Math.sin(angle) * 1.34);
+    group.add(pin);
+    geometries.push(pin.geometry);
+  }
+
+  const qubits: QuantumQubit[] = [];
+  const qubitCount = lowPower ? 4 : 8;
+  const qubitRadius = lowPower ? 2.28 : 2.62;
+  const qubitSegments = lowPower ? 12 : 16;
+  const haloSegments = lowPower ? 9 : 12;
+
+  for (let i = 0; i < qubitCount; i += 1) {
+    const layer = i % 2;
+    const angle = (i / qubitCount) * Math.PI * 2;
+    const y = layer === 0 ? 0.56 : -0.22;
+    const x = Math.cos(angle) * qubitRadius;
+    const z = Math.sin(angle) * qubitRadius * 0.74;
+    const base = new THREE.Vector3(x, y, z);
+
+    const node = new THREE.Mesh(
+      new THREE.SphereGeometry(0.16, qubitSegments, qubitSegments),
+      new THREE.MeshStandardMaterial({
+        color: layer === 0 ? "#86d7ff" : "#5df6d5",
+        emissive: layer === 0 ? "#3b86d6" : "#2aa58f",
+        emissiveIntensity: 0.62,
+        roughness: 0.25,
+        metalness: 0.2,
+      })
+    );
+    node.position.copy(base);
+
+    const halo = new THREE.Mesh(
+      new THREE.SphereGeometry(0.32, haloSegments, haloSegments),
+      new THREE.MeshBasicMaterial({
+        color: layer === 0 ? "#7bc4ff" : "#64f6d8",
+        transparent: true,
+        opacity: 0.2,
+        blending: THREE.AdditiveBlending,
+      })
+    );
+    halo.position.copy(base);
+
+    group.add(node);
+    group.add(halo);
+    trackMeshDisposables(node, geometries, materials);
+    trackMeshDisposables(halo, geometries, materials);
+
+    if (!lowPower || i % 2 === 0) {
+      const conduit = new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints([
+          new THREE.Vector3(x * 0.35, -0.08, z * 0.35),
+          new THREE.Vector3(x, y, z),
+        ]),
+        new THREE.LineBasicMaterial({
+          color: "#82bfff",
+          transparent: true,
+          opacity: 0.34,
+        })
+      );
+      group.add(conduit);
+      trackLineDisposables(conduit, geometries, materials);
+    }
+
+    qubits.push({
+      node,
+      halo,
+      base,
+      phase: (Math.PI * 2 * i) / Math.max(1, qubitCount),
+      speed: 0.7 + Math.random() * 0.42,
+    });
+  }
+
+  const links: QuantumLink[] = [];
+  const linkMaterial = new THREE.LineBasicMaterial({
+    color: "#94ccff",
+    transparent: true,
+    opacity: 0.2,
+  });
+  materials.push(linkMaterial);
+
+  const addLink = (indexA: number, indexB: number, phase: number, speed: number) => {
+    const a = qubits[indexA];
+    const b = qubits[indexB];
+    if (!a || !b) return;
+
+    const line = new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints([a.node.position.clone(), b.node.position.clone()]),
+      linkMaterial
+    );
+    group.add(line);
+    geometries.push(line.geometry);
+
+    links.push({ line, a, b, phase, speed });
+  };
+
+  const stride = Math.floor(qubitCount / 2);
+  for (let i = 0; i < qubitCount; i += 2) {
+    const pair = (i + stride) % qubitCount;
+    addLink(i, pair, i * 0.48, 1.15 + i * 0.05);
+  }
+
+  if (!lowPower && qubitCount >= 8) {
+    for (let i = 0; i < qubitCount; i += 3) {
+      const pair = (i + 3) % qubitCount;
+      addLink(i, pair, i * 0.32 + 1.4, 1.45 + i * 0.04);
+    }
+  }
+
+  const rings: QuantumRing[] = [];
+  const ringSpecs = [
+    { radius: 1.82, tube: 0.02, speed: 0.0044, phase: 0.2, wobble: 0.16, rot: new THREE.Euler(Math.PI / 2, 0, 0) },
+    { radius: 2.12, tube: 0.018, speed: -0.0035, phase: 1.8, wobble: 0.13, rot: new THREE.Euler(0.38, 0.52, 0.24) },
+    { radius: 2.36, tube: 0.016, speed: 0.0031, phase: 2.6, wobble: 0.11, rot: new THREE.Euler(-0.42, 0.2, -0.54) },
   ];
 
-  const limit = lowPower ? 3 : specs.length;
+  ringSpecs.forEach((spec) => {
+    if (lowPower && spec.radius > 2.2) return;
 
-  specs.slice(0, limit).forEach((spec) => {
-    const texture = createCodeTexture(spec.title, spec.lines, spec.accent);
-    if (!texture) return;
+    const ring = new THREE.Mesh(
+      new THREE.TorusGeometry(spec.radius, spec.tube, lowPower ? 8 : 12, lowPower ? 64 : 96),
+      new THREE.MeshBasicMaterial({
+        color: spec.radius > 2.1 ? "#56e2c8" : "#79c6ff",
+        transparent: true,
+        opacity: 0.36,
+        blending: THREE.AdditiveBlending,
+      })
+    );
 
-    const geometry = new THREE.PlaneGeometry(3.0, 1.56);
-    const material = new THREE.MeshBasicMaterial({
-      map: texture,
-      transparent: true,
-      opacity: 0.94,
-      side: THREE.DoubleSide,
-    });
-
-    const mesh = new THREE.Mesh(geometry, material);
-    const baseRotX = -0.1 + Math.random() * 0.14;
-    const baseRotY = (Math.random() - 0.5) * 0.55;
-    mesh.position.set(spec.pos[0], spec.pos[1], spec.pos[2]);
-    mesh.rotation.set(baseRotX, baseRotY, 0);
-
-    sceneRoot.add(mesh);
-
-    cards.push({
-      mesh,
-      base: mesh.position.clone(),
-      baseRotX,
-      baseRotY,
+    ring.rotation.copy(spec.rot);
+    group.add(ring);
+    trackMeshDisposables(ring, geometries, materials);
+    rings.push({
+      mesh: ring,
       speed: spec.speed,
-      drift: spec.drift,
-      rollSpeed: spec.rollSpeed,
+      phase: spec.phase,
+      wobble: spec.wobble,
     });
-
-    geometries.push(geometry);
-    materials.push(material);
-    textures.push(texture);
   });
 
-  return cards;
-}
+  const pulses: QuantumPulse[] = [];
+  const pulseCount = lowPower ? 3 : 5;
+  for (let i = 0; i < pulseCount; i += 1) {
+    const pulse = new THREE.Mesh(
+      new THREE.SphereGeometry(0.055, lowPower ? 8 : 10, lowPower ? 8 : 10),
+      new THREE.MeshBasicMaterial({
+        color: i % 2 === 0 ? "#8dd5ff" : "#68f0d6",
+        transparent: true,
+        opacity: 0.9,
+      })
+    );
 
-function createSymbolNodes(
-  sceneRoot: THREE.Group,
-  materials: THREE.Material[],
-  textures: THREE.Texture[],
-  lowPower: boolean
-) {
-  const nodes: SymbolNode[] = [];
-  const symbols = ["</>", "{}", "()=>", "npm", "git", "SQL"];
-  const colors = ["#76D8FF", "#9BD4FF", "#50E0C7", "#BBD8FF", "#8BE5FF", "#7FC3FF"];
-  const limit = lowPower ? 3 : symbols.length;
-
-  for (let i = 0; i < limit; i += 1) {
-    const texture = createSymbolTexture(symbols[i], colors[i % colors.length]);
-    if (!texture) continue;
-
-    const material = new THREE.SpriteMaterial({
-      map: texture,
-      transparent: true,
-      depthWrite: false,
-      opacity: 0.88,
+    group.add(pulse);
+    trackMeshDisposables(pulse, geometries, materials);
+    pulses.push({
+      mesh: pulse,
+      radius: 1.74 + (i % 3) * 0.3,
+      height: (Math.random() - 0.5) * 0.66,
+      depthScale: 0.65 + Math.random() * 0.24,
+      phase: (Math.PI * 2 * i) / pulseCount,
+      speed: 0.9 + Math.random() * 0.44,
     });
-
-    const sprite = new THREE.Sprite(material);
-    const size = 0.9 + Math.random() * 0.25;
-    sprite.scale.set(size, size, 1);
-    sceneRoot.add(sprite);
-
-    nodes.push({
-      sprite,
-      radius: 2.8 + Math.random() * 2.1,
-      speed: 0.2 + Math.random() * 0.2,
-      phase: (Math.PI * 2 * i) / Math.max(1, limit),
-      yOffset: (Math.random() - 0.5) * 2.4,
-    });
-
-    materials.push(material);
-    textures.push(texture);
   }
 
-  return nodes;
-}
-
-function createCodeParticles(
-  sceneRoot: THREE.Group,
-  geometries: THREE.BufferGeometry[],
-  materials: THREE.Material[],
-  count: number
-) {
-  const buffer = new Float32Array(count * 3);
-
-  for (let i = 0; i < count; i += 1) {
+  const dustCount = lowPower ? 70 : 160;
+  const dustPositions = new Float32Array(dustCount * 3);
+  for (let i = 0; i < dustCount; i += 1) {
     const i3 = i * 3;
-    buffer[i3] = (Math.random() - 0.5) * 22;
-    buffer[i3 + 1] = (Math.random() - 0.5) * 14;
-    buffer[i3 + 2] = -3 - Math.random() * 10;
+    const angle = Math.random() * Math.PI * 2;
+    const radius = 1.7 + Math.random() * 4.2;
+    const spread = (Math.random() - 0.5) * 2.8;
+    dustPositions[i3] = Math.cos(angle) * radius;
+    dustPositions[i3 + 1] = spread;
+    dustPositions[i3 + 2] = Math.sin(angle) * radius * 0.8;
   }
 
-  const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute("position", new THREE.BufferAttribute(buffer, 3));
+  const dustGeometry = new THREE.BufferGeometry();
+  dustGeometry.setAttribute("position", new THREE.BufferAttribute(dustPositions, 3));
+  geometries.push(dustGeometry);
 
-  const material = new THREE.PointsMaterial({
-    color: "#7CC8FF",
-    size: 0.085,
-    sizeAttenuation: true,
+  const dustMaterial = new THREE.PointsMaterial({
+    color: "#8acfff",
+    size: 0.052,
     transparent: true,
-    opacity: 0.52,
+    opacity: 0.48,
+    sizeAttenuation: true,
     blending: THREE.AdditiveBlending,
     depthWrite: false,
   });
+  materials.push(dustMaterial);
 
-  const points = new THREE.Points(geometry, material);
-  sceneRoot.add(points);
+  const dust = new THREE.Points(dustGeometry, dustMaterial);
+  dust.position.y = 0.1;
+  group.add(dust);
 
-  geometries.push(geometry);
-  materials.push(material);
-
-  return points;
+  return {
+    group,
+    topPlate,
+    qubits,
+    rings,
+    links,
+    pulses,
+    dust,
+  } satisfies QuantumCore;
 }
 
 export default function AtmosphereCanvas() {
@@ -335,49 +337,56 @@ export default function AtmosphereCanvas() {
     if (!host) return;
 
     const nav = navigator as Navigator & { deviceMemory?: number };
+    const deviceMemory = nav.deviceMemory ?? 8;
+    const cpuCores = navigator.hardwareConcurrency ?? 8;
+    const dpr = window.devicePixelRatio || 1;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isSmallScreen = window.matchMedia("(max-width: 900px)").matches;
-    const lowMemory = (nav.deviceMemory ?? 8) <= 4;
-    const lowCores = (navigator.hardwareConcurrency ?? 8) <= 4;
-    const lowPower = isSmallScreen || lowMemory || lowCores;
-    const disableWebgl = reducedMotion || (isSmallScreen && (lowMemory || lowCores));
+    const isSmallScreen = window.matchMedia("(max-width: 1024px)").matches;
+    const lowMemory = deviceMemory <= 8;
+    const veryLowMemory = deviceMemory <= 4;
+    const lowCores = cpuCores <= 8;
+    const veryLowCores = cpuCores <= 4;
+    const lowPower = isSmallScreen || lowMemory || lowCores || dpr > 1.8;
+    const disableWebgl = reducedMotion || isSmallScreen || veryLowMemory || veryLowCores;
 
-    // Keep CSS fallback glow but skip GPU work on constrained devices.
+    // Keep CSS background layers visible while skipping GPU work on constrained devices.
     if (disableWebgl) return;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 120);
-    camera.position.set(0, 0, 10.2);
+    const camera = new THREE.PerspectiveCamera(48, 1, 0.1, 120);
+    camera.position.set(0, 0.4, 10.6);
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: !lowPower,
       powerPreference: "high-performance",
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, lowPower ? 1 : 1.35));
+    renderer.setPixelRatio(Math.min(dpr, lowPower ? 0.85 : 1));
     renderer.setClearColor(0x000000, 0);
     host.appendChild(renderer.domElement);
 
     const root = new THREE.Group();
     scene.add(root);
 
-    const ambient = new THREE.AmbientLight(0xffffff, 1);
-    scene.add(ambient);
+    const ambient = new THREE.AmbientLight(0xdceeff, 0.62);
+    const hemi = new THREE.HemisphereLight(0xa9d7ff, 0x08131d, 0.82);
+    const keyLight = new THREE.PointLight(0x8fd0ff, 1.35, 30, 2);
+    keyLight.position.set(4.5, 4.3, 4.8);
+    const accentLight = new THREE.PointLight(0x43e3c2, 1.15, 24, 2);
+    accentLight.position.set(-4.8, -2.2, 3.5);
+    scene.add(ambient, hemi, keyLight, accentLight);
 
     const geometries: THREE.BufferGeometry[] = [];
     const materials: THREE.Material[] = [];
-    const textures: THREE.Texture[] = [];
-
-    const cards = createCodeCards(root, geometries, materials, textures, lowPower);
-    const symbols = createSymbolNodes(root, materials, textures, lowPower);
-    const particles = createCodeParticles(root, geometries, materials, lowPower ? 180 : 360);
+    const quantumCore = createQuantumCore(root, geometries, materials, lowPower);
 
     const pointer = { x: 0, y: 0 };
     const clock = new THREE.Clock();
-    const frameBudget = 1000 / (lowPower ? 24 : 40);
-    const enablePointerTilt = !lowPower;
+    const frameBudget = 1000 / (lowPower ? 24 : 32);
+    const enablePointerTilt = !lowPower && window.matchMedia("(pointer: fine)").matches;
     let lastFrame = 0;
     let frameId = 0;
+    let frameStep = 0;
 
     const resize = () => {
       const width = host.clientWidth || window.innerWidth;
@@ -390,8 +399,8 @@ export default function AtmosphereCanvas() {
     const onPointerMove = (event: PointerEvent) => {
       const width = window.innerWidth || 1;
       const height = window.innerHeight || 1;
-      pointer.x = ((event.clientX / width) * 2 - 1) * 0.24;
-      pointer.y = ((event.clientY / height) * 2 - 1) * 0.18;
+      pointer.x = ((event.clientX / width) * 2 - 1) * 0.28;
+      pointer.y = ((event.clientY / height) * 2 - 1) * 0.2;
     };
 
     const animate = () => {
@@ -404,29 +413,62 @@ export default function AtmosphereCanvas() {
       lastFrame = now;
 
       const t = clock.getElapsedTime();
+      root.rotation.y = THREE.MathUtils.lerp(root.rotation.y, pointer.x + Math.sin(t * 0.12) * 0.08, 0.05);
+      root.rotation.x = THREE.MathUtils.lerp(root.rotation.x, -pointer.y + Math.sin(t * 0.09) * 0.03, 0.045);
 
-      root.rotation.y = THREE.MathUtils.lerp(root.rotation.y, pointer.x, 0.04);
-      root.rotation.x = THREE.MathUtils.lerp(root.rotation.x, -pointer.y, 0.035);
+      quantumCore.group.position.y = Math.sin(t * 0.55) * 0.14;
+      quantumCore.group.rotation.y += 0.0016;
 
-      cards.forEach((card, index) => {
-        const wave = t * card.speed + index;
-        card.mesh.position.y = card.base.y + Math.sin(wave) * card.drift;
-        card.mesh.position.x = card.base.x + Math.cos(wave * 0.7) * card.drift * 0.34;
-        card.mesh.rotation.x = card.baseRotX + Math.sin(wave * 0.5) * 0.05;
-        card.mesh.rotation.y = card.baseRotY + Math.cos(wave * 0.4) * 0.08;
-        card.mesh.rotation.z += card.rollSpeed;
+      const topMaterial = quantumCore.topPlate.material;
+      if (topMaterial instanceof THREE.MeshStandardMaterial) {
+        topMaterial.emissiveIntensity = 0.56 + Math.sin(t * 2.1) * 0.2;
+      }
+
+      quantumCore.qubits.forEach((qubit) => {
+        const wave = t * qubit.speed + qubit.phase;
+        qubit.node.position.y = qubit.base.y + Math.sin(wave) * 0.12;
+        qubit.node.position.x = qubit.base.x + Math.cos(wave * 0.48) * 0.09;
+        qubit.node.position.z = qubit.base.z + Math.sin(wave * 0.62) * 0.08;
+
+        const nodeScale = 1 + Math.sin(wave * 1.5) * 0.08;
+        qubit.node.scale.setScalar(nodeScale);
+        qubit.halo.position.copy(qubit.node.position);
+        qubit.halo.scale.setScalar(1 + Math.sin(wave + 0.8) * 0.22);
+
+        const haloMaterial = qubit.halo.material;
+        if (haloMaterial instanceof THREE.MeshBasicMaterial) {
+          haloMaterial.opacity = 0.11 + ((Math.sin(wave * 1.8) + 1) * 0.12);
+        }
       });
 
-      symbols.forEach((node) => {
-        const angle = t * node.speed + node.phase;
-        node.sprite.position.x = Math.cos(angle) * node.radius;
-        node.sprite.position.z = -2.4 + Math.sin(angle) * node.radius * 0.3;
-        node.sprite.position.y = node.yOffset + Math.sin(angle * 1.6) * 0.34;
-        node.sprite.material.rotation = Math.sin(t * 0.45 + node.phase) * 0.12;
+      quantumCore.links.forEach((link) => {
+        // On lower tiers, line endpoints update every other rendered frame.
+        if (!lowPower || frameStep % 2 === 0) {
+          setLineEndpoints(link.line, link.a.node.position, link.b.node.position);
+        }
+        const material = link.line.material;
+        if (material instanceof THREE.LineBasicMaterial) {
+          material.opacity = 0.12 + ((Math.sin(t * link.speed + link.phase) + 1) * 0.12);
+        }
       });
 
-      particles.rotation.y += 0.0007;
-      particles.rotation.x += 0.00025;
+      quantumCore.rings.forEach((ring) => {
+        ring.mesh.rotation.y += ring.speed;
+        ring.mesh.rotation.z = Math.sin(t * 0.52 + ring.phase) * ring.wobble;
+      });
+
+      quantumCore.pulses.forEach((pulse) => {
+        const angle = t * pulse.speed + pulse.phase;
+        pulse.mesh.position.set(
+          Math.cos(angle) * pulse.radius,
+          pulse.height + Math.sin(angle * 1.45) * 0.28,
+          Math.sin(angle) * pulse.radius * pulse.depthScale
+        );
+      });
+
+      quantumCore.dust.rotation.y += 0.0007;
+      quantumCore.dust.rotation.x = Math.sin(t * 0.2) * 0.08;
+      frameStep += 1;
 
       renderer.render(scene, camera);
     };
@@ -445,11 +487,10 @@ export default function AtmosphereCanvas() {
       if (enablePointerTilt) {
         window.removeEventListener("pointermove", onPointerMove);
       }
-      window.cancelAnimationFrame(frameId);
 
+      window.cancelAnimationFrame(frameId);
       geometries.forEach((geometry) => geometry.dispose());
       materials.forEach((material) => material.dispose());
-      textures.forEach((texture) => texture.dispose());
 
       renderer.dispose();
       scene.clear();
