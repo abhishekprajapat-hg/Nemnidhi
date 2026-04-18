@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
-import HeroScene3D from "@/components/home/HeroScene3D";
 
 type HeroContent = {
   headingMain?: string;
@@ -60,7 +59,36 @@ export default function Hero({ hero }: HeroProps) {
           </div>
 
           <div className="relative flex w-full justify-end md:col-span-6">
-            <HeroScene3D />
+            <div className="surface-3d-soft w-full max-w-[760px] rounded-2xl border border-[#3A5675]/36 p-5 text-left md:p-7">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#8095AC]">Engineering Snapshot</p>
+
+              <div className="mt-4 space-y-2.5 rounded-xl border border-[#3A5675]/34 bg-[linear-gradient(150deg,rgba(18,28,42,0.9),rgba(10,18,30,0.9))] p-4 font-mono text-[13px] leading-6 text-[#AABFD4]">
+                <p>
+                  <span className="text-[#69AEFF]">const</span> stack = [Next.js, Node.js, MongoDB];
+                </p>
+                <p>
+                  <span className="text-[#69AEFF]">uptime</span>: 99.95%
+                </p>
+                <p>
+                  <span className="text-[#69AEFF]">deploy</span>: production-ready workflows
+                </p>
+              </div>
+
+              <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                <div className="rounded-xl border border-[#3A5675]/28 bg-[#0f1c2e]/70 px-3 py-2">
+                  <p className="text-xs uppercase tracking-[0.1em] text-[#8095AC]">Runtime</p>
+                  <p className="mt-1 text-sm font-semibold text-[#E7F0FF]">42ms p95</p>
+                </div>
+                <div className="rounded-xl border border-[#3A5675]/28 bg-[#0f1c2e]/70 px-3 py-2">
+                  <p className="text-xs uppercase tracking-[0.1em] text-[#8095AC]">Security</p>
+                  <p className="mt-1 text-sm font-semibold text-[#E7F0FF]">Role-based access</p>
+                </div>
+                <div className="rounded-xl border border-[#3A5675]/28 bg-[#0f1c2e]/70 px-3 py-2">
+                  <p className="text-xs uppercase tracking-[0.1em] text-[#8095AC]">Scale</p>
+                  <p className="mt-1 text-sm font-semibold text-[#E7F0FF]">Auto workflows</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

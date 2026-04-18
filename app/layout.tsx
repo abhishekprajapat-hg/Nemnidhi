@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import AtmosphereCanvas from "@/components/three/AtmosphereCanvas";
 import { Manrope, Space_Grotesk } from "next/font/google";
 
 const manrope = Manrope({
@@ -36,7 +35,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${manrope.variable} ${spaceGrotesk.variable} site-shell min-h-screen`}>
-        <AtmosphereCanvas />
         <div className="scene-root relative flex min-h-screen flex-col overflow-x-clip">
           <Navbar />
           <main className="relative z-[2] flex-1 pb-24 md:pb-0">{children}</main>

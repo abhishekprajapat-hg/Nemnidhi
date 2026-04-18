@@ -61,7 +61,7 @@ export function Navbar() {
               <div className="group relative">
                 <Link href="/projects" className={desktopLinkClass(isProjectsActive)}>
                   <span>Projects</span>
-                  <ChevronDown size={14} className="transition-transform duration-300 group-hover:rotate-180" />
+                  <ChevronDown size={14} className="transition-transform duration-300" />
                 </Link>
 
                 <div className="pointer-events-none absolute left-0 top-full z-50 w-[430px] translate-y-1 pt-3 opacity-0 transition-all duration-300 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100">
@@ -75,7 +75,7 @@ export function Navbar() {
 
                     <Link
                       href="/projects"
-                      className="button-3d flex items-center justify-between rounded-xl border border-[#4F85BA] bg-[linear-gradient(145deg,#33DEC0,#004DC5)] px-3 py-2.5 text-sm font-semibold text-[#EAF2FF] transition hover:opacity-95"
+                      className="button-3d flex items-center justify-between rounded-xl border border-[#4F85BA] bg-[linear-gradient(145deg,#33DEC0,#004DC5)] px-3 py-2.5 text-sm font-semibold text-[#EAF2FF] transition"
                     >
                       <span>Explore project ecosystem</span>
                       <ArrowUpRight className="h-4 w-4" />

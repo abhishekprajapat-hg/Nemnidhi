@@ -284,6 +284,15 @@
     }
   }
 
+  @keyframes bg-particles-drift {
+    0% {
+      background-position: 0 0, 40px 70px, 100px 20px, 160px 120px, center, center;
+    }
+    100% {
+      background-position: 260px 180px, -120px 260px, 340px -160px, -220px 140px, center, center;
+    }
+  }
+
   .site-shell {
     position: relative;
     isolation: isolate;
@@ -321,15 +330,17 @@
     pointer-events: none;
     mix-blend-mode: screen;
     background:
-      radial-gradient(circle at 20% 30%, rgba(173, 223, 255, 0.38) 0 2px, rgba(173, 223, 255, 0) 7px),
-      radial-gradient(circle at 78% 56%, rgba(98, 240, 208, 0.32) 0 2px, rgba(98, 240, 208, 0) 7px),
+      radial-gradient(circle at 20% 30%, rgba(173, 223, 255, 0.5) 0 1.7px, rgba(173, 223, 255, 0) 6px),
+      radial-gradient(circle at 78% 56%, rgba(98, 240, 208, 0.46) 0 1.6px, rgba(98, 240, 208, 0) 6px),
+      radial-gradient(circle at 48% 16%, rgba(142, 202, 255, 0.34) 0 1.4px, rgba(142, 202, 255, 0) 5.5px),
+      radial-gradient(circle at 12% 68%, rgba(129, 247, 219, 0.3) 0 1.3px, rgba(129, 247, 219, 0) 5.2px),
       radial-gradient(circle at 62% 22%, rgba(117, 181, 255, 0.22), rgba(117, 181, 255, 0) 34%),
       radial-gradient(circle at 34% 78%, rgba(46, 215, 184, 0.18), rgba(46, 215, 184, 0) 32%);
-    background-size: 310px 310px, 340px 340px, 100% 100%, 100% 100%;
-    background-repeat: repeat, repeat, no-repeat, no-repeat;
-    background-position: 0 0, 110px 86px, center, center;
-    opacity: 0.16;
-    animation: quantum-interference 34s ease-in-out infinite;
+    background-size: 200px 200px, 240px 240px, 300px 300px, 340px 340px, 100% 100%, 100% 100%;
+    background-repeat: repeat, repeat, repeat, repeat, no-repeat, no-repeat;
+    background-position: 0 0, 40px 70px, 100px 20px, 160px 120px, center, center;
+    opacity: 0.24;
+    animation: bg-particles-drift 90s linear infinite, quantum-interference 34s ease-in-out infinite;
   }
 
   .container-custom {
@@ -518,13 +529,6 @@
     pointer-events: none;
   }
 
-  .nav-brand:hover .nav-brand-cube {
-    transform: translateZ(18px) rotateX(10deg) rotateY(-14deg) translate3d(0, -2px, 0);
-    box-shadow:
-      0 12px 0 rgba(8, 29, 55, 0.62),
-      0 24px 34px rgba(8, 29, 55, 0.46);
-  }
-
   .nav-3d-menu {
     position: relative;
     z-index: 3;
@@ -566,21 +570,16 @@
     transition: opacity 220ms ease;
   }
 
-  .nav-3d-link:hover,
   .nav-3d-link:focus-visible,
   .nav-3d-link.is-active {
     color: #e8f1ff;
     border-color: rgba(101, 151, 207, 0.58);
-    transform: translate3d(0, -3px, 0);
-    box-shadow: 0 8px 14px rgba(5, 16, 30, 0.4);
     outline: none;
   }
 
-  .nav-3d-link:hover::before,
   .nav-3d-link:focus-visible::before,
   .nav-3d-link.is-active::before {
     opacity: 1;
-    animation: nav-sheen 600ms ease;
   }
 
   .nav-mega-panel {
@@ -602,12 +601,6 @@
     border: 1px solid transparent;
     padding: 0.62rem 0.72rem;
     transition: transform 220ms ease, border-color 220ms ease, background-color 220ms ease;
-  }
-
-  .nav-project-link:hover {
-    border-color: rgba(141, 180, 215, 0.45);
-    background: linear-gradient(150deg, rgba(25, 39, 57, 0.8), rgba(19, 17, 24, 0.74));
-    transform: translate3d(0, -2px, 0);
   }
 
   .nav-cta {
@@ -668,17 +661,13 @@
     transition: opacity 220ms ease;
   }
 
-  .nav-mobile-tab:hover,
   .nav-mobile-tab:focus-visible,
   .nav-mobile-tab.is-active {
     color: #e7f0ff;
     border-color: rgba(101, 151, 207, 0.52);
-    transform: translate3d(0, -2px, 0);
-    box-shadow: 0 8px 14px rgba(4, 14, 27, 0.36);
     outline: none;
   }
 
-  .nav-mobile-tab:hover::before,
   .nav-mobile-tab:focus-visible::before,
   .nav-mobile-tab.is-active::before {
     opacity: 1;
@@ -782,27 +771,6 @@
   }
 
   @media (hover: hover) {
-    .theme-card:hover,
-    .surface-3d-soft:hover {
-      transform: translate3d(0, -6px, 0) rotateX(3deg) rotateY(-2deg);
-      border-color: rgba(102, 152, 206, 0.58);
-      box-shadow: var(--shadow-lift);
-    }
-
-    .theme-card-strong:hover,
-    .surface-3d:hover {
-      transform: translate3d(0, -8px, 0) rotateX(3.2deg) rotateY(-2.2deg);
-      border-color: rgba(110, 162, 219, 0.62);
-      box-shadow: 0 25px 42px rgba(1, 8, 16, 0.78), 0 8px 18px rgba(1, 8, 16, 0.5);
-    }
-
-    .theme-card:hover::before,
-    .theme-card-strong:hover::before,
-    .surface-3d:hover::before,
-    .surface-3d-soft:hover::before {
-      animation: gloss-sweep 760ms ease;
-    }
-
     .lift-3d:hover {
       transform: translate3d(0, -5px, 0);
       box-shadow: var(--shadow-panel);
