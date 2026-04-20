@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import RequirementChatbot from "@/components/chat/RequirementChatbot";
 import { Manrope, Space_Grotesk } from "next/font/google";
 
 const manrope = Manrope({
@@ -39,6 +40,7 @@ export default function RootLayout({
           <Navbar />
           <main className="relative z-[2] flex-1 pb-24 md:pb-0">{children}</main>
           <Footer />
+          <RequirementChatbot />
         </div>
       </body>
     </html>
