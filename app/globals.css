@@ -1022,3 +1022,153 @@
     transform: none !important;
   }
 }
+
+/* Admin Theme V2 */
+.admin-theme-v2 {
+  --admin-text: #e7edf5;
+  --admin-muted: #9daebe;
+  --admin-line: rgba(116, 145, 170, 0.28);
+  --admin-surface: rgba(13, 22, 34, 0.82);
+  --admin-surface-strong: rgba(8, 16, 27, 0.92);
+  --admin-accent: #8dd6ff;
+  --admin-accent-2: #61e5c9;
+  position: relative;
+  color: var(--admin-text);
+  background:
+    radial-gradient(1200px 620px at -10% -18%, rgba(73, 150, 230, 0.22), transparent 62%),
+    radial-gradient(980px 560px at 112% -22%, rgba(65, 205, 182, 0.16), transparent 58%),
+    linear-gradient(158deg, #060b13 0%, #09121f 42%, #0b1524 100%);
+}
+
+.admin-theme-v2::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(124, 153, 176, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 153, 176, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px, 32px 32px;
+  mask-image: radial-gradient(circle at center, black 44%, transparent 100%);
+  opacity: 0.24;
+  z-index: 0;
+}
+
+.admin-theme-v2 > * {
+  position: relative;
+  z-index: 1;
+}
+
+.admin-theme-v2 [class*="bg-black"],
+.admin-theme-v2 [class*="bg-zinc-950"],
+.admin-theme-v2 [class*="bg-zinc-900"] {
+  background: linear-gradient(152deg, var(--admin-surface-strong), var(--admin-surface)) !important;
+  backdrop-filter: blur(8px);
+}
+
+.admin-theme-v2 [class*="border-zinc-8"],
+.admin-theme-v2 [class*="border-zinc-7"] {
+  border-color: var(--admin-line) !important;
+}
+
+.admin-theme-v2 .text-zinc-50,
+.admin-theme-v2 .text-zinc-100,
+.admin-theme-v2 .text-zinc-200 {
+  color: var(--admin-text) !important;
+}
+
+.admin-theme-v2 .text-zinc-300,
+.admin-theme-v2 .text-zinc-400,
+.admin-theme-v2 .text-zinc-500 {
+  color: var(--admin-muted) !important;
+}
+
+.admin-theme-v2 .text-amber-300,
+.admin-theme-v2 .text-amber-200,
+.admin-theme-v2 .text-sky-200,
+.admin-theme-v2 .text-sky-300,
+.admin-theme-v2 .text-indigo-200,
+.admin-theme-v2 .text-rose-200,
+.admin-theme-v2 .text-emerald-200 {
+  color: var(--admin-accent) !important;
+}
+
+.admin-theme-v2 [class*="from-amber-400"] {
+  --tw-gradient-from: #ffb347 var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgb(255 179 71 / 0) var(--tw-gradient-to-position) !important;
+}
+
+.admin-theme-v2 [class*="via-yellow-400"] {
+  --tw-gradient-via: #ff944d var(--tw-gradient-via-position) !important;
+}
+
+.admin-theme-v2 [class*="to-amber-500"] {
+  --tw-gradient-to: #ff6a3d var(--tw-gradient-to-position) !important;
+}
+
+.admin-theme-v2 button[class*="bg-gradient-to-r"] {
+  border: 1px solid rgba(255, 185, 94, 0.45) !important;
+  box-shadow: 0 12px 24px rgba(255, 124, 58, 0.22);
+}
+
+.admin-theme-v2 button[class*="border-zinc-7"] {
+  border-color: rgba(255, 173, 91, 0.35) !important;
+  color: #ffd6ad !important;
+  background: rgba(48, 23, 8, 0.55) !important;
+}
+
+.admin-theme-v2 input,
+.admin-theme-v2 select,
+.admin-theme-v2 textarea {
+  background: rgba(9, 18, 30, 0.88) !important;
+  border-color: rgba(106, 137, 163, 0.35) !important;
+  color: #ecf3ff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.admin-theme-v2 input::placeholder,
+.admin-theme-v2 textarea::placeholder {
+  color: #7f95aa !important;
+}
+
+.admin-theme-v2 input:focus,
+.admin-theme-v2 select:focus,
+.admin-theme-v2 textarea:focus {
+  border-color: rgba(96, 180, 232, 0.82) !important;
+  box-shadow: 0 0 0 3px rgba(86, 164, 228, 0.18);
+}
+
+.admin-theme-v2 button,
+.admin-theme-v2 a {
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, filter 220ms ease;
+}
+
+.admin-theme-v2 button:hover,
+.admin-theme-v2 a:hover {
+  transform: translateY(-1px);
+}
+
+.admin-theme-v2 .admin-login-hero {
+  border: 1px solid rgba(102, 139, 168, 0.24);
+  border-radius: 1.5rem;
+  padding: 1.3rem;
+  background:
+    radial-gradient(520px 230px at 110% -10%, rgba(56, 149, 222, 0.2), transparent 60%),
+    radial-gradient(500px 260px at -12% 112%, rgba(48, 186, 161, 0.16), transparent 60%),
+    linear-gradient(150deg, rgba(8, 17, 28, 0.88), rgba(13, 24, 38, 0.74));
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.45);
+}
+
+.admin-theme-v2 .admin-login-card {
+  border: 1px solid rgba(97, 129, 157, 0.26);
+  border-radius: 1.6rem;
+  background: linear-gradient(154deg, rgba(9, 18, 30, 0.95), rgba(14, 27, 43, 0.82));
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 767px) {
+  .admin-theme-v2::before {
+    background-size: 24px 24px, 24px 24px;
+    opacity: 0.19;
+  }
+}
