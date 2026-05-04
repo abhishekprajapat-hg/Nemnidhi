@@ -82,13 +82,14 @@ function getOriginForHrmsForward(request: Request) {
 function getHrmsEndpoint() {
   const endpoint = process.env.HRMS_LEAD_ENDPOINT?.trim();
   if (!endpoint) {
-    throw new Error("HRMS_ENDPOINT_NOT_CONFIGURED");
+    return null;
   }
 
   try {
     return new URL(endpoint).toString();
   } catch {
-    throw new Error("HRMS_ENDPOINT_INVALID");
+    console.error("HRMS_LEAD_ENDPOINT is invalid. Skipping HRMS lead sync.");
+    return null;
   }
 }
 
@@ -288,6 +289,11 @@ async function forwardLeadToHrms(
   },
 ) {
   const endpoint = getHrmsEndpoint();
+  if (!endpoint) {
+    console.warn("HRMS lead sync skipped because HRMS_LEAD_ENDPOINT is not configured.");
+    return false;
+  }
+
   const origin = getOriginForHrmsForward(request);
   const category = mapToHrmsCategory(input.source, input.message);
 
@@ -345,7 +351,7 @@ async function forwardLeadToHrms(
       throw new Error(`HRMS_SYNC_FAILED:${message}`);
     }
 
-    return data;
+    return Boolean(data || response.ok);
   } finally {
     clearTimeout(timeout);
   }
@@ -385,16 +391,22 @@ export async function POST(req: Request) {
     const nextFollowUp = buildNextFollowUp(cleanTimeline);
     const now = new Date();
 
-    await forwardLeadToHrms(req, {
-      name: String(name),
-      email: String(email),
-      company: cleanCompany,
-      budget: cleanBudget,
-      timeline: cleanTimeline,
-      message: cleanMessage,
-      source: cleanSource,
-    });
+    let hrmsSynced = false;
+    try {
+      hrmsSynced = await forwardLeadToHrms(req, {
+        name: String(name),
+        email: String(email),
+        company: cleanCompany,
+        budget: cleanBudget,
+        timeline: cleanTimeline,
+        message: cleanMessage,
+        source: cleanSource,
+      });
+    } catch (hrmsError: unknown) {
+      console.error("HRMS sync failed. Falling back to local lead capture:", getErrorMessage(hrmsError));
+    }
 
+    let localSaved = false;
     try {
       await dbConnect();
 
@@ -439,28 +451,18 @@ export async function POST(req: Request) {
         ],
         lastActivityAt: now,
       });
+      localSaved = true;
     } catch (localError: unknown) {
       console.error("Local contact persistence failed after HRMS sync:", getErrorMessage(localError));
+    }
+
+    if (!hrmsSynced && !localSaved) {
+      return NextResponse.json({ message: "Failed to submit form. Please try again later." }, { status: 500 });
     }
 
     return NextResponse.json({ success: true, message: "Thank you. We'll get back to you shortly." }, { status: 201 });
   } catch (error: unknown) {
     console.error("POST /api/contact error:", getErrorMessage(error));
-
-    const errorMessage = getErrorMessage(error);
-
-    if (errorMessage === "HRMS_ENDPOINT_NOT_CONFIGURED") {
-      return NextResponse.json({ message: "Lead pipeline is not configured yet. Please contact support." }, { status: 500 });
-    }
-
-    if (errorMessage === "HRMS_ENDPOINT_INVALID") {
-      return NextResponse.json({ message: "Lead pipeline configuration is invalid. Please contact support." }, { status: 500 });
-    }
-
-    if (errorMessage.startsWith("HRMS_SYNC_FAILED:")) {
-      return NextResponse.json({ message: "Could not submit right now. Please try again in a moment." }, { status: 502 });
-    }
-
     return NextResponse.json({ message: "Failed to submit form. Please try again later." }, { status: 500 });
   }
 }
