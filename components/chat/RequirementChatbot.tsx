@@ -44,10 +44,12 @@ const EMPTY_DRAFT: RequirementDraft = {
   notes: "",
 };
 
+const DEFAULT_PHONE_PREFIX = "+91 ";
+
 const EMPTY_FORM: ContactForm = {
   name: "",
   email: "",
-  phone: "",
+  phone: DEFAULT_PHONE_PREFIX,
   message: "",
 };
 

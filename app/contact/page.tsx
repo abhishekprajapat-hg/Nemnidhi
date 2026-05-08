@@ -17,11 +17,13 @@ type ContactApiResponse = {
   message?: string;
 };
 
+const DEFAULT_PHONE_PREFIX = "+91 ";
+
 export default function ContactPage() {
   const [form, setForm] = useState<FormState>({
     name: "",
     email: "",
-    phone: "",
+    phone: DEFAULT_PHONE_PREFIX,
     budget: "",
     timeline: "",
     message: "",
@@ -66,7 +68,7 @@ export default function ContactPage() {
       setForm({
         name: "",
         email: "",
-        phone: "",
+        phone: DEFAULT_PHONE_PREFIX,
         budget: "",
         timeline: "",
         message: "",
