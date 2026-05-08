@@ -224,12 +224,14 @@ function buildHrmsTitle(name: string, company?: string, source?: string) {
 
 function buildHrmsDescription(input: {
   message: string;
+  phone?: string;
   company?: string;
   budget?: string;
   timeline?: string;
   source?: string;
 }) {
   const lines = [input.message.trim()];
+  if (input.phone) lines.push(`Mobile: ${input.phone}`);
   if (input.company) lines.push(`Company: ${input.company}`);
   if (input.budget) lines.push(`Budget: ${input.budget}`);
   if (input.timeline) lines.push(`Timeline: ${input.timeline}`);
@@ -281,6 +283,7 @@ async function forwardLeadToHrms(
   input: {
     name: string;
     email: string;
+    phone?: string;
     company?: string;
     budget?: string;
     timeline?: string;
@@ -307,6 +310,7 @@ async function forwardLeadToHrms(
     budget: mapBudgetToHrmsRange(input.budget),
     description: buildHrmsDescription({
       message: input.message,
+      phone: input.phone,
       company: input.company,
       budget: input.budget,
       timeline: input.timeline,
@@ -375,7 +379,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { name, email, company, budget, timeline, message, source } = body;
+    const { name, email, phone, mobile, company, budget, timeline, message, source } = body;
 
     if (!name || !email || !message) {
       return NextResponse.json({ message: "Name, email, and message are required." }, { status: 400 });
@@ -384,6 +388,7 @@ export async function POST(req: Request) {
     const cleanSource = toOptionalString(source) || "Website contact form";
     const cleanBudget = toOptionalString(budget);
     const cleanTimeline = toOptionalString(timeline);
+    const cleanPhone = toOptionalString(phone) || toOptionalString(mobile);
     const cleanCompany = toOptionalString(company);
     const cleanMessage = String(message).trim();
     const leadValue = normalizeBudgetValue(cleanBudget);
@@ -396,6 +401,7 @@ export async function POST(req: Request) {
       hrmsSynced = await forwardLeadToHrms(req, {
         name: String(name),
         email: String(email),
+        phone: cleanPhone,
         company: cleanCompany,
         budget: cleanBudget,
         timeline: cleanTimeline,
@@ -413,6 +419,7 @@ export async function POST(req: Request) {
       await ContactSubmission.create({
         name,
         email,
+        phone: cleanPhone,
         company: cleanCompany,
         budget: cleanBudget,
         timeline: cleanTimeline,
@@ -424,6 +431,7 @@ export async function POST(req: Request) {
       await CrmLead.create({
         name: String(name).trim(),
         email: String(email).trim(),
+        phone: cleanPhone,
         company: cleanCompany,
         requirement: cleanMessage,
         source: cleanSource,
@@ -435,6 +443,7 @@ export async function POST(req: Request) {
         tags: buildLeadTags(cleanSource, cleanBudget, cleanTimeline),
         notes: [
           "Auto-captured from website contact form.",
+          cleanPhone ? `Mobile: ${cleanPhone}` : null,
           cleanBudget ? `Budget: ${cleanBudget}` : null,
           cleanTimeline ? `Timeline: ${cleanTimeline}` : null,
         ]

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/Button";
 type FormState = {
   name: string;
   email: string;
-  company: string;
+  phone: string;
   budget: string;
   timeline: string;
   message: string;
@@ -21,7 +21,7 @@ export default function ContactPage() {
   const [form, setForm] = useState<FormState>({
     name: "",
     email: "",
-    company: "",
+    phone: "",
     budget: "",
     timeline: "",
     message: "",
@@ -66,7 +66,7 @@ export default function ContactPage() {
       setForm({
         name: "",
         email: "",
-        company: "",
+        phone: "",
         budget: "",
         timeline: "",
         message: "",
@@ -155,12 +155,16 @@ export default function ContactPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-[#8095AC]">Company / brand</label>
+                <label className="text-xs font-medium text-[#8095AC]">
+                  Mobile number <span className="text-red-500">*</span>
+                </label>
                 <input
+                  type="tel"
                   className="w-full rounded-lg border border-[#2A3E56] bg-[#111a28] px-3 py-2.5 text-sm text-[#AABFD4] outline-none transition placeholder:text-[#8095AC] focus:border-[#66AAFF]"
-                  value={form.company}
-                  onChange={(e) => handleChange("company", e.target.value)}
-                  placeholder="Your company"
+                  value={form.phone}
+                  onChange={(e) => handleChange("phone", e.target.value)}
+                  placeholder="+91 98765 43210"
+                  required
                 />
               </div>
 

@@ -23,7 +23,7 @@ type RequirementDraft = {
 type ContactForm = {
   name: string;
   email: string;
-  company: string;
+  phone: string;
   message: string;
 };
 
@@ -47,7 +47,7 @@ const EMPTY_DRAFT: RequirementDraft = {
 const EMPTY_FORM: ContactForm = {
   name: "",
   email: "",
-  company: "",
+  phone: "",
   message: "",
 };
 
@@ -200,7 +200,7 @@ export default function RequirementChatbot() {
         body: JSON.stringify({
           name: contactForm.name.trim(),
           email: contactForm.email.trim(),
-          company: contactForm.company.trim(),
+          phone: contactForm.phone.trim(),
           budget: draft.budget,
           timeline: draft.timeline,
           message: composeFinalMessage(),
@@ -365,10 +365,12 @@ export default function RequirementChatbot() {
                 </div>
 
                 <input
-                  value={contactForm.company}
-                  onChange={(event) => handleContactChange("company", event.target.value)}
+                  type="tel"
+                  value={contactForm.phone}
+                  onChange={(event) => handleContactChange("phone", event.target.value)}
                   className="w-full rounded-xl border border-[#345474]/80 bg-[#101D2E] px-3 py-2 text-xs text-[#D7E8FA] outline-none transition placeholder:text-[#7F9AB5] focus:border-[#69A3D7]"
-                  placeholder="Company / brand"
+                  placeholder="Mobile number *"
+                  required
                 />
 
                 <textarea

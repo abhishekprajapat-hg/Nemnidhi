@@ -4,6 +4,7 @@ import mongoose, { Schema, Model, Document } from "mongoose";
 export interface IContactSubmission extends Document {
   name: string;
   email: string;
+  phone?: string;
   company?: string;
   budget?: string;
   timeline?: string;
@@ -16,6 +17,7 @@ const ContactSubmissionSchema = new Schema<IContactSubmission>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true },
+    phone: { type: String },
     company: { type: String },
     budget: { type: String },
     timeline: { type: String },
