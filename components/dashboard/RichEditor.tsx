@@ -110,8 +110,6 @@ export default function RichEditor({ value, onChange }: RichEditorProps) {
         }
         .ql-container.ql-snow {
           flex: 1;
-          display: flex;
-          flex-direction: column;
           overflow: hidden;
           border-bottom-left-radius: 4px;
           border-bottom-right-radius: 4px;
