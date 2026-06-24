@@ -3,23 +3,31 @@ import clsx from "clsx";
 import Link from "next/link";
 
 type ButtonVariant = "solid" | "outline" | "ghost";
+type ButtonSize = "sm" | "md" | "lg";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   asChild?: boolean;
   href?: string;
   variant?: ButtonVariant;
+  size?: ButtonSize;
 }
 
 const baseStyles =
-  "button-3d inline-flex items-center justify-center gap-2 rounded-xl px-6 py-2.5 text-base font-semibold transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A70DF]/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F1826] disabled:pointer-events-none disabled:opacity-60";
+  "premium-button inline-flex items-center justify-center gap-2 rounded-[var(--radius-sm)] font-bold transition-colors duration-200 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-60";
 
 const variants: Record<ButtonVariant, string> = {
   solid:
-    "border border-[#1A66B3]/75 bg-[linear-gradient(145deg,#33DEC0,#004DC5)] text-[#EAF2FF] hover:brightness-[1.02]",
+    "border border-[rgba(214,190,124,0.72)] bg-[#D6BE7C] text-[#07111F] hover:bg-[#F0D991]",
   outline:
-    "border border-[#3A5675]/72 bg-[linear-gradient(162deg,#131E2E_0%,#0F1826_100%)] text-[#D5E6FF] hover:border-[#24B89A] hover:text-[#76B5FF]",
-  ghost: "border border-transparent bg-[#111a28]/70 text-[#B8CBE0] hover:border-[#3A5675] hover:bg-[#111a28]/90",
+    "border border-slate-300/18 bg-white/[0.035] text-[#F8FBFF] hover:border-[rgba(214,190,124,0.5)] hover:text-[#F0D991]",
+  ghost: "border border-transparent bg-transparent text-[#D9E2EF] hover:bg-white/[0.06] hover:text-white",
+};
+
+const sizes: Record<ButtonSize, string> = {
+  sm: "px-4 py-2 text-sm",
+  md: "px-5 py-2.5 text-sm",
+  lg: "px-6 py-3 text-base",
 };
 
 export function Button({
@@ -27,28 +35,31 @@ export function Button({
   asChild,
   href,
   variant = "solid",
+  size = "md",
   className,
   ...props
 }: ButtonProps & { className?: string }) {
-  const classes = clsx(baseStyles, variants[variant], className);
+  const classes = clsx(baseStyles, variants[variant], sizes[size], className);
 
   if (asChild && React.isValidElement(children)) {
-    const child = children as React.ReactElement<{ className?: string }>;
+    const child = children as React.ReactElement<{ className?: string; "data-magnetic"?: string; "data-cursor"?: string }>;
     return React.cloneElement(child, {
       className: clsx(classes, child.props.className),
+      "data-magnetic": "",
+      "data-cursor": "interactive",
     });
   }
 
   if (href) {
     return (
-      <Link href={href} className={classes}>
+      <Link href={href} className={classes} data-magnetic data-cursor="interactive">
         {children}
       </Link>
     );
   }
 
   return (
-    <button className={classes} {...props}>
+    <button className={classes} data-magnetic data-cursor="interactive" {...props}>
       {children}
     </button>
   );

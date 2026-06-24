@@ -1,0 +1,26 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#030712"/>
+  <path d="M0 0H1200V630H0V0Z" fill="url(#bg)"/>
+  <path d="M91 91H1109V539H91V91Z" stroke="#D6BE7C" stroke-opacity=".28"/>
+  <path d="M136 137H1064V493H136V137Z" stroke="#A4B8D3" stroke-opacity=".14"/>
+  <circle cx="966" cy="126" r="172" fill="#7DD3FC" fill-opacity=".14"/>
+  <circle cx="204" cy="490" r="194" fill="#D6BE7C" fill-opacity=".16"/>
+  <g filter="url(#soft)">
+    <circle cx="600" cy="315" r="182" fill="#D6BE7C" fill-opacity=".10"/>
+  </g>
+  <text x="136" y="210" fill="#D6BE7C" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" letter-spacing="7">NEMNIDHI</text>
+  <text x="136" y="315" fill="#F8FBFF" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="700">Premium Fintech</text>
+  <text x="136" y="397" fill="#F8FBFF" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="700">Product Engineering</text>
+  <text x="136" y="466" fill="#AFC0D6" font-family="Arial, Helvetica, sans-serif" font-size="28">Trust-first websites, automation workflows, and scalable digital infrastructure.</text>
+  <rect x="924" y="404" width="140" height="48" rx="24" fill="#D6BE7C"/>
+  <text x="956" y="436" fill="#07111F" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">Briefing</text>
+  <defs>
+    <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(600 315) rotate(90) scale(435 828.571)">
+      <stop stop-color="#0E2035"/>
+      <stop offset="1" stop-color="#030712"/>
+    </radialGradient>
+    <filter id="soft" x="318" y="33" width="564" height="564" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="50"/>
+    </filter>
+  </defs>
+</svg>

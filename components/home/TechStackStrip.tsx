@@ -1,7 +1,8 @@
+"use client";
+
 import Link from "next/link";
-import Container from "@/components/layout/Container";
+import { useRef } from "react";
 import {
-  SiAmazondocumentdb,
   SiCloudflare,
   SiDocker,
   SiFigma,
@@ -17,73 +18,76 @@ import {
   SiTypescript,
   SiVercel,
 } from "react-icons/si";
+import { Badge } from "@/components/ui/Badge";
+import { Card } from "@/components/ui/Card";
+import { Heading } from "@/components/ui/Heading";
+import { Section } from "@/components/ui/Section";
+import { useStaggerScale } from "@/lib/useGsapAnimations";
 
-const STACK_GROUPS = [
+const stackGroups = [
   {
-    label: "Product Engineering",
-    description: "Modern frontend foundations for fast, resilient, and conversion-driven digital products.",
+    label: "Interface systems",
+    description: "Reusable product surfaces, design foundations, and responsive public experiences.",
     href: "/services",
     items: [SiNextdotjs, SiReact, SiTailwindcss, SiFigma],
   },
   {
-    label: "Business Systems",
-    description: "Backend and integration architecture that keeps teams aligned and operations predictable.",
+    label: "Business logic",
+    description: "Application workflows, payments, data handoffs, and operational automation.",
     href: "/solutions",
     items: [SiNodedotjs, SiTypescript, SiPrisma, SiStripe],
   },
   {
-    label: "Data Operations",
-    description: "Flexible data layers designed for evolving products, workflows, and analytics maturity.",
+    label: "Data layer",
+    description: "Flexible persistence and reporting foundations for evolving product teams.",
     href: "/projects",
-    items: [SiMongodb, SiPostgresql, SiAmazondocumentdb],
+    items: [SiMongodb, SiPostgresql],
   },
   {
-    label: "Cloud and Reliability",
-    description: "Infrastructure choices optimized for release speed, uptime, and future expansion.",
+    label: "Reliability",
+    description: "Cloud platforms and deployment patterns chosen for release speed and uptime.",
     href: "/about",
     items: [SiVercel, SiCloudflare, SiDocker, SiFirebase],
   },
 ];
 
 export default function TechStackStrip() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useStaggerScale(sectionRef, { stagger: 0.08 });
+
   return (
-    <section className="theme-section deferred-section">
-      <Container className="py-10 md:py-14">
-        <div className="mb-8 space-y-4 text-center md:text-left">
-          <p className="section-eyebrow">Resources</p>
-          <h2 className="section-title">Build with proven systems and enterprise tooling</h2>
-          <p className="mx-auto max-w-3xl section-copy md:mx-0">
-            Everything we deliver is shaped by maintainability, measurable outcomes, and the practical realities of
-            growing teams.
-          </p>
+    <Section ref={sectionRef} size="wide">
+      <div className="grid gap-8 lg:grid-cols-[0.38fr_0.62fr] lg:items-end">
+        <div>
+          <Badge tone="blue">Technology layer</Badge>
+          <p className="mt-4 section-copy">Modern tooling, selected for maintainable delivery rather than novelty.</p>
         </div>
+        <Heading>Reusable foundations for product, data, cloud, and conversion workflows.</Heading>
+      </div>
 
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {STACK_GROUPS.map((group) => (
-            <Link
-              key={group.label}
-              href={group.href}
-              className="theme-card flex h-full flex-col p-5"
-            >
-              <h3 className="text-xl font-semibold text-[#E7F0FF]">{group.label}</h3>
-              <p className="mt-3 text-sm leading-7 text-[#AABFD4]">{group.description}</p>
-
-              <div className="mt-5 flex flex-wrap gap-2">
-                {group.items.map((Icon, iconIndex) => (
-                  <span
-                    key={`${group.label}-${iconIndex}`}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#3A5675]/42 bg-[linear-gradient(160deg,rgba(21,33,49,0.95),rgba(14,24,37,0.9)_65%,rgba(23,18,16,0.82))] text-[#76B5FF]"
-                  >
-                    <Icon className="h-4 w-4" />
-                  </span>
-                ))}
-              </div>
-
-              <span className="mt-auto pt-5 text-sm font-semibold text-[#66AAFF]">Explore section</span>
+      <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {stackGroups.map((group) => (
+          <Card key={group.label} className="p-6">
+            <div className="flex flex-wrap gap-3 text-[#91A0B5]">
+              {group.items.map((Icon, index) => (
+                <span
+                  key={index}
+                  data-scale-reveal
+                  className="grid h-11 w-11 place-items-center rounded-[var(--radius-sm)] border border-white/10 bg-white/[0.035]"
+                >
+                  <Icon className="h-5 w-5" aria-hidden />
+                </span>
+              ))}
+            </div>
+            <h3 className="mt-8 text-xl font-semibold text-[#F8FBFF]">{group.label}</h3>
+            <p className="mt-3 text-sm leading-7 text-[#AFC0D6]">{group.description}</p>
+            <Link href={group.href} className="mt-6 inline-block text-sm font-extrabold text-[#F0D991]">
+              Explore section
             </Link>
-          ))}
-        </div>
-      </Container>
-    </section>
+          </Card>
+        ))}
+      </div>
+    </Section>
   );
 }

@@ -1,68 +1,235 @@
-import { Layers, Rocket, ShieldCheck, Workflow } from "lucide-react";
-import Container from "@/components/layout/Container";
+"use client";
 
-const STEPS = [
+import { useRef } from "react";
+import Container from "@/components/layout/Container";
+import { useSectionLabel, useTimelineGrow } from "@/lib/useGsapAnimations";
+
+const steps = [
   {
-    title: "Future-ready architecture",
-    body: "Enterprise-grade foundations that support high-velocity delivery and reliable scale.",
-    icon: Layers,
+    num: "01",
+    title: "Discovery",
+    desc: "We map requirements, constraints, success metrics, and the commercial outcome the software has to create.",
   },
   {
-    title: "Enterprise-ready from day one",
-    body: "Solutions tailored to your operating model so teams move faster with less friction.",
-    icon: ShieldCheck,
+    num: "02",
+    title: "Design",
+    desc: "We shape product flows, visual systems, data models, and technical architecture before heavy engineering begins.",
   },
   {
-    title: "Scale through integrated workflows",
-    body: "Structured systems that connect data, product, and teams in one operating layer.",
-    icon: Workflow,
+    num: "03",
+    title: "Development",
+    desc: "Senior engineers build in focused sprints with frequent demos, clean handoffs, and deployable increments.",
   },
   {
-    title: "Faster execution cycles",
-    body: "Ship improvements continuously with measurable outcomes and clear ownership.",
-    icon: Rocket,
+    num: "04",
+    title: "Testing",
+    desc: "We validate performance, responsive behavior, edge cases, integrations, and release readiness.",
+  },
+  {
+    num: "05",
+    title: "Launch",
+    desc: "We ship with monitoring, deployment confidence, documentation, and a clear plan for the next iteration.",
   },
 ];
 
 export default function ProcessSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useSectionLabel(sectionRef);
+  useTimelineGrow(sectionRef);
+
   return (
-    <section className="plain-section deferred-section border-t border-[#3A5675]/28">
-      <Container className="py-10 md:py-14">
-        <div className="mb-10 grid items-center gap-8 md:grid-cols-2">
-          <h2 className="section-title max-w-2xl">
-            We are a key innovation partner for iconic and emerging brands.
-          </h2>
-          <div className="grid grid-cols-3 gap-5">
-            <div className="theme-card p-4 text-center">
-              <p className="text-4xl font-bold text-[#69AEFF]">2000+</p>
-              <p className="mt-1 text-sm text-[#AABFD4]">Brands</p>
-            </div>
-            <div className="theme-card p-4 text-center">
-              <p className="text-4xl font-bold text-[#69AEFF]">100%</p>
-              <p className="mt-1 text-sm text-[#AABFD4]">Go-live</p>
-            </div>
-            <div className="theme-card p-4 text-center">
-              <p className="text-4xl font-bold text-[#69AEFF]">99%</p>
-              <p className="mt-1 text-sm text-[#AABFD4]">Retention</p>
+    <section
+      id="process"
+      ref={sectionRef}
+      data-scroll-chapter
+      style={{
+        background: "#080a0c",
+        paddingTop: "5rem",
+        paddingBottom: "5rem",
+        borderTop: "1px solid rgba(255,255,255,0.07)",
+      }}
+    >
+      <Container size="wide">
+        <div
+          data-section-label
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "1rem",
+            marginBottom: "3rem",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "var(--font-mono, monospace)",
+              fontSize: "0.7rem",
+              fontWeight: 600,
+              color: "#67e8f9",
+              letterSpacing: "0.1em",
+            }}
+          >
+            [ 03 ]
+          </span>
+          <span
+            style={{
+              fontFamily: "var(--font-mono, monospace)",
+              fontSize: "0.7rem",
+              fontWeight: 500,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase" as const,
+              color: "#f0f4f8",
+            }}
+          >
+            PROCESS TIMELINE
+          </span>
+          <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.07)" }} />
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "minmax(0, 0.38fr) minmax(0, 0.62fr)",
+            gap: "clamp(2rem, 6vw, 6rem)",
+            alignItems: "start",
+          }}
+          className="process-timeline-layout"
+        >
+          <div style={{ position: "sticky", top: "7rem" }} className="process-timeline-intro">
+            <h2
+              style={{
+                fontFamily: "var(--font-display, var(--font-heading, sans-serif))",
+                fontWeight: 900,
+                fontSize: "clamp(1.95rem, 3.8vw, 3.6rem)",
+                textTransform: "uppercase" as const,
+                color: "#f0f4f8",
+                letterSpacing: "-0.02em",
+                lineHeight: 0.95,
+                fontStyle: "italic",
+              }}
+            >
+              From signal to shipped software.
+            </h2>
+            <p
+              style={{
+                marginTop: "1.5rem",
+                color: "#f0f4f8",
+                fontSize: "0.95rem",
+                lineHeight: 1.75,
+                maxWidth: "30rem",
+              }}
+            >
+              A lean delivery rhythm that keeps strategy, design, engineering, and release quality moving together.
+            </p>
+          </div>
+
+          <div style={{ position: "relative" }}>
+            <div
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                left: "1.1rem",
+                top: "0.4rem",
+                bottom: "0.4rem",
+                width: "1px",
+                background: "rgba(255,255,255,0.09)",
+              }}
+            />
+            <div
+              data-timeline-line
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                left: "1.1rem",
+                top: "0.4rem",
+                bottom: "0.4rem",
+                width: "1px",
+                background: "#67e8f9",
+                boxShadow: "0 0 24px rgba(103,232,249,0.36)",
+              }}
+            />
+
+            <div style={{ display: "grid", gap: "1rem" }}>
+              {steps.map((step) => (
+                <article
+                  key={step.num}
+                  data-timeline-step
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "2.25rem 1fr",
+                    gap: "1.35rem",
+                    alignItems: "start",
+                    minHeight: "9.5rem",
+                  }}
+                >
+                  <span
+                    style={{
+                      position: "relative",
+                      zIndex: 1,
+                      display: "grid",
+                      width: "2.25rem",
+                      height: "2.25rem",
+                      placeItems: "center",
+                      border: "1px solid rgba(103,232,249,0.4)",
+                      background: "#080a0c",
+                      color: "#67e8f9",
+                      fontFamily: "var(--font-mono, monospace)",
+                      fontSize: "0.7rem",
+                      fontWeight: 700,
+                    }}
+                  >
+                    {step.num}
+                  </span>
+
+                  <div
+                    style={{
+                      border: "1px solid rgba(255,255,255,0.07)",
+                      background: "#0d1117",
+                      padding: "1.5rem",
+                    }}
+                  >
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-display, var(--font-heading, sans-serif))",
+                        fontWeight: 900,
+                        fontSize: "clamp(1.15rem, 1.55vw, 1.45rem)",
+                        textTransform: "uppercase" as const,
+                        color: "#f0f4f8",
+                        letterSpacing: "-0.01em",
+                        lineHeight: 1,
+                        fontStyle: "italic",
+                      }}
+                    >
+                      {step.title}
+                    </h3>
+                    <p
+                      style={{
+                        marginTop: "0.9rem",
+                        color: "#f0f4f8",
+                        fontSize: "0.875rem",
+                        lineHeight: 1.7,
+                      }}
+                    >
+                      {step.desc}
+                    </p>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
         </div>
-
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {STEPS.map((step) => {
-            const Icon = step.icon;
-            return (
-              <article key={step.title} className="theme-card p-6">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-md bg-[linear-gradient(150deg,#152338,#132334)] text-[#76B5FF]">
-                  <Icon className="h-6 w-6" />
-                </div>
-                <h3 className="text-xl font-semibold text-[#E7F0FF]">{step.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-[#AABFD4]">{step.body}</p>
-              </article>
-            );
-          })}
-        </div>
       </Container>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .process-timeline-layout {
+            grid-template-columns: 1fr !important;
+          }
+          .process-timeline-intro {
+            position: static !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

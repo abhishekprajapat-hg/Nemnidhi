@@ -22,12 +22,14 @@ export default function ProjectPreview({
 
       <div className="surface-3d relative overflow-hidden rounded-lg border border-[#3A5675]/36 bg-[#111a28]">
         {staticPreviewSrc ? (
-          <div className="relative h-[360px] w-full">
+          <div className="relative h-[360px] w-full" data-image-scale>
             <Image
               src={staticPreviewSrc}
               alt={staticPreviewAlt || "Project preview"}
               fill
-              sizes="(min-width: 768px) 52vw, 100vw"
+              sizes="(min-width: 1280px) 44vw, (min-width: 768px) 52vw, 100vw"
+              quality={82}
+              loading="lazy"
               className="object-cover object-top"
             />
           </div>

@@ -11,6 +11,9 @@ const eslintConfig = defineConfig([
     ".next/**",
     "out/**",
     "build/**",
+    "test-results/**",
+    "verify-site-3d.spec.js",
+    "verify-site-3d-*.png",
     "next-env.d.ts",
   ]),
 ]);

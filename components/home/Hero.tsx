@@ -1,9 +1,12 @@
+"use client";
+
+import { useRef } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import Container from "@/components/layout/Container";
-import { Button } from "@/components/ui/Button";
+import { useHeroEntrance, useHeroParallax } from "@/lib/useGsapAnimations";
 
 type HeroContent = {
+  badgeText?: string;
   headingMain?: string;
   headingHighlight?: string;
   headingSuffix?: string;
@@ -19,94 +22,173 @@ type HeroProps = {
 };
 
 export default function Hero({ hero }: HeroProps) {
-  const content = hero || {
-    headingMain: "Code. Deploy. Scale.",
-    subheading:
-      "Nemnidhi builds coding-first product systems, automation pipelines, and secure engineering workflows designed for long-term scale.",
-    primaryCtaLabel: "Book Tech Demo",
-    primaryCtaHref: "/contact",
-    secondaryCtaLabel: "View Engineering Projects",
-    secondaryCtaHref: "/projects",
-  };
+  const sectionRef = useRef<HTMLElement>(null);
 
-  const heading = [content.headingMain, content.headingHighlight, content.headingSuffix]
-    .filter(Boolean)
-    .join(" ");
-  const primaryCtaHref = content.primaryCtaHref ?? "/contact";
-  const primaryCtaLabel = content.primaryCtaLabel ?? "Book Tech Demo";
-  const secondaryCtaHref = content.secondaryCtaHref ?? "/projects";
-  const secondaryCtaLabel = content.secondaryCtaLabel ?? "View Engineering Projects";
+  useHeroEntrance(sectionRef);
+  useHeroParallax(sectionRef);
+
+  const badge = hero?.badgeText ?? "[ NEMNIDHI.COM ] — EST. 2018";
+  const headingLine1 = hero?.headingMain ?? "ENGINEERING";
+  const headingLine2 = hero?.headingHighlight ?? "SOFTWARE";
+  const headingLine3 = hero?.headingSuffix ?? "THAT SCALES.";
+  const sub =
+    hero?.subheading ??
+    "We build production-grade software for startups and enterprises — from architecture to deployment. Precision engineering, zero compromise.";
+  const primaryHref = hero?.primaryCtaHref ?? "/contact";
+  const primaryLabel = hero?.primaryCtaLabel ?? "START PROJECT →";
+  const secondaryHref = hero?.secondaryCtaHref ?? "/projects";
+  const secondaryLabel = hero?.secondaryCtaLabel ?? "VIEW WORK";
 
   return (
-    <section className="theme-section relative overflow-hidden border-b border-[#3A5675]/34 px-6 py-12 text-center md:px-0 md:text-left">
-      <Container className="relative">
-        <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-10">
-          <div className="z-10 space-y-6 md:col-span-4">
-            <p className="theme-pill w-fit">Code-First Growth Architecture</p>
-            <h1 className="text-4xl font-bold leading-[1.02] text-[#E7F0FF] md:text-6xl">{heading}</h1>
-            <p className="text-base leading-8 text-[#AABFD4]">{content.subheading}</p>
-            <div className="flex flex-wrap justify-center gap-4 pt-2 md:justify-start">
-              <Button asChild>
-                <Link href={primaryCtaHref}>
-                  {primaryCtaLabel}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline">
-                <Link href={secondaryCtaHref}>{secondaryCtaLabel}</Link>
-              </Button>
-            </div>
-          </div>
+    <section
+      id="home"
+      ref={sectionRef}
+      data-scroll-chapter
+      suppressHydrationWarning
+      className="home-hero-section"
+    >
+      {/* ── Parallax dot-grid background ─────────────────────────── */}
+      <div
+        data-hero-grid
+        aria-hidden="true"
+        className="home-hero-grid"
+      />
 
-          <div className="relative flex w-full justify-end md:col-span-6">
-            <div className="surface-3d-soft w-full max-w-[760px] rounded-2xl border border-[#3A5675]/36 p-5 text-left md:p-7">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#8095AC]">Engineering Snapshot</p>
+      <Container size="wide" className="home-hero-content">
+        {/* Badge */}
+        <p
+          data-hero-anim
+          style={{
+            fontFamily: "var(--font-mono, monospace)",
+            fontSize: "0.75rem",
+            fontWeight: 500,
+            letterSpacing: "0.12em",
+            color: "#67e8f9",
+            textTransform: "uppercase" as const,
+            marginBottom: "2rem",
+          }}
+        >
+          {badge}
+        </p>
 
-              <div className="mt-4 space-y-2.5 rounded-xl border border-[#3A5675]/34 bg-[linear-gradient(150deg,rgba(18,28,42,0.9),rgba(10,18,30,0.9))] p-4 font-mono text-[13px] leading-6 text-[#AABFD4]">
-                <p>
-                  <span className="text-[#69AEFF]">const</span> stack = [Next.js, Node.js, MongoDB];
-                </p>
-                <p>
-                  <span className="text-[#69AEFF]">uptime</span>: 99.95%
-                </p>
-                <p>
-                  <span className="text-[#69AEFF]">deploy</span>: production-ready workflows
-                </p>
-              </div>
+        {/* Giant Heading — each line is a separate anim target */}
+        <h1
+          style={{
+            fontFamily: "var(--font-display, var(--font-heading, sans-serif))",
+            fontWeight: 900,
+            fontSize: "clamp(2.9rem, 7.8vw, 6.8rem)",
+            lineHeight: 0.88,
+            letterSpacing: "-0.02em",
+            textTransform: "uppercase" as const,
+            margin: 0,
+          }}
+        >
+          <span
+            data-hero-headline
+            style={{
+              display: "block",
+              color: "#f0f4f8",
+              WebkitTextStroke: "1px rgba(240,244,248,0.1)",
+            }}
+          >
+            {headingLine1}
+          </span>
+          <span
+            data-hero-headline
+            style={{
+              display: "block",
+              color: "#f0f4f8",
+            }}
+          >
+            {headingLine2}
+          </span>
+          <span
+            data-hero-headline
+            style={{
+              display: "block",
+              color: "#67e8f9",
+            }}
+          >
+            {headingLine3}
+          </span>
+        </h1>
 
-              <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                <div className="rounded-xl border border-[#3A5675]/28 bg-[#0f1c2e]/70 px-3 py-2">
-                  <p className="text-xs uppercase tracking-[0.1em] text-[#8095AC]">Runtime</p>
-                  <p className="mt-1 text-sm font-semibold text-[#E7F0FF]">42ms p95</p>
-                </div>
-                <div className="rounded-xl border border-[#3A5675]/28 bg-[#0f1c2e]/70 px-3 py-2">
-                  <p className="text-xs uppercase tracking-[0.1em] text-[#8095AC]">Security</p>
-                  <p className="mt-1 text-sm font-semibold text-[#E7F0FF]">Role-based access</p>
-                </div>
-                <div className="rounded-xl border border-[#3A5675]/28 bg-[#0f1c2e]/70 px-3 py-2">
-                  <p className="text-xs uppercase tracking-[0.1em] text-[#8095AC]">Scale</p>
-                  <p className="mt-1 text-sm font-semibold text-[#E7F0FF]">Auto workflows</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Bottom row: subtitle + buttons */}
+        <div
+          data-hero-anim
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr auto",
+            alignItems: "flex-end",
+            gap: "3rem",
+            marginTop: "3rem",
+          }}
+          className="hero-bottom-row"
+        >
+          <p
+            style={{
+              color: "#f0f4f8",
+              fontSize: "clamp(0.9rem, 1.2vw, 1rem)",
+              lineHeight: 1.7,
+              maxWidth: "28rem",
+            }}
+          >
+            {sub}
+          </p>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-3">
-          <div className="theme-card p-5 text-center">
-            <p className="text-4xl font-bold text-[#69AEFF]">150K+</p>
-            <p className="mt-1 text-sm text-[#AABFD4]">Production commits shipped</p>
-          </div>
-          <div className="theme-card p-5 text-center">
-            <p className="text-4xl font-bold text-[#69AEFF]">99.95%</p>
-            <p className="mt-1 text-sm text-[#AABFD4]">Deployment uptime SLA</p>
-          </div>
-          <div className="theme-card p-5 text-center">
-            <p className="text-4xl font-bold text-[#69AEFF]">240+</p>
-            <p className="mt-1 text-sm text-[#AABFD4]">Automation modules deployed</p>
+          {/* CTA Buttons */}
+          <div style={{ display: "flex", gap: "1rem", flexShrink: 0 }}>
+            <Link
+              href={secondaryHref}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                padding: "0.9rem 1.75rem",
+                border: "1px solid rgba(255,255,255,0.18)",
+                background: "transparent",
+                color: "#f0f4f8",
+                fontFamily: "var(--font-mono, monospace)",
+                fontSize: "0.7rem",
+                fontWeight: 700,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase" as const,
+                textDecoration: "none",
+                transition: "border-color 0.2s, background 0.2s",
+              }}
+            >
+              {secondaryLabel}
+            </Link>
+            <Link
+              href={primaryHref}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                padding: "0.9rem 1.75rem",
+                border: "1px solid #67e8f9",
+                background: "#67e8f9",
+                color: "#080a0c",
+                fontFamily: "var(--font-mono, monospace)",
+                fontSize: "0.7rem",
+                fontWeight: 700,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase" as const,
+                textDecoration: "none",
+                transition: "background 0.2s",
+              }}
+            >
+              {primaryLabel}
+            </Link>
           </div>
         </div>
       </Container>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .hero-bottom-row {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

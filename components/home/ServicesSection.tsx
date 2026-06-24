@@ -1,61 +1,242 @@
-import { ArrowUpRight } from "lucide-react";
+"use client";
+
+import { useRef } from "react";
 import Container from "@/components/layout/Container";
+import { useScrollReveal, useSectionLabel } from "@/lib/useGsapAnimations";
 
 type Service = {
   _id?: string;
   title: string;
   description: string;
-  points: string[];
+  points?: string[];
 };
 
-type ServicesSectionProps = {
-  services: Service[];
-};
+const defaultServices = [
+  {
+    _id: "1",
+    title: "WEB ENGINEERING",
+    description:
+      "Full-stack web applications built for scale. React, Next.js, Node — architected for performance from day one.",
+    points: ["React", "Next.js", "Node.js", "PostgreSQL"],
+  },
+  {
+    _id: "2",
+    title: "MOBILE DEVELOPMENT",
+    description:
+      "Native and cross-platform mobile applications that ship on time and hold up in production.",
+    points: ["React Native", "iOS", "Android", "Expo"],
+  },
+  {
+    _id: "3",
+    title: "CLOUD & DEVOPS",
+    description:
+      "Infrastructure that scales with your business. CI/CD pipelines, container orchestration, zero-downtime deployments.",
+    points: ["AWS", "Docker", "Kubernetes", "Terraform"],
+  },
+  {
+    _id: "4",
+    title: "AI INTEGRATION",
+    description:
+      "Intelligent systems embedded into your product. LLM pipelines, RAG architectures, and custom model fine-tuning.",
+    points: ["LLMs", "RAG", "Python", "Vector DBs"],
+  },
+];
 
-export default function ServicesSection({ services }: ServicesSectionProps) {
+export default function ServicesSection({
+  services,
+}: {
+  services?: Service[];
+}) {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // ── GSAP: section label fade-in
+  useSectionLabel(sectionRef);
+  // ── GSAP: staggered card reveal (y:80→0, opacity:0→1, stagger 0.15s)
+  useScrollReveal(sectionRef, { stagger: 0.15, startY: 80 });
+
+  const items = services && services.length > 0 ? services : defaultServices;
+
   return (
-    <section className="theme-section deferred-section">
-      <Container className="py-10 md:py-14">
-        <div className="mb-8 space-y-4 text-center md:text-left">
-          <p className="section-eyebrow">Solutions</p>
-          <h2 className="section-title">Shift your orbit with Nemnidhi</h2>
-          <p className="mx-auto max-w-3xl section-copy md:mx-0">
-            Discover solutions engineered to streamline operations, improve collaboration, and accelerate
-            business growth.
-          </p>
+    <section
+      id="services"
+      ref={sectionRef}
+      data-scroll-chapter
+      style={{
+        background: "#080a0c",
+        paddingTop: "5rem",
+        paddingBottom: "5rem",
+      }}
+    >
+      <Container size="wide">
+        {/* Section label */}
+        <div
+          data-section-label
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "1rem",
+            marginBottom: "3rem",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "var(--font-mono, monospace)",
+              fontSize: "0.7rem",
+              fontWeight: 600,
+              color: "#67e8f9",
+              letterSpacing: "0.1em",
+            }}
+          >
+            [ 01 ]
+          </span>
+          <span
+            style={{
+              fontFamily: "var(--font-mono, monospace)",
+              fontSize: "0.7rem",
+              fontWeight: 500,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase" as const,
+              color: "#f0f4f8",
+            }}
+          >
+            WHAT WE BUILD
+          </span>
+          <div
+            style={{
+              flex: 1,
+              height: "1px",
+              background: "rgba(255,255,255,0.07)",
+            }}
+          />
         </div>
 
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {services.map((service, index) => (
-            <article
-              key={service._id ?? service.title}
-              className="theme-card flex h-full flex-col p-5"
+        {/* 2-column grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(2, 1fr)",
+            gap: "1px",
+            background: "rgba(255,255,255,0.07)",
+            border: "1px solid rgba(255,255,255,0.07)",
+          }}
+          className="services-grid-responsive"
+        >
+          {items.map((service, i) => (
+            <div
+              key={service._id ?? i}
+              data-reveal
+              className="service-card-hover"
+              style={{
+                padding: "2.5rem",
+                background: "#080a0c",
+                cursor: "pointer",
+                transition: "background 0.2s",
+              }}
             >
-              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-[linear-gradient(150deg,#152338,#132334)] text-sm font-bold text-[#CFE1FF]">
-                {String(index + 1).padStart(2, "0")}
-              </div>
-              <h3 className="text-xl font-semibold text-[#E7F0FF]">{service.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-[#AABFD4]">{service.description}</p>
-
-              <ul className="mt-4 space-y-2 text-sm text-[#8095AC]">
-                {(service.points || []).slice(0, 3).map((point) => (
-                  <li key={point} className="flex items-start gap-2">
-                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[#76B5FF]" />
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-auto pt-5">
-                <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#66AAFF]">
-                  Learn more
-                  <ArrowUpRight className="h-4 w-4" />
+              {/* Number + arrow row */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: "1.5rem",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono, monospace)",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    color: "#67e8f9",
+                    letterSpacing: "0.06em",
+                  }}
+                >
+                  {String(i + 1).padStart(2, "0")}
                 </span>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  style={{ color: "#475569" }}
+                >
+                  <path
+                    d="M2 12L12 2M12 2H4M12 2V10"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </div>
-            </article>
+
+              {/* Title */}
+              <h3
+                style={{
+                  fontFamily:
+                    "var(--font-display, var(--font-heading, sans-serif))",
+                  fontWeight: 900,
+                  fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)",
+                  textTransform: "uppercase" as const,
+                  color: "#f0f4f8",
+                  letterSpacing: "-0.01em",
+                  lineHeight: 1.1,
+                  marginBottom: "1rem",
+                  fontStyle: "italic",
+                }}
+              >
+                {service.title.replace(/^0\d\s*/, "")}
+              </h3>
+
+              {/* Description */}
+              <p
+                style={{
+                  color: "#f0f4f8",
+                  fontSize: "0.875rem",
+                  lineHeight: 1.65,
+                  marginBottom: "1.5rem",
+                }}
+              >
+                {service.description}
+              </p>
+
+              {/* Tags */}
+              {service.points && service.points.length > 0 && (
+                <div style={{ display: "flex", flexWrap: "wrap" as const, gap: "0.5rem" }}>
+                  {service.points.map((tag) => (
+                    <span
+                      key={tag}
+                      style={{
+                        display: "inline-block",
+                        padding: "0.3rem 0.7rem",
+                        border: "1px solid rgba(255,255,255,0.1)",
+                        fontFamily: "var(--font-mono, monospace)",
+                        fontSize: "0.62rem",
+                        fontWeight: 500,
+                        letterSpacing: "0.04em",
+                        color: "#94a3b8",
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
         </div>
       </Container>
+
+      <style>{`
+        .service-card-hover:hover {
+          background: #0d1117 !important;
+        }
+        @media (max-width: 768px) {
+          .services-grid-responsive {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

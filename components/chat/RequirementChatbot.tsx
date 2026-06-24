@@ -83,6 +83,8 @@ export default function RequirementChatbot() {
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const messagesRef = useRef<HTMLDivElement | null>(null);
+  const launcherRef = useRef<HTMLButtonElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const requirementSummary = useMemo(() => {
     const parts = [
@@ -248,21 +250,43 @@ export default function RequirementChatbot() {
     messagesRef.current?.scrollTo({ top: messagesRef.current.scrollHeight, behavior: "smooth" });
   }, [isOpen, messages, step, error, success]);
 
+  useEffect(() => {
+    if (isOpen) {
+      closeButtonRef.current?.focus();
+      return;
+    }
+
+    launcherRef.current?.focus();
+  }, [isOpen]);
+
   return (
-    <div className="fixed bottom-[5.25rem] right-3 z-[70] md:bottom-6 md:right-6">
+    <div
+      className="fixed bottom-[5.25rem] right-3 z-[70] md:bottom-6 md:right-6"
+      onKeyDown={(event) => {
+        if (event.key === "Escape") {
+          setIsOpen(false);
+        }
+      }}
+    >
       {isOpen && (
-        <section className="mb-3 w-[calc(100vw-1.5rem)] max-w-[390px] overflow-hidden rounded-2xl border border-[#325173]/70 bg-[linear-gradient(165deg,rgba(14,23,37,0.97),rgba(10,18,30,0.98))] shadow-[0_20px_55px_rgba(0,0,0,0.45)]">
+        <section
+          className="mb-3 w-[calc(100vw-1.5rem)] max-w-[390px] overflow-hidden rounded-2xl border border-[#325173]/70 bg-[linear-gradient(165deg,rgba(14,23,37,0.97),rgba(10,18,30,0.98))] shadow-[0_20px_55px_rgba(0,0,0,0.45)]"
+          role="dialog"
+          aria-modal="false"
+          aria-labelledby="requirement-assistant-title"
+        >
           <div className="flex items-center justify-between border-b border-[#2D4662]/75 px-4 py-3">
             <div className="flex items-center gap-2">
               <span className="rounded-full border border-[#37628E]/65 bg-[#132538] p-2 text-[#7BC4FF]">
                 <Bot size={16} />
               </span>
               <div>
-                <p className="text-sm font-semibold text-[#E7F0FF]">Requirement Assistant</p>
+                <p id="requirement-assistant-title" className="text-sm font-semibold text-[#E7F0FF]">Requirement Assistant</p>
                 <p className="text-[11px] text-[#8095AC]">Guided help + contact handoff</p>
               </div>
             </div>
             <button
+              ref={closeButtonRef}
               type="button"
               onClick={() => setIsOpen(false)}
               className="rounded-full border border-[#375778] bg-[#132338] p-1.5 text-[#93AEC8] transition hover:border-[#4B7AA6] hover:text-[#D3E7FF]"
@@ -406,10 +430,12 @@ export default function RequirementChatbot() {
       )}
 
       <button
+        ref={launcherRef}
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
         className="group inline-flex items-center gap-2 rounded-full border border-[#2C5A86]/80 bg-[linear-gradient(140deg,rgba(12,24,40,0.97),rgba(14,35,57,0.97))] px-4 py-2.5 text-sm font-semibold text-[#E6F1FF] shadow-[0_10px_28px_rgba(0,0,0,0.45)] transition hover:border-[#4F88BD] hover:shadow-[0_14px_34px_rgba(0,0,0,0.5)]"
         aria-label={isOpen ? "Close requirement assistant" : "Open requirement assistant"}
+        aria-expanded={isOpen}
       >
         <MessageSquareText size={16} className="text-[#7BC4FF] transition group-hover:text-[#ABDAFF]" />
         {isOpen ? "Close Chat" : "Need Help?"}
