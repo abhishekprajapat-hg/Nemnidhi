@@ -1,11 +1,27 @@
 "use client";
 
 import { useRef, useMemo } from "react";
+import { forwardRef } from "react";
 import dynamic from "next/dynamic";
 import "react-quill-new/dist/quill.snow.css";
 
 // Dynamic import with ssr: false is essential for React Quill in Next.js App Router
-const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false, loading: () => <p>Loading editor...</p> });
+const ReactQuillWrapper = dynamic(
+  async () => {
+    if (typeof window !== "undefined") {
+      (window as any).Quill = (await import("react-quill-new")).default.Quill;
+    }
+    const { default: RQ } = await import("react-quill-new");
+    const { default: ImageResize } = await import("quill-image-resize-module-react");
+    
+    RQ.Quill.register("modules/imageResize", ImageResize);
+    
+    return forwardRef(function ForwardedQuill(props: any, ref: any) {
+      return <RQ ref={ref} {...props} />;
+    });
+  },
+  { ssr: false, loading: () => <p>Loading editor...</p> }
+);
 
 interface RichEditorProps {
   value: string;
@@ -76,6 +92,9 @@ export default function RichEditor({ value, onChange }: RichEditorProps) {
         image: imageHandler,
       },
     },
+    imageResize: {
+      modules: ["Resize", "DisplaySize", "Toolbar"],
+    },
   }), []);
 
   return (
@@ -90,8 +109,7 @@ export default function RichEditor({ value, onChange }: RichEditorProps) {
           border-top-right-radius: 4px;
         }
       `}</style>
-      <ReactQuill
-        // @ts-expect-error: ref forwarding via next/dynamic causes type mismatch but works at runtime
+      <ReactQuillWrapper
         ref={quillRef}
         theme="snow"
         value={value}
