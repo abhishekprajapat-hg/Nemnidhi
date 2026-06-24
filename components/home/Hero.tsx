@@ -27,7 +27,7 @@ export default function Hero({ hero }: HeroProps) {
   useHeroEntrance(sectionRef);
   useHeroParallax(sectionRef);
 
-  const badge = hero?.badgeText ?? "[ NEMNIDHI.COM ] — EST. 2018";
+  const badge = hero?.badgeText ?? "[ NEMNIDHI.COM ] — EST. 2025";
   const headingLine1 = hero?.headingMain ?? "ENGINEERING";
   const headingLine2 = hero?.headingHighlight ?? "SOFTWARE";
   const headingLine3 = hero?.headingSuffix ?? "THAT SCALES.";

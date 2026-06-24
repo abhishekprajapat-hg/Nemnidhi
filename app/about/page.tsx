@@ -46,7 +46,7 @@ const process = [
 
 export const metadata = {
   title: "About",
-  description: "Nemnidhi is a software engineering studio building production-grade systems for startups and enterprises since 2018.",
+  description: "Nemnidhi is a software engineering studio building production-grade systems for startups and enterprises since 2025.",
 };
 
 export default function AboutPage() {
@@ -56,7 +56,7 @@ export default function AboutPage() {
       <section style={{ padding: "7rem 0 4rem" }}>
         <Container size="wide">
           <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: S.accent, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
-            [ NEMNIDHI.COM ] — EST. 2018
+            [ NEMNIDHI.COM ] — EST. 2025
           </p>
           <h1 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "italic", fontSize: "clamp(2.35rem, 5.8vw, 5.2rem)", textTransform: "uppercase", lineHeight: 0.95, letterSpacing: "-0.015em", marginBottom: "2rem" }}>
             <span style={{ color: S.white, display: "block" }}>WHO</span>
