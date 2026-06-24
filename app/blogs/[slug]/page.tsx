@@ -101,6 +101,17 @@ export default async function DynamicBlogPage({ params }: { params: Promise<{ sl
       </section>
       
       <style>{`
+        .blog-content {
+          white-space: pre-wrap;
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+        }
+        .blog-content * {
+          max-width: 100%;
+        }
+        .blog-content p, .blog-content span, .blog-content div, .blog-content h1, .blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6, .blog-content li {
+          white-space: pre-wrap;
+        }
         .blog-content img {
           width: 100%;
           aspect-ratio: 16/9;
