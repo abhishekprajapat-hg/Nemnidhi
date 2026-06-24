@@ -98,7 +98,10 @@ export default function RichEditor({ value, onChange }: RichEditorProps) {
   }), []);
 
   return (
-    <div style={{ background: "#fff", color: "#000", borderRadius: "4px", height: "70vh", minHeight: "400px", display: "flex", flexDirection: "column" }}>
+    <div 
+      data-lenis-prevent="true" 
+      style={{ background: "#fff", color: "#000", borderRadius: "4px", height: "70vh", minHeight: "400px", display: "flex", flexDirection: "column" }}
+    >
       <style>{`
         .quill {
           display: flex;
