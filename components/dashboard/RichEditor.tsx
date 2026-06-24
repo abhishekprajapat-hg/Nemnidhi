@@ -98,27 +98,31 @@ export default function RichEditor({ value, onChange }: RichEditorProps) {
   }), []);
 
   return (
-    <div style={{ background: "#fff", color: "#000", borderRadius: "4px" }}>
+    <div style={{ background: "#fff", color: "#000", borderRadius: "4px", height: "70vh", minHeight: "400px", display: "flex", flexDirection: "column" }}>
       <style>{`
         .quill {
           display: flex;
           flex-direction: column;
-          height: 70vh; /* Responsive fixed height */
-          min-height: 400px;
+          flex: 1;
+          overflow: hidden;
         }
         .ql-toolbar.ql-snow {
           background: #f8f9fa;
           border-top-left-radius: 4px;
           border-top-right-radius: 4px;
           flex-shrink: 0;
-          z-index: 100;
         }
         .ql-container.ql-snow {
           flex: 1;
-          overflow-y: auto;
-          min-height: 0;
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
           border-bottom-left-radius: 4px;
           border-bottom-right-radius: 4px;
+        }
+        .ql-editor {
+          flex: 1;
+          overflow-y: auto;
         }
       `}</style>
       <ReactQuillWrapper
