@@ -7,7 +7,7 @@
   color-scheme: dark;
 
   /* Fonts */
-  --font-sans: var(--font-body), 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-display), 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-display), var(--font-body), 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Cascadia Code', monospace;
 
