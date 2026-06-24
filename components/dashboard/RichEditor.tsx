@@ -12,9 +12,9 @@ const ReactQuillWrapper = dynamic(
       (window as any).Quill = (await import("react-quill-new")).default.Quill;
     }
     const { default: RQ } = await import("react-quill-new");
-    const { default: ImageResize } = await import("quill-image-resize-module-react");
+    const { default: BlotFormatter } = await import("quill-blot-formatter");
     
-    RQ.Quill.register("modules/imageResize", ImageResize);
+    RQ.Quill.register("modules/blotFormatter", BlotFormatter);
     
     return forwardRef(function ForwardedQuill(props: any, ref: any) {
       return <RQ ref={ref} {...props} />;
@@ -92,9 +92,7 @@ export default function RichEditor({ value, onChange }: RichEditorProps) {
         image: imageHandler,
       },
     },
-    imageResize: {
-      modules: ["Resize", "DisplaySize", "Toolbar"],
-    },
+    blotFormatter: {},
   }), []);
 
   return (
