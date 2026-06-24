@@ -46,7 +46,7 @@ export default async function DynamicBlogPage({ params }: { params: Promise<{ sl
     <div style={{ background: S.bg, minHeight: "100svh", paddingBottom: "5rem" }}>
       {/* ─── Hero / Header ─── */}
       <section style={{ paddingTop: "7rem", paddingBottom: "3rem", borderBottom: `1px solid ${S.line}` }}>
-        <Container size="normal" style={{ maxWidth: "800px", margin: "0 auto" }}>
+        <Container size="default" style={{ maxWidth: "800px", margin: "0 auto" }}>
           <Link
             href="/blogs"
             style={{
@@ -86,7 +86,7 @@ export default async function DynamicBlogPage({ params }: { params: Promise<{ sl
 
       {/* ─── Content ─── */}
       <section style={{ paddingTop: "4rem" }}>
-        <Container size="normal" style={{ maxWidth: "800px", margin: "0 auto" }}>
+        <Container size="default" style={{ maxWidth: "800px", margin: "0 auto" }}>
           <div
             className="blog-content"
             style={{
