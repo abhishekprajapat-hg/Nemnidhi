@@ -74,6 +74,7 @@ export default function RichEditor({ value, onChange }: RichEditorProps) {
   return (
     <div style={{ background: "#fff", color: "#000", borderRadius: "4px", overflow: "hidden" }}>
       <ReactQuill
+        // @ts-expect-error: ref forwarding via next/dynamic causes type mismatch but works at runtime
         ref={quillRef}
         theme="snow"
         value={value}
