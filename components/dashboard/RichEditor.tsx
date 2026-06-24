@@ -57,11 +57,6 @@ export default function RichEditor({ value, onChange }: RichEditorProps) {
           if (editor) {
             const range = editor.getSelection();
             editor.insertEmbed(range?.index || 0, "image", url);
-            // Apply some default inline styles so it fits well like the other images
-            editor.formatText(range?.index || 0, 1, {
-              width: "100%",
-              style: "aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; margin: 3rem 0; border: 1px solid rgba(255,255,255,0.07);"
-            });
           }
         } else {
           alert("Failed to upload image");
@@ -120,10 +115,12 @@ export default function RichEditor({ value, onChange }: RichEditorProps) {
           overflow: hidden;
           border-bottom-left-radius: 4px;
           border-bottom-right-radius: 4px;
+          position: relative;
         }
         .ql-editor {
           flex: 1;
           overflow-y: auto;
+          position: relative;
         }
       `}</style>
       <ReactQuillWrapper
