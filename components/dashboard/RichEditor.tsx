@@ -59,10 +59,17 @@ export default function RichEditor({ value, onChange }: RichEditorProps) {
   const modules = useMemo(() => ({
     toolbar: {
       container: [
-        [{ header: [1, 2, 3, false] }],
-        ["bold", "italic", "underline", "strike", "blockquote"],
+        [{ font: [] }],
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        ["bold", "italic", "underline", "strike"],
+        ["blockquote", "code-block"],
+        [{ color: [] }, { background: [] }],
+        [{ script: "sub" }, { script: "super" }],
         [{ list: "ordered" }, { list: "bullet" }],
-        ["link", "image"],
+        [{ indent: "-1" }, { indent: "+1" }],
+        [{ direction: "rtl" }],
+        [{ align: [] }],
+        ["link", "image", "video"],
         ["clean"],
       ],
       handlers: {
@@ -72,7 +79,17 @@ export default function RichEditor({ value, onChange }: RichEditorProps) {
   }), []);
 
   return (
-    <div style={{ background: "#fff", color: "#000", borderRadius: "4px", overflow: "hidden" }}>
+    <div style={{ background: "#fff", color: "#000", borderRadius: "4px" }}>
+      <style>{`
+        .ql-toolbar.ql-snow {
+          position: sticky;
+          top: 0;
+          z-index: 100;
+          background: #f8f9fa;
+          border-top-left-radius: 4px;
+          border-top-right-radius: 4px;
+        }
+      `}</style>
       <ReactQuill
         // @ts-expect-error: ref forwarding via next/dynamic causes type mismatch but works at runtime
         ref={quillRef}
