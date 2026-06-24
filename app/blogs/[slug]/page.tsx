@@ -73,7 +73,7 @@ export default async function DynamicBlogPage({ params }: { params: Promise<{ sl
               lineHeight: 1.05,
               color: S.white,
               marginBottom: "1.5rem",
-              fontStyle: "italic",
+              fontStyle: "normal",
             }}
           >
             {blog.title}

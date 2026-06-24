@@ -199,7 +199,7 @@ export default function ContactSection() {
                 lineHeight: 0.95,
                 letterSpacing: "-0.02em",
                 marginBottom: "1.5rem",
-                fontStyle: "italic",
+                fontStyle: "normal",
               }}
             >
               <span style={{ color: "#f0f4f8", display: "block" }}>READY TO</span>

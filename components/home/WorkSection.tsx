@@ -182,7 +182,7 @@ export default function WorkSection() {
                   color: "#f0f4f8",
                   letterSpacing: "-0.02em",
                   lineHeight: 0.92,
-                  fontStyle: "italic",
+                  fontStyle: "normal",
                   marginBottom: "1rem",
                 }}
               >

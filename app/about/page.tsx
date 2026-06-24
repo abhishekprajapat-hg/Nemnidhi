@@ -58,7 +58,7 @@ export default function AboutPage() {
           <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: S.accent, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
             [ NEMNIDHI.COM ] — EST. 2025
           </p>
-          <h1 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "italic", fontSize: "clamp(2.35rem, 5.8vw, 5.2rem)", textTransform: "uppercase", lineHeight: 0.95, letterSpacing: "-0.015em", marginBottom: "2rem" }}>
+          <h1 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(2.35rem, 5.8vw, 5.2rem)", textTransform: "uppercase", lineHeight: 0.95, letterSpacing: "-0.015em", marginBottom: "2rem" }}>
             <span style={{ color: S.white, display: "block" }}>WHO</span>
             <span style={{ color: S.accent, display: "block" }}>WE ARE.</span>
           </h1>
@@ -76,7 +76,7 @@ export default function AboutPage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", border: `1px solid ${S.line}` }} className="about-stats-grid">
             {stats.map((s, i) => (
               <div key={s.label} style={{ padding: "2.5rem 2rem", borderRight: i < stats.length - 1 ? `1px solid ${S.line}` : "none", background: S.bgCard }}>
-                <p style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "italic", fontSize: "clamp(2.5rem,4vw,3.5rem)", color: S.white, letterSpacing: "-0.02em", lineHeight: 1, marginBottom: "0.6rem" }}>{s.value}</p>
+                <p style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(2.5rem,4vw,3.5rem)", color: S.white, letterSpacing: "-0.02em", lineHeight: 1, marginBottom: "0.6rem" }}>{s.value}</p>
                 <p style={{ fontFamily: S.mono, fontSize: "0.6rem", fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: S.muted }}>{s.label}</p>
               </div>
             ))}
@@ -92,7 +92,7 @@ export default function AboutPage() {
           <SectionLabel number="[ 01 ]" text="STUDIO MODEL" />
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "start" }} className="about-two-col">
             <div>
-              <h2 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "italic", fontSize: "clamp(1.5rem,2.35vw,2.15rem)", textTransform: "uppercase", color: S.white, lineHeight: 1.05, marginBottom: "1.5rem" }}>
+              <h2 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(1.5rem,2.35vw,2.15rem)", textTransform: "uppercase", color: S.white, lineHeight: 1.05, marginBottom: "1.5rem" }}>
                 INTENTIONALLY LEAN. RELENTLESSLY SENIOR.
               </h2>
               <p style={{ color: S.muted, fontSize: "0.9rem", lineHeight: 1.75, marginBottom: "1rem" }}>
@@ -129,7 +129,7 @@ export default function AboutPage() {
             {principles.map((p) => (
               <div key={p.num} style={{ padding: "2.5rem", background: S.bg }}>
                 <span style={{ fontFamily: S.mono, fontSize: "0.75rem", fontWeight: 600, color: S.accent, display: "block", marginBottom: "1.25rem" }}>{p.num}</span>
-                <h3 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "italic", fontSize: "clamp(1.2rem,2vw,1.6rem)", textTransform: "uppercase", color: S.white, lineHeight: 1.1, marginBottom: "1rem" }}>{p.title}</h3>
+                <h3 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(1.2rem,2vw,1.6rem)", textTransform: "uppercase", color: S.white, lineHeight: 1.1, marginBottom: "1rem" }}>{p.title}</h3>
                 <p style={{ color: S.muted, fontSize: "0.875rem", lineHeight: 1.7 }}>{p.desc}</p>
               </div>
             ))}
@@ -147,7 +147,7 @@ export default function AboutPage() {
             {process.map((step, i) => (
               <div key={step.num} style={{ padding: "2rem 1.75rem", background: S.bgCard, borderRight: i < process.length - 1 ? `1px solid ${S.line}` : "none" }}>
                 <p style={{ fontFamily: S.mono, fontSize: "0.75rem", fontWeight: 600, color: S.accent, marginBottom: "1.25rem" }}>{step.num}</p>
-                <h3 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "italic", fontSize: "clamp(1.1rem,1.6vw,1.4rem)", textTransform: "uppercase", color: S.white, lineHeight: 1.1, marginBottom: "1rem" }}>{step.title}</h3>
+                <h3 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(1.1rem,1.6vw,1.4rem)", textTransform: "uppercase", color: S.white, lineHeight: 1.1, marginBottom: "1rem" }}>{step.title}</h3>
                 <p style={{ color: S.muted, fontSize: "0.8rem", lineHeight: 1.65, marginBottom: "1.5rem" }}>{step.desc}</p>
                 <div style={{ paddingTop: "1rem", borderTop: `1px solid ${S.line}`, fontFamily: S.mono, fontSize: "0.6rem", fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: S.faint }}>
                   TIMELINE: {step.timeline}
@@ -165,7 +165,7 @@ export default function AboutPage() {
         <Container size="wide">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "2rem" }}>
             <div>
-              <h2 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "italic", fontSize: "clamp(1.65rem,3vw,2.65rem)", textTransform: "uppercase", color: S.white, lineHeight: 1.05 }}>
+              <h2 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(1.65rem,3vw,2.65rem)", textTransform: "uppercase", color: S.white, lineHeight: 1.05 }}>
                 START A CONVERSATION.
               </h2>
               <p style={{ color: S.muted, marginTop: "0.75rem", fontSize: "0.9rem" }}>

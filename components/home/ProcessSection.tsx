@@ -105,7 +105,7 @@ export default function ProcessSection() {
                 color: "#f0f4f8",
                 letterSpacing: "-0.02em",
                 lineHeight: 0.95,
-                fontStyle: "italic",
+                fontStyle: "normal",
               }}
             >
               From signal to shipped software.
@@ -197,7 +197,7 @@ export default function ProcessSection() {
                         color: "#f0f4f8",
                         letterSpacing: "-0.01em",
                         lineHeight: 1,
-                        fontStyle: "italic",
+                        fontStyle: "normal",
                       }}
                     >
                       {step.title}

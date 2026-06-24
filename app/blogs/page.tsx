@@ -39,7 +39,7 @@ export default async function BlogsPage() {
           <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: S.accent, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
             [ NEMNIDHI.COM / BLOGS ]
           </p>
-          <h1 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "italic", fontSize: "clamp(2.35rem, 5.8vw, 5.2rem)", textTransform: "uppercase", lineHeight: 0.95, letterSpacing: "-0.015em", marginBottom: "2rem" }}>
+          <h1 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(2.35rem, 5.8vw, 5.2rem)", textTransform: "uppercase", lineHeight: 0.95, letterSpacing: "-0.015em", marginBottom: "2rem" }}>
             <span style={{ color: S.white, display: "block" }}>INSIGHTS &</span>
             <span style={{ color: S.accent, display: "block" }}>ARTICLES.</span>
           </h1>
@@ -61,7 +61,7 @@ export default async function BlogsPage() {
               <Link key={blog.slug} href={`/blogs/${blog.slug}`} style={{ textDecoration: "none" }}>
                 <div className="blog-card" style={{ padding: "2.5rem", background: S.bgCard, border: `1px solid ${S.line}`, transition: "border-color 0.2s" }}>
                   <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: S.accent, marginBottom: "1rem" }}>{blog.date}</p>
-                  <h2 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "italic", fontSize: "clamp(1.5rem, 3vw, 2.2rem)", color: S.white, lineHeight: 1.1, marginBottom: "1rem" }}>
+                  <h2 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(1.5rem, 3vw, 2.2rem)", color: S.white, lineHeight: 1.1, marginBottom: "1rem" }}>
                     {blog.title}
                   </h2>
                   <p style={{ color: S.muted, fontSize: "1rem", lineHeight: 1.7, maxWidth: "45rem" }}>

@@ -110,7 +110,7 @@ export default function ProjectsPage() {
           <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: S.accent, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
             [ NEMNIDHI.COM ] — LIVE BUILDS
           </p>
-          <h1 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "italic", fontSize: "clamp(2.35rem, 5.8vw, 5.2rem)", textTransform: "uppercase", lineHeight: 0.95, letterSpacing: "-0.015em", marginBottom: "2rem" }}>
+          <h1 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(2.35rem, 5.8vw, 5.2rem)", textTransform: "uppercase", lineHeight: 0.95, letterSpacing: "-0.015em", marginBottom: "2rem" }}>
             <span style={{ color: S.white, display: "block" }}>OUR</span>
             <span style={{ color: S.accent, display: "block" }}>WORK.</span>
           </h1>
@@ -151,7 +151,7 @@ export default function ProjectsPage() {
                   {/* Content */}
                   <div>
                     <div style={{ display: "flex", alignItems: "baseline", flexWrap: "wrap" as const, gap: "0.75rem", marginBottom: "0.5rem" }}>
-                      <h2 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "italic", fontSize: "clamp(1.25rem, 2.05vw, 1.7rem)", textTransform: "uppercase", color: S.white, letterSpacing: "-0.005em", lineHeight: 1.15, margin: 0 }}>
+                      <h2 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(1.25rem, 2.05vw, 1.7rem)", textTransform: "uppercase", color: S.white, letterSpacing: "-0.005em", lineHeight: 1.15, margin: 0 }}>
                         {project.title}
                       </h2>
                       <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" as const }}>
@@ -219,7 +219,7 @@ export default function ProjectsPage() {
         <Container size="wide">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "2rem" }}>
             <div>
-              <h2 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "italic", fontSize: "clamp(1.65rem, 3vw, 2.65rem)", textTransform: "uppercase", color: S.white, lineHeight: 1.05 }}>
+              <h2 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(1.65rem, 3vw, 2.65rem)", textTransform: "uppercase", color: S.white, lineHeight: 1.05 }}>
                 YOUR PROJECT NEXT?
               </h2>
               <p style={{ color: S.muted, marginTop: "0.75rem", fontSize: "0.9rem" }}>

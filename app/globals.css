@@ -291,7 +291,7 @@
 
   .hero-heading {
     font-weight: 900;
-    font-style: italic;
+    font-style: normal;
     line-height: 0.88;
     letter-spacing: -0.03em;
     text-transform: uppercase;
@@ -451,7 +451,7 @@
   .stat-number {
     font-size: clamp(2.5rem, 4vw, 3.5rem);
     font-weight: 900;
-    font-style: italic;
+    font-style: normal;
     color: var(--color-white);
     letter-spacing: -0.02em;
     line-height: 1;
@@ -509,7 +509,7 @@
   .service-card-title {
     font-size: clamp(1.5rem, 2.5vw, 2rem);
     font-weight: 900;
-    font-style: italic;
+    font-style: normal;
     text-transform: uppercase;
     color: var(--color-white);
     letter-spacing: -0.01em;
@@ -573,7 +573,7 @@
   .work-title {
     font-size: clamp(1.5rem, 3vw, 2.25rem);
     font-weight: 900;
-    font-style: italic;
+    font-style: normal;
     text-transform: uppercase;
     color: var(--color-white);
     letter-spacing: -0.01em;
@@ -650,7 +650,7 @@
   .process-title {
     font-size: clamp(1.4rem, 2.2vw, 1.8rem);
     font-weight: 900;
-    font-style: italic;
+    font-style: normal;
     text-transform: uppercase;
     color: var(--color-white);
     letter-spacing: -0.01em;
@@ -680,7 +680,7 @@
   .contact-heading {
     font-size: clamp(2.05rem, 4.6vw, 3.45rem);
     font-weight: 900;
-    font-style: italic;
+    font-style: normal;
     text-transform: uppercase;
     color: var(--color-white);
     line-height: 0.95;
@@ -1093,7 +1093,7 @@
     max-width: 12ch;
     color: var(--color-white);
     font-size: clamp(2.1rem, 4.3vw, 4.7rem);
-    font-style: italic;
+    font-style: normal;
     font-weight: 950;
     letter-spacing: -0.025em;
     line-height: 0.88;
@@ -1149,7 +1149,7 @@
     max-width: 12ch;
     color: var(--color-heading);
     font-size: clamp(1.65rem, 3.4vw, 3.55rem);
-    font-style: italic;
+    font-style: normal;
     font-weight: 950;
     letter-spacing: -0.025em;
     line-height: 0.9;
@@ -1171,7 +1171,7 @@
     color: rgba(255, 255, 255, 0.035);
     font-family: var(--font-heading);
     font-size: clamp(3rem, 9vw, 8rem);
-    font-style: italic;
+    font-style: normal;
     font-weight: 950;
     letter-spacing: -0.04em;
     line-height: 0.8;

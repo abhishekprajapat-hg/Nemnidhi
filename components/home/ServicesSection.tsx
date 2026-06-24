@@ -182,7 +182,7 @@ export default function ServicesSection({
                   letterSpacing: "-0.01em",
                   lineHeight: 1.1,
                   marginBottom: "1rem",
-                  fontStyle: "italic",
+                  fontStyle: "normal",
                 }}
               >
                 {service.title.replace(/^0\d\s*/, "")}
