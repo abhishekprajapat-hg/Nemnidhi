@@ -1,5 +1,7 @@
 import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
+import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
+import HeroLightfall from "@/components/services/HeroLightfall";
 
 type SolutionItem = {
   id: string;
@@ -113,13 +115,21 @@ export default function SolutionsPage() {
   return (
     <section className="theme-section min-h-screen">
       <Container className="py-10 md:py-14">
-        <header className="mb-10 space-y-4">
-          <p className="section-eyebrow">Partners</p>
-          <h1 className="section-title max-w-4xl">Integrated business systems designed to compound quietly.</h1>
-          <p className="max-w-3xl section-copy">
-            Instead of one-off tasks, we build integrated solutions across offer clarity, conversion flow, and
-            operational reliability.
-          </p>
+        <header className="relative isolate mb-10 overflow-hidden py-8">
+          <HeroLightfall />
+          <div className="hero-content-layer space-y-4">
+            <p className="section-eyebrow">Partners</p>
+            <HeroBlurTitle
+              className="section-title max-w-4xl"
+              lines={[{ text: "Integrated business systems designed to compound quietly." }]}
+              delay={75}
+              lineStyle={{ display: "block" }}
+            />
+            <p className="max-w-3xl section-copy">
+              Instead of one-off tasks, we build integrated solutions across offer clarity, conversion flow, and
+              operational reliability.
+            </p>
+          </div>
         </header>
 
         <div className="space-y-5">

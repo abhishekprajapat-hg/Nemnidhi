@@ -20,7 +20,7 @@ export function Card({
 }) {
   return (
     <article
-      className={clsx("interactive-card rounded-[var(--radius-lg)]", variants[variant], className)}
+      className={clsx("interactive-card magic-bento-card rounded-[var(--radius-lg)]", variants[variant], className)}
       data-cursor="interactive"
       data-card-reveal
       {...props}

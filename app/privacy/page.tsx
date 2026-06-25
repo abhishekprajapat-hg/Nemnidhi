@@ -1,4 +1,6 @@
 import Container from "@/components/layout/Container";
+import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
+import HeroLightfall from "@/components/services/HeroLightfall";
 
 const SECTIONS = [
   {
@@ -46,13 +48,16 @@ export default function PrivacyPage() {
   return (
     <section className="theme-section min-h-screen">
       <Container className="py-10 md:py-14">
-        <header className="mb-8 space-y-4">
-          <p className="section-eyebrow">Legal</p>
-          <h1 className="section-title">Privacy Policy</h1>
-          <p className="max-w-3xl section-copy">
-            This page explains how Nemnidhi collects, uses, and protects information when you interact with our website
-            and services.
-          </p>
+        <header className="relative isolate mb-8 overflow-hidden py-8">
+          <HeroLightfall />
+          <div className="hero-content-layer space-y-4">
+            <p className="section-eyebrow">Legal</p>
+            <HeroBlurTitle className="section-title" lines={[{ text: "Privacy Policy" }]} lineStyle={{ display: "block" }} />
+            <p className="max-w-3xl section-copy">
+              This page explains how Nemnidhi collects, uses, and protects information when you interact with our website
+              and services.
+            </p>
+          </div>
         </header>
 
         <div className="theme-card p-5 md:p-7">

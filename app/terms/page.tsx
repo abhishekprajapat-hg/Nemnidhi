@@ -1,4 +1,6 @@
 import Container from "@/components/layout/Container";
+import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
+import HeroLightfall from "@/components/services/HeroLightfall";
 
 const SECTIONS = [
   {
@@ -55,13 +57,16 @@ export default function TermsPage() {
   return (
     <section className="theme-section min-h-screen">
       <Container className="py-10 md:py-14">
-        <header className="mb-8 space-y-4">
-          <p className="section-eyebrow">Legal</p>
-          <h1 className="section-title">Terms and Conditions</h1>
-          <p className="max-w-3xl section-copy">
-            These terms govern your use of the Nemnidhi website and any related services offered through direct
-            engagement.
-          </p>
+        <header className="relative isolate mb-8 overflow-hidden py-8">
+          <HeroLightfall />
+          <div className="hero-content-layer space-y-4">
+            <p className="section-eyebrow">Legal</p>
+            <HeroBlurTitle className="section-title" lines={[{ text: "Terms and Conditions" }]} lineStyle={{ display: "block" }} />
+            <p className="max-w-3xl section-copy">
+              These terms govern your use of the Nemnidhi website and any related services offered through direct
+              engagement.
+            </p>
+          </div>
         </header>
 
         <div className="theme-card p-5 md:p-7">

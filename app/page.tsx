@@ -1,5 +1,6 @@
 // app/page.tsx
 import Hero from "@/components/home/Hero";
+import HomeHyperspeed from "@/components/home/HomeHyperspeed";
 import ScrollChapterRail from "@/components/home/ScrollChapterRail";
 import ScrollStorySection from "@/components/home/ScrollStorySection";
 import TickerStrip from "@/components/home/TickerStrip";
@@ -62,16 +63,19 @@ export default async function HomePage() {
 
   return (
     <>
+      <HomeHyperspeed />
       <ScrollChapterRail />
-      <Hero hero={hero} />
-      <TickerStrip />
-      <StatsSection />
-      <ScrollStorySection />
-      <ServicesSection services={services} />
-      <WorkSection />
-      <ProcessSection />
-      <TechStackStrip />
-      <ContactSection />
+      <div className="home-page-content">
+        <Hero hero={hero} />
+        <TickerStrip />
+        <StatsSection />
+        <ScrollStorySection />
+        <ServicesSection services={services} />
+        <WorkSection />
+        <ProcessSection />
+        <TechStackStrip />
+        <ContactSection />
+      </div>
     </>
   );
 }

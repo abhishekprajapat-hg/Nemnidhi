@@ -29,7 +29,7 @@ export default function StatsSection() {
           {stats.map((stat, i) => (
             <div
               key={stat.label}
-              className="stat-card"
+              className="stat-card magic-bento-card"
               data-last={i === stats.length - 1 ? "true" : undefined}
             >
               <p

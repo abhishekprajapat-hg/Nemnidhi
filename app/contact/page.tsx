@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Container from "@/components/layout/Container";
+import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
+import HeroLightfall from "@/components/services/HeroLightfall";
 
 const S = {
   bg: "#080a0c",
@@ -112,15 +114,17 @@ export default function ContactPage() {
   return (
     <div style={{ background: S.bg, minHeight: "100svh" }}>
       {/* ─── Hero ─── */}
-      <section style={{ padding: "7rem 0 4rem" }}>
-        <Container size="wide">
+      <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", padding: "7rem 0 4rem" }}>
+        <HeroLightfall />
+        <Container size="wide" className="hero-content-layer">
           <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: S.accent, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
             [ NEMNIDHI.COM ] — GET IN TOUCH
           </p>
-          <h1 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(2.35rem, 5.8vw, 5.2rem)", textTransform: "uppercase", lineHeight: 0.95, letterSpacing: "-0.015em", marginBottom: "2rem" }}>
-            <span style={{ color: S.white, display: "block" }}>READY TO</span>
-            <span style={{ color: S.accent, display: "block" }}>BUILD?</span>
-          </h1>
+          <HeroBlurTitle
+            lines={[{ text: "READY TO", color: S.white }, { text: "BUILD?", color: S.accent }]}
+            style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(2.35rem, 5.8vw, 5.2rem)", textTransform: "uppercase", lineHeight: 0.95, letterSpacing: "-0.015em", marginBottom: "2rem" }}
+            lineStyle={{ display: "block" }}
+          />
           <p style={{ color: S.muted, fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.7, maxWidth: "36rem" }}>
             Tell us what you&apos;re working on. We respond within 24 hours and move fast from there.
           </p>
@@ -166,7 +170,7 @@ export default function ContactPage() {
                   { label: "ENGAGEMENT", value: "Remote-first" },
                   { label: "BASED IN", value: "Bangalore, India" },
                 ].map((card) => (
-                  <div key={card.label} style={{ padding: "1.25rem", background: S.bgCard }}>
+                  <div key={card.label} className="magic-bento-card" style={{ padding: "1.25rem", background: S.bgCard }}>
                     <p style={{ fontFamily: S.mono, fontSize: "0.58rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: S.faint, marginBottom: "0.4rem" }}>
                       {card.label}
                     </p>

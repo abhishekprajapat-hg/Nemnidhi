@@ -182,6 +182,7 @@ export default function ProcessSection() {
                   </span>
 
                   <div
+                    className="magic-bento-card"
                     style={{
                       border: "1px solid rgba(255,255,255,0.07)",
                       background: "#0d1117",

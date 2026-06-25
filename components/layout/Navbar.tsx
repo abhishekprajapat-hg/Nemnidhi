@@ -2,10 +2,9 @@
 
 import clsx from "clsx";
 import { Home, Briefcase, FolderOpen, Info, MessageCircle, BookOpen } from "lucide-react";
-import { motion, useReducedMotion, useScroll, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Container from "./Container";
 
 const links = [
@@ -28,22 +27,31 @@ const mobileTabs = [
 
 export function Navbar() {
   const pathname = usePathname();
-  const shouldReduceMotion = useReducedMotion();
-  const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    setScrolled(latest > 50);
-  });
+  useEffect(() => {
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      setScrolled(window.scrollY > 50);
+    };
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
-    <motion.header
+    <header
       className={clsx("sticky top-0 z-50", scrolled && "nav-scrolled")}
-      initial={shouldReduceMotion ? false : { y: -18, opacity: 0 }}
-      animate={shouldReduceMotion ? { opacity: 1 } : { y: 0, opacity: 1 }}
-      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
     >
       <Container size="wide">
         <div className="nav-shell flex min-h-[4.5rem] items-center justify-between px-0 py-3">
@@ -112,6 +120,6 @@ export function Navbar() {
           })}
         </div>
       </nav>
-    </motion.header>
+    </header>
   );
 }

@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Container from "@/components/layout/Container";
+import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
+import HeroLightfall from "@/components/services/HeroLightfall";
 
 // ─── shared design tokens ───
 const S = {
@@ -119,15 +121,17 @@ export default function ServicesPage() {
   return (
     <div style={{ background: S.bg, minHeight: "100svh" }}>
       {/* ─── Hero ─── */}
-      <section style={{ padding: "7rem 0 4rem" }}>
-        <Container size="wide">
+      <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", padding: "7rem 0 4rem" }}>
+        <HeroLightfall />
+        <Container size="wide" className="hero-content-layer">
           <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: S.accent, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
             [ NEMNIDHI.COM ] — CAPABILITIES
           </p>
-          <h1 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(2.35rem, 5.8vw, 5.2rem)", textTransform: "uppercase", lineHeight: 0.95, letterSpacing: "-0.015em", marginBottom: "2rem" }}>
-            <span style={{ color: S.white, display: "block" }}>WHAT WE</span>
-            <span style={{ color: S.accent, display: "block" }}>BUILD.</span>
-          </h1>
+          <HeroBlurTitle
+            lines={[{ text: "WHAT WE", color: S.white }, { text: "BUILD.", color: S.accent }]}
+            style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(2.35rem, 5.8vw, 5.2rem)", textTransform: "uppercase", lineHeight: 0.95, letterSpacing: "-0.015em", marginBottom: "2rem" }}
+            lineStyle={{ display: "block" }}
+          />
           <p style={{ color: S.muted, fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.7, maxWidth: "36rem" }}>
             Full-spectrum software engineering — from architecture to deployment. Six core capabilities, one integrated team.
           </p>

@@ -1,0 +1,12 @@
+.lightfallContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.lightfallContainer canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

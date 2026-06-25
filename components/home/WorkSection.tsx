@@ -126,7 +126,7 @@ export default function WorkSection() {
             href={project.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="project-showcase-card"
+            className="project-showcase-card magic-bento-card"
             style={{
               display: "flex",
               minHeight: "30rem",

@@ -15,6 +15,19 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react", "react-icons/si"],
   },
+  async headers() {
+    return [
+      {
+        source: "/:path*\\.(png|jpg|jpeg|gif|webp|avif|svg|ico|mp4|woff2|otf)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

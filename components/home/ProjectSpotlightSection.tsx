@@ -48,7 +48,7 @@ export default function ProjectSpotlightSection() {
 
         <Card variant="plain" className="grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-lg)] bg-white/10 p-0">
           {TRUSTED.map((item) => (
-            <div key={item} className="grid min-h-28 place-items-center bg-[#07111F] font-mono text-xl font-semibold text-[#91A0B5]">
+            <div key={item} className="magic-bento-card grid min-h-28 place-items-center bg-[#07111F] font-mono text-xl font-semibold text-[#91A0B5]">
               {item}
             </div>
           ))}

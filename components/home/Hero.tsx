@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import Container from "@/components/layout/Container";
+import BlurText from "@/components/motion/BlurText";
 import { useHeroEntrance, useHeroParallax } from "@/lib/useGsapAnimations";
 
 type HeroContent = {
@@ -83,34 +84,40 @@ export default function Hero({ hero }: HeroProps) {
             margin: 0,
           }}
         >
-          <span
+          <BlurText
+            as="span"
             data-hero-headline
+            text={headingLine1}
+            delay={90}
+            stepDuration={0.42}
             style={{
-              display: "block",
+              display: "flex",
               color: "#f0f4f8",
               WebkitTextStroke: "1px rgba(240,244,248,0.1)",
             }}
-          >
-            {headingLine1}
-          </span>
-          <span
+          />
+          <BlurText
+            as="span"
             data-hero-headline
+            text={headingLine2}
+            delay={90}
+            stepDuration={0.42}
             style={{
-              display: "block",
+              display: "flex",
               color: "#f0f4f8",
             }}
-          >
-            {headingLine2}
-          </span>
-          <span
+          />
+          <BlurText
+            as="span"
             data-hero-headline
+            text={headingLine3}
+            delay={90}
+            stepDuration={0.42}
             style={{
-              display: "block",
+              display: "flex",
               color: "#67e8f9",
             }}
-          >
-            {headingLine3}
-          </span>
+          />
         </h1>
 
         {/* Bottom row: subtitle + buttons */}
@@ -183,6 +190,14 @@ export default function Hero({ hero }: HeroProps) {
       </Container>
 
       <style>{`
+        .home-hero-grid {
+          z-index: 1;
+        }
+
+        .home-hero-content {
+          z-index: 2;
+        }
+
         @media (max-width: 768px) {
           .hero-bottom-row {
             grid-template-columns: 1fr !important;

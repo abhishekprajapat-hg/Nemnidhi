@@ -125,7 +125,7 @@ export default function ServicesSection({
             <div
               key={service._id ?? i}
               data-reveal
-              className="service-card-hover"
+              className="service-card-hover magic-bento-card"
               style={{
                 padding: "2.5rem",
                 background: "#080a0c",

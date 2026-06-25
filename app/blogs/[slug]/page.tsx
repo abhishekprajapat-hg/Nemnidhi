@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Container from "@/components/layout/Container";
+import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
+import HeroLightfall from "@/components/services/HeroLightfall";
 import { dbConnect } from "@/lib/mongodb";
 import { Blog, IBlog } from "@/models/Blog";
 
@@ -45,8 +47,9 @@ export default async function DynamicBlogPage({ params }: { params: Promise<{ sl
   return (
     <div style={{ background: S.bg, minHeight: "100svh", paddingBottom: "5rem" }}>
       {/* ─── Hero / Header ─── */}
-      <section style={{ paddingTop: "7rem", paddingBottom: "3rem", borderBottom: `1px solid ${S.line}` }}>
-        <Container size="default" style={{ maxWidth: "800px", margin: "0 auto" }}>
+      <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", paddingTop: "7rem", paddingBottom: "3rem", borderBottom: `1px solid ${S.line}` }}>
+        <HeroLightfall />
+        <Container size="default" className="hero-content-layer" style={{ maxWidth: "800px", margin: "0 auto" }}>
           <Link
             href="/blogs"
             style={{
@@ -64,7 +67,8 @@ export default async function DynamicBlogPage({ params }: { params: Promise<{ sl
             ← Back to Blogs
           </Link>
 
-          <h1
+          <HeroBlurTitle
+            lines={[{ text: blog.title, color: S.white }]}
             style={{
               fontFamily: S.heading,
               fontWeight: 900,
@@ -75,9 +79,8 @@ export default async function DynamicBlogPage({ params }: { params: Promise<{ sl
               marginBottom: "1.5rem",
               fontStyle: "normal",
             }}
-          >
-            {blog.title}
-          </h1>
+            lineStyle={{ display: "block" }}
+          />
           <div style={{ display: "flex", gap: "1.5rem", fontFamily: S.mono, fontSize: "0.7rem", color: S.faint, textTransform: "uppercase", letterSpacing: "0.05em" }}>
             <span>{blog.date}</span>
           </div>

@@ -94,7 +94,7 @@ export function CredibilityStrip() {
         </div>
         <div className="grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-line)] bg-white/10 md:grid-cols-3 xl:grid-cols-6">
           {trustLogos.map((logo) => (
-            <div key={logo} className="grid min-h-20 place-items-center bg-[#07111F]/90 px-4 text-center text-sm font-bold text-[#B7C4D8] transition-colors hover:text-[#F0D991]">
+            <div key={logo} className="magic-bento-card grid min-h-20 place-items-center bg-[#07111F]/90 px-4 text-center text-sm font-bold text-[#B7C4D8] transition-colors hover:text-[#F0D991]">
               {logo}
             </div>
           ))}
@@ -121,7 +121,7 @@ export function StatisticsSection() {
 
       <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {stats.map((item) => (
-          <Card key={item.label} className="group p-6 transition-transform duration-200 hover:-translate-y-1">
+            <Card key={item.label} className="group p-6 transition-transform duration-200 hover:-translate-y-1">
             <p className="text-4xl font-semibold tracking-[-0.04em] text-[#F8FBFF] md:text-5xl">
               <AnimatedNumber value={item.value} suffix={item.suffix} />
             </p>
@@ -150,7 +150,7 @@ export function BenefitsSection() {
 
         <div className="grid gap-4">
           {benefits.map(({ icon: Icon, title, body }) => (
-            <Card key={title} className="group grid gap-4 p-5 transition-transform duration-200 hover:-translate-y-1 sm:grid-cols-[auto_1fr]">
+          <Card key={title} className="group grid gap-4 p-5 transition-transform duration-200 hover:-translate-y-1 sm:grid-cols-[auto_1fr]">
               <div className="grid h-12 w-12 place-items-center rounded-[var(--radius-md)] border border-[rgba(214,190,124,0.3)] bg-[rgba(214,190,124,0.11)] text-[#F0D991]">
                 <Icon className="h-5 w-5" aria-hidden />
               </div>
@@ -184,9 +184,9 @@ export function ProductShowcaseSection() {
         </div>
 
         <Card variant="strong" className="overflow-hidden p-0">
-          <div className="showcase-illustration relative min-h-[30rem] overflow-hidden p-5" data-image-scale>
+            <div className="showcase-illustration relative min-h-[30rem] overflow-hidden p-5" data-image-scale>
             <div className="showcase-orbit" aria-hidden />
-            <div className="relative z-10 rounded-[var(--radius-lg)] border border-white/10 bg-[#030712]/72 p-5">
+            <div className="magic-bento-card relative z-10 rounded-[var(--radius-lg)] border border-white/10 bg-[#030712]/72 p-5">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="section-eyebrow">Command layer</p>
@@ -197,14 +197,14 @@ export function ProductShowcaseSection() {
 
               <div className="mt-6 grid gap-3">
                 {showcaseMetrics.map(([label, value]) => (
-                  <div key={label} className="flex items-center justify-between rounded-[var(--radius-md)] border border-white/10 bg-white/[0.035] px-4 py-3">
+                  <div key={label} className="magic-bento-card flex items-center justify-between rounded-[var(--radius-md)] border border-white/10 bg-white/[0.035] px-4 py-3">
                     <span className="text-sm font-semibold text-[#AFC0D6]">{label}</span>
                     <span className="text-sm font-bold text-[#F8FBFF]">{value}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-6 rounded-[var(--radius-md)] border border-[rgba(125,211,252,0.18)] bg-[rgba(125,211,252,0.06)] p-4">
+              <div className="magic-bento-card mt-6 rounded-[var(--radius-md)] border border-[rgba(125,211,252,0.18)] bg-[rgba(125,211,252,0.06)] p-4">
                 <div className="mb-3 flex items-center gap-2 text-sm font-bold text-[#D9E2EF]">
                   <Sparkles className="h-4 w-4 text-[#7DD3FC]" aria-hidden />
                   Next best action
@@ -267,7 +267,7 @@ export function FAQSection() {
         </div>
         <div className="space-y-3">
           {faqs.map((item) => (
-            <details key={item.question} className="group rounded-[var(--radius-lg)] border border-[var(--color-line)] bg-[#07111F]/72 p-5">
+            <details key={item.question} className="magic-bento-card group rounded-[var(--radius-lg)] border border-[var(--color-line)] bg-[#07111F]/72 p-5">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#F8FBFF]">
                 {item.question}
                 <ArrowUpRight className="h-4 w-4 shrink-0 text-[#F0D991] transition-transform group-open:rotate-45" aria-hidden />
