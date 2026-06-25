@@ -51,7 +51,6 @@ export default function HomeHyperspeed() {
 
   useEffect(() => {
     const canRender =
-      window.matchMedia("(min-width: 1024px) and (hover: hover) and (pointer: fine)").matches &&
       !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (!canRender) return;
