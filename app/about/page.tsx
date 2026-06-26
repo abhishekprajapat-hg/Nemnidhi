@@ -108,7 +108,7 @@ export default function AboutPage() {
             </div>
             <div style={{ display: "grid", gap: "1px", background: S.line, border: `1px solid ${S.line}` }}>
               {[
-                { label: "BASE", value: "Bangalore, India" },
+                { label: "BASE", value: "Indore, India" },
                 { label: "MODEL", value: "Remote-first" },
                 { label: "CLIENTS", value: "Startups & Enterprises" },
                 { label: "FOCUS", value: "Production systems" },

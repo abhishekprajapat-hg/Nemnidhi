@@ -168,7 +168,7 @@ export default function ContactPage() {
                   { label: "TYPICAL RESPONSE", value: "Under 24 hours" },
                   { label: "BEST FIT", value: "Startups & SMEs" },
                   { label: "ENGAGEMENT", value: "Remote-first" },
-                  { label: "BASED IN", value: "Bangalore, India" },
+                  { label: "BASED IN", value: "Indore, India" },
                 ].map((card) => (
                   <div key={card.label} className="magic-bento-card" style={{ padding: "1.25rem", background: S.bgCard }}>
                     <p style={{ fontFamily: S.mono, fontSize: "0.58rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: S.faint, marginBottom: "0.4rem" }}>

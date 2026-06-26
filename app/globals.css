@@ -7,8 +7,10 @@
   color-scheme: dark;
 
   /* Fonts */
-  --font-sans: var(--font-display), 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-display), var(--font-body), 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-body), 'Bona Nova SC', Georgia, serif;
+  --font-sans: var(--font-body), 'Bona Nova SC', Georgia, serif;
+  --font-heading: var(--font-body), 'Bona Nova SC', Georgia, serif;
+  --font-secondary: var(--font-body), 'Bona Nova SC', Georgia, serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Cascadia Code', monospace;
 
   /* Colors - Dark Raven palette */
@@ -294,11 +296,34 @@
 
   .home-hero-content {
     position: relative;
-    z-index: 1;
+    z-index: 2;
+  }
+
+  .home-page-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .home-page-orb {
+    position: fixed;
+    inset: -12vh -12vw;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0.24;
+    mix-blend-mode: screen;
+    filter: saturate(1.18) blur(0.2px);
+  }
+
+  .home-page-orb::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 50%, transparent 0 58%, rgba(8, 10, 12, 0.52) 78%, var(--color-bg) 100%);
   }
 
   .hero-heading {
-    font-weight: 900;
+    font-weight: 500;
     font-style: normal;
     line-height: 0.88;
     letter-spacing: -0.03em;
@@ -338,7 +363,7 @@
     color: #080a0c;
     font-family: var(--font-mono);
     font-size: 0.75rem;
-    font-weight: 700;
+    font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     border: none;
@@ -458,7 +483,7 @@
 
   .stat-number {
     font-size: clamp(2.5rem, 4vw, 3.5rem);
-    font-weight: 900;
+    font-weight: 700;
     font-style: normal;
     color: var(--color-white);
     letter-spacing: -0.02em;
@@ -926,13 +951,10 @@
   .magic-bento-card {
     position: relative;
     overflow: hidden;
-    transform-style: preserve-3d;
-    will-change: transform;
-    --magic-glow-x: 50%;
-    --magic-glow-y: 50%;
-    --magic-glow-intensity: 0;
-    --magic-glow-radius: 18rem;
-    --magic-glow-color: 103, 232, 249;
+    --gh-angle: -32deg;
+    --gh-duration: 750ms;
+    --gh-size: 280%;
+    --gh-rgba: rgba(103, 232, 249, 0.2);
   }
 
   .magic-bento-card::before {
@@ -942,92 +964,56 @@
     inset: 0;
     border-radius: inherit;
     pointer-events: none;
-    background:
-      radial-gradient(
-        var(--magic-glow-radius) circle at var(--magic-glow-x) var(--magic-glow-y),
-        rgba(var(--magic-glow-color), calc(var(--magic-glow-intensity) * 0.2)) 0%,
-        rgba(240, 217, 145, calc(var(--magic-glow-intensity) * 0.08)) 34%,
-        transparent 68%
-      );
-    opacity: 1;
-    z-index: 0;
+    background: linear-gradient(
+      var(--gh-angle),
+      hsla(0, 0%, 0%, 0) 60%,
+      var(--gh-rgba) 70%,
+      hsla(0, 0%, 0%, 0),
+      hsla(0, 0%, 0%, 0) 100%
+    );
+    background-size:
+      var(--gh-size) var(--gh-size),
+      100% 100%;
+    background-repeat: no-repeat;
+    background-position:
+      -100% -100%,
+      0 0;
+    transition: background-position var(--gh-duration) ease;
+    z-index: 1;
   }
 
   .magic-bento-card::after {
-    content: "";
-    display: block;
-    position: absolute;
-    inset: 0;
-    padding: 1px;
-    border-radius: inherit;
-    pointer-events: none;
-    background:
-      radial-gradient(
-        calc(var(--magic-glow-radius) * 0.88) circle at var(--magic-glow-x) var(--magic-glow-y),
-        rgba(var(--magic-glow-color), calc(var(--magic-glow-intensity) * 0.85)) 0%,
-        rgba(240, 217, 145, calc(var(--magic-glow-intensity) * 0.36)) 38%,
-        transparent 64%
-      );
-    -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    z-index: 2;
+    display: none;
   }
 
   .magic-bento-card > *:not(.magic-bento-particle):not(.magic-bento-ripple) {
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 
-  .has-magic-bento .magic-bento-card:hover {
+  .magic-bento-card:hover {
     border-color: rgba(103, 232, 249, 0.28);
     box-shadow:
       0 18px 55px rgba(0, 0, 0, 0.24),
       0 0 34px rgba(103, 232, 249, 0.12);
   }
 
+  .magic-bento-card:hover::before {
+    background-position:
+      100% 100%,
+      0 0;
+  }
+
   .magic-bento-particle {
-    position: absolute;
-    display: block;
-    width: 4px;
-    height: 4px;
-    border-radius: 999px;
-    background: rgba(103, 232, 249, 0.98);
-    box-shadow:
-      0 0 8px rgba(103, 232, 249, 0.78),
-      0 0 18px rgba(240, 217, 145, 0.24);
-    pointer-events: none;
-    z-index: 4;
+    display: none;
   }
 
   .magic-bento-ripple {
-    position: absolute;
-    display: block;
-    border-radius: 999px;
-    background:
-      radial-gradient(circle, rgba(103, 232, 249, 0.34) 0%, rgba(240, 217, 145, 0.18) 32%, transparent 72%);
-    pointer-events: none;
-    z-index: 3;
+    display: none;
   }
 
   .magic-bento-spotlight {
-    position: fixed;
-    width: 42rem;
-    height: 42rem;
-    border-radius: 999px;
-    pointer-events: none;
-    background:
-      radial-gradient(circle, rgba(103, 232, 249, 0.14) 0%, rgba(103, 232, 249, 0.07) 22%, rgba(240, 217, 145, 0.035) 42%, transparent 70%);
-    mix-blend-mode: screen;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    z-index: 80;
-    will-change: left, top, opacity;
+    display: none;
   }
 
   /* Surface overrides */
@@ -1237,9 +1223,10 @@
     margin-top: 2rem;
     max-width: 12ch;
     color: var(--color-white);
+    font-family: var(--font-condensed), var(--font-display), var(--font-heading), sans-serif;
     font-size: clamp(2.1rem, 4.3vw, 4.7rem);
     font-style: normal;
-    font-weight: 950;
+    font-weight: 500;
     letter-spacing: -0.025em;
     line-height: 0.88;
     text-transform: uppercase;
@@ -1293,9 +1280,10 @@
   .scroll-story-panel h3 {
     max-width: 12ch;
     color: var(--color-heading);
+    font-family: var(--font-condensed), var(--font-display), var(--font-heading), sans-serif;
     font-size: clamp(1.65rem, 3.4vw, 3.55rem);
     font-style: normal;
-    font-weight: 950;
+    font-weight: 500;
     letter-spacing: -0.025em;
     line-height: 0.9;
     text-transform: uppercase;

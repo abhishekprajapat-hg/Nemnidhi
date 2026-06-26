@@ -2,6 +2,7 @@ import Link from "next/link";
 import Container from "@/components/layout/Container";
 import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
 import HeroLightfall from "@/components/services/HeroLightfall";
+import ServicesTimeline from "@/components/services/ServicesTimeline";
 
 // ─── shared design tokens ───
 const S = {
@@ -17,20 +18,6 @@ const S = {
 };
 
 // ─── section label component (inline helper) ───
-function SectionLabel({ number, text }: { number: string; text: string }) {
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "3rem" }}>
-      <span style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 600, color: S.accent, letterSpacing: "0.1em" }}>
-        {number}
-      </span>
-      <span style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: S.muted }}>
-        {text}
-      </span>
-      <div style={{ flex: 1, height: "1px", background: S.line }} />
-    </div>
-  );
-}
-
 const services = [
   {
     num: "01",
@@ -140,56 +127,8 @@ export default function ServicesPage() {
 
       <div style={{ width: "100%", height: "1px", background: S.line }} />
 
-      {/* ─── Services Grid ─── */}
-      <section style={{ padding: "5rem 0" }}>
-        <Container size="wide">
-          <SectionLabel number="[ 01 ]" text="OUR CAPABILITIES" />
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1px", background: S.line, border: `1px solid ${S.line}` }} className="services-page-grid">
-            {services.map((svc) => (
-              <div
-                key={svc.num}
-                className="service-page-card"
-                style={{ padding: "2.5rem", background: S.bg, transition: "background 0.2s" }}
-              >
-                {/* header */}
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.5rem" }}>
-                  <span style={{ fontFamily: S.mono, fontSize: "0.75rem", fontWeight: 600, color: S.accent }}>{svc.num}</span>
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ color: S.faint }}>
-                    <path d="M2 12L12 2M12 2H4M12 2V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
-
-                <h2 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(1.15rem, 1.55vw, 1.45rem)", textTransform: "uppercase", color: S.white, letterSpacing: "-0.005em", lineHeight: 1.15, marginBottom: "1rem" }}>
-                  {svc.title}
-                </h2>
-                <p style={{ color: S.muted, fontSize: "0.875rem", lineHeight: 1.65, marginBottom: "1.5rem" }}>
-                  {svc.desc}
-                </p>
-
-                {/* details */}
-                <ul style={{ marginBottom: "1.5rem", display: "grid", gap: "0.5rem" }}>
-                  {svc.details.map((d) => (
-                    <li key={d} style={{ display: "flex", alignItems: "center", gap: "0.75rem", fontFamily: S.mono, fontSize: "0.7rem", color: S.muted, letterSpacing: "0.02em" }}>
-                      <span style={{ width: 4, height: 4, borderRadius: "50%", background: S.accent, flexShrink: 0, display: "inline-block" }} />
-                      {d}
-                    </li>
-                  ))}
-                </ul>
-
-                {/* tags */}
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-                  {svc.tags.map((tag) => (
-                    <span key={tag} style={{ padding: "0.3rem 0.7rem", border: "1px solid rgba(255,255,255,0.1)", fontFamily: S.mono, fontSize: "0.62rem", color: "#94a3b8" }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
+      {/* ─── Services Timeline ─── */}
+      <ServicesTimeline services={services} />
 
       <div style={{ width: "100%", height: "1px", background: S.line }} />
 
@@ -213,11 +152,7 @@ export default function ServicesPage() {
       </section>
 
       <style>{`
-        .services-page-grid { grid-template-columns: repeat(2, 1fr); }
         .service-page-card:hover { background: #0d1117 !important; }
-        @media (max-width: 768px) {
-          .services-page-grid { grid-template-columns: 1fr !important; }
-        }
       `}</style>
     </div>
   );

@@ -1,24 +1,16 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
-import localFont from "next/font/local";
-import { Barlow_Condensed, Barlow, JetBrains_Mono } from "next/font/google";
+import { Bona_Nova_SC, Barlow_Condensed, JetBrains_Mono } from "next/font/google";
 import SiteShell from "@/components/layout/SiteShell";
 
 const siteUrl = "https://nemnidhi.com";
 
-// Body font — clean sans-serif
-const barlow = Barlow({
+const bonaNovaSc = Bona_Nova_SC({
   subsets: ["latin"],
   variable: "--font-body",
-  weight: ["400", "500", "600", "700"],
-});
-
-// Display/heading font — ultra-bold condensed like the Figma
-const modernRomance = localFont({
-  src: "../public/fonts/modern-romance.otf",
-  variable: "--font-display",
-  display: "swap",
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
 });
 
 const barlowCondensed = Barlow_Condensed({
@@ -28,7 +20,6 @@ const barlowCondensed = Barlow_Condensed({
   style: ["normal", "italic"],
 });
 
-// Mono font — for labels, nav, tags
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
@@ -127,7 +118,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${barlow.variable} ${barlowCondensed.variable} ${modernRomance.variable} ${jetbrainsMono.variable} min-h-screen`}
+        className={`${bonaNovaSc.variable} ${barlowCondensed.variable} ${jetbrainsMono.variable} min-h-screen`}
         style={{ background: "#080a0c" }}
       >
         <script

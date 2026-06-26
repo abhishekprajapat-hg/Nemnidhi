@@ -11,13 +11,6 @@ const RequirementChatbot = dynamic(() => import("@/components/chat/RequirementCh
   loading: () => null,
 });
 
-const MagicBentoLayer = dynamic(() => import("@/components/motion/MagicBentoLayer"), {
-  ssr: false,
-  loading: () => null,
-});
-
-
-
 export default function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isDashboardRoute = pathname.startsWith("/dashboard");
@@ -37,7 +30,6 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
             {children}
           </main>
           {!isDashboardRoute && <Footer />}
-          {!isDashboardRoute && <MagicBentoLayer />}
           {!isDashboardRoute && <RequirementChatbot />}
         </MotionProvider>
     </div>
