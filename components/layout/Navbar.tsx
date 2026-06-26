@@ -2,6 +2,7 @@
 
 import clsx from "clsx";
 import { Home, Briefcase, FolderOpen, Info, MessageCircle, BookOpen } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -55,20 +56,28 @@ export function Navbar() {
     >
       <Container size="wide">
         <div className="nav-shell flex min-h-[4.5rem] items-center justify-between px-0 py-3">
-          {/* Logo */}
           <Link
             href="/"
-            className="flex items-center gap-2"
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.95rem",
-              fontWeight: 800,
-              letterSpacing: "0.15em",
-              textTransform: "uppercase" as const,
-              color: "var(--color-heading)",
-            }}
+            className="flex items-center gap-3"
+            aria-label="Nemnidhi home"
           >
-            NEMNIDHI.
+            <Image
+              src="/images/logo.png"
+              alt="Nemnidhi"
+              width={1368}
+              height={1288}
+              priority
+              className="h-11 w-auto object-contain"
+            />
+            <span
+              className="text-lg font-extrabold uppercase leading-none text-[#67e8f9] sm:text-xl"
+              style={{
+                fontFamily: "var(--font-mono)",
+                letterSpacing: "0.12em",
+              }}
+            >
+              Nemnidhi
+            </span>
           </Link>
 
           {/* Desktop Nav Links */}

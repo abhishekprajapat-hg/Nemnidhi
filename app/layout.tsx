@@ -108,7 +108,7 @@ export default function RootLayout({
     "@type": "Organization",
     name: "Nemnidhi",
     url: siteUrl,
-    logo: `${siteUrl}/favicon.png`,
+    logo: `${siteUrl}/images/logo.png`,
     email: "info@nemnidhi.com",
     telephone: "+91 70004 55463",
     address: {
