@@ -64,7 +64,7 @@ export default function Hero({ hero }: HeroProps) {
             fontSize: "0.75rem",
             fontWeight: 500,
             letterSpacing: "0.12em",
-            color: "#67e8f9",
+            color: "var(--color-accent)",
             textTransform: "uppercase" as const,
             marginBottom: "2rem",
           }}
@@ -92,8 +92,8 @@ export default function Hero({ hero }: HeroProps) {
             stepDuration={0.42}
             style={{
               display: "flex",
-              color: "#f0f4f8",
-              WebkitTextStroke: "1px rgba(240,244,248,0.1)",
+              color: "var(--color-heading)",
+              WebkitTextStroke: "1px var(--color-line)",
             }}
           />
           <BlurText
@@ -104,7 +104,7 @@ export default function Hero({ hero }: HeroProps) {
             stepDuration={0.42}
             style={{
               display: "flex",
-              color: "#f0f4f8",
+              color: "var(--color-heading)",
             }}
           />
           <BlurText
@@ -115,7 +115,7 @@ export default function Hero({ hero }: HeroProps) {
             stepDuration={0.42}
             style={{
               display: "flex",
-              color: "#67e8f9",
+              color: "var(--color-accent)",
             }}
           />
         </h1>

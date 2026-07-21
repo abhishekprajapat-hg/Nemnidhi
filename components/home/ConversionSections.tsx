@@ -86,15 +86,15 @@ const faqs = [
 
 export function CredibilityStrip() {
   return (
-    <Section size="wide" containerClassName="py-10 md:py-12">
+    <Section size="wide" containerClassName="py-10 md:py-12" data-conversion>
       <div className="grid gap-6 lg:grid-cols-[0.25fr_0.75fr] lg:items-center">
         <div>
           <p className="section-eyebrow">Trusted operating language</p>
-          <p className="mt-2 text-sm leading-6 text-[#91A0B5]">Built for credibility-sensitive teams.</p>
+          <p className="mt-2 text-sm leading-6" style={{ color: "var(--color-text-muted)" }}>Built for credibility-sensitive teams.</p>
         </div>
         <div className="grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-line)] bg-white/10 md:grid-cols-3 xl:grid-cols-6">
           {trustLogos.map((logo) => (
-            <div key={logo} className="magic-bento-card grid min-h-20 place-items-center bg-[#07111F]/90 px-4 text-center text-sm font-bold text-[#B7C4D8] transition-colors hover:text-[#F0D991]">
+            <div key={logo} className="magic-bento-card grid min-h-20 place-items-center px-4 text-center text-sm font-bold transition-colors" style={{ background: "var(--color-bg-card)", color: "var(--color-text-muted)" }}>
               {logo}
             </div>
           ))}
@@ -106,7 +106,7 @@ export function CredibilityStrip() {
 
 export function StatisticsSection() {
   return (
-    <Section size="wide">
+    <Section size="wide" data-conversion>
       <div className="grid gap-8 lg:grid-cols-[0.42fr_0.58fr] lg:items-end">
         <div>
           <Badge tone="success">Measurable momentum</Badge>
@@ -122,10 +122,10 @@ export function StatisticsSection() {
       <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {stats.map((item) => (
             <Card key={item.label} className="group p-6 transition-transform duration-200 hover:-translate-y-1">
-            <p className="text-4xl font-semibold tracking-[-0.04em] text-[#F8FBFF] md:text-5xl">
+            <p className="text-4xl font-semibold tracking-[-0.04em] md:text-5xl" style={{ color: "var(--color-heading)" }}>
               <AnimatedNumber value={item.value} suffix={item.suffix} />
             </p>
-            <p className="mt-4 text-sm font-semibold leading-6 text-[#AFC0D6]">{item.label}</p>
+            <p className="mt-4 text-sm font-semibold leading-6" style={{ color: "var(--color-text-muted)" }}>{item.label}</p>
           </Card>
         ))}
       </div>
@@ -135,7 +135,7 @@ export function StatisticsSection() {
 
 export function BenefitsSection() {
   return (
-    <Section size="wide">
+    <Section size="wide" data-conversion>
       <div className="grid gap-10 lg:grid-cols-[0.5fr_0.5fr] lg:items-center">
         <div>
           <Badge>Why it converts</Badge>
@@ -151,12 +151,12 @@ export function BenefitsSection() {
         <div className="grid gap-4">
           {benefits.map(({ icon: Icon, title, body }) => (
           <Card key={title} className="group grid gap-4 p-5 transition-transform duration-200 hover:-translate-y-1 sm:grid-cols-[auto_1fr]">
-              <div className="grid h-12 w-12 place-items-center rounded-[var(--radius-md)] border border-[rgba(214,190,124,0.3)] bg-[rgba(214,190,124,0.11)] text-[#F0D991]">
+              <div className="grid h-12 w-12 place-items-center rounded-[var(--radius-md)]" style={{ border: "1px solid rgba(7,109,135,0.25)", background: "rgba(7,109,135,0.08)", color: "var(--color-accent)" }}>
                 <Icon className="h-5 w-5" aria-hidden />
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-[#F8FBFF]">{title}</h3>
-                <p className="mt-2 text-sm leading-7 text-[#AFC0D6]">{body}</p>
+                <h3 className="text-xl font-semibold" style={{ color: "var(--color-heading)" }}>{title}</h3>
+                <p className="mt-2 text-sm leading-7" style={{ color: "var(--color-text-muted)" }}>{body}</p>
               </div>
             </Card>
           ))}
@@ -223,7 +223,7 @@ export function ProductShowcaseSection() {
 
 export function TestimonialsSection() {
   return (
-    <Section size="wide">
+    <Section size="wide" data-conversion>
       <div className="grid gap-8 lg:grid-cols-[0.36fr_0.64fr] lg:items-end">
         <div>
           <Badge tone="neutral">Client voice</Badge>
@@ -239,11 +239,11 @@ export function TestimonialsSection() {
       <div className="mt-10 grid gap-4 lg:grid-cols-3">
         {testimonials.map((item) => (
           <Card key={item.name} className="flex min-h-80 flex-col p-6 transition-transform duration-200 hover:-translate-y-1">
-            <p className="text-5xl leading-none text-[#D6BE7C]">“</p>
-            <blockquote className="mt-3 text-base leading-8 text-[#D9E2EF]">{item.quote}</blockquote>
+            <p className="text-5xl leading-none" style={{ color: "var(--color-accent)" }}>&#8220;</p>
+            <blockquote className="mt-3 text-base leading-8" style={{ color: "var(--color-text)" }}>{item.quote}</blockquote>
             <div className="mt-auto pt-8">
-              <p className="font-semibold text-[#F8FBFF]">{item.name}</p>
-              <p className="mt-1 text-sm text-[#91A0B5]">{item.role}</p>
+              <p className="font-semibold" style={{ color: "var(--color-heading)" }}>{item.name}</p>
+              <p className="mt-1 text-sm" style={{ color: "var(--color-text-muted)" }}>{item.role}</p>
             </div>
           </Card>
         ))}
@@ -254,7 +254,7 @@ export function TestimonialsSection() {
 
 export function FAQSection() {
   return (
-    <Section size="wide">
+    <Section size="wide" data-conversion>
       <div className="grid gap-10 lg:grid-cols-[0.38fr_0.62fr]">
         <div>
           <Badge>FAQ</Badge>
@@ -267,12 +267,12 @@ export function FAQSection() {
         </div>
         <div className="space-y-3">
           {faqs.map((item) => (
-            <details key={item.question} className="magic-bento-card group rounded-[var(--radius-lg)] border border-[var(--color-line)] bg-[#07111F]/72 p-5">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#F8FBFF]">
+            <details key={item.question} className="magic-bento-card group rounded-[var(--radius-lg)] border border-[var(--color-line)] p-5" style={{ background: "var(--color-bg-elevated)" }}>
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold" style={{ color: "var(--color-heading)" }}>
                 {item.question}
-                <ArrowUpRight className="h-4 w-4 shrink-0 text-[#F0D991] transition-transform group-open:rotate-45" aria-hidden />
+                <ArrowUpRight className="h-4 w-4 shrink-0 transition-transform group-open:rotate-45" style={{ color: "var(--color-accent)" }} aria-hidden />
               </summary>
-              <p className="mt-4 text-sm leading-7 text-[#AFC0D6]">{item.answer}</p>
+              <p className="mt-4 text-sm leading-7" style={{ color: "var(--color-text-muted)" }}>{item.answer}</p>
             </details>
           ))}
         </div>
@@ -283,7 +283,7 @@ export function FAQSection() {
 
 export function FinalCTASection() {
   return (
-    <Section size="wide" className="border-b border-[var(--color-line)]">
+    <Section size="wide" className="border-b border-[var(--color-line)]" data-conversion>
       <Card variant="strong" className="relative overflow-hidden p-6 md:p-10">
         <div className="cta-illustration" data-parallax="34" aria-hidden />
         <div className="relative z-10 grid gap-8 lg:grid-cols-[0.66fr_0.34fr] lg:items-end">
@@ -299,7 +299,7 @@ export function FinalCTASection() {
             </p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row lg:flex-col">
               <CTA href="/contact">Start a briefing</CTA>
-              <a href="tel:+917000455463" className="inline-flex items-center justify-center rounded-[var(--radius-sm)] border border-white/10 bg-white/[0.035] px-5 py-3 text-sm font-bold text-[#F8FBFF] transition-colors hover:border-[rgba(214,190,124,0.5)] hover:text-[#F0D991]">
+              <a href="tel:+917000455463" className="inline-flex items-center justify-center rounded-[var(--radius-sm)] border px-5 py-3 text-sm font-bold transition-colors" style={{ border: "1px solid var(--color-line)", background: "var(--color-bg-card)", color: "var(--color-heading)" }}>
                 Call +91 70004 55463
               </a>
             </div>

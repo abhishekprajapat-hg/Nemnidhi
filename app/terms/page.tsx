@@ -57,7 +57,7 @@ export default function TermsPage() {
   return (
     <section className="theme-section min-h-screen">
       <Container className="py-10 md:py-14">
-        <header className="relative isolate mb-8 overflow-hidden py-8">
+        <header className="relative isolate mb-8 overflow-hidden py-8 bg-[#05080b] rounded-sm">
           <HeroLightfall />
           <div className="hero-content-layer space-y-4">
             <p className="section-eyebrow">Legal</p>

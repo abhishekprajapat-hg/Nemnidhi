@@ -200,9 +200,11 @@ export function useHorizontalScroll(ref: SectionRef) {
             ease: "none",
             scrollTrigger: {
               trigger: scope,
-              start: "top 82%",
-              end: () => `+=${Math.max(window.innerHeight, getDistance())}`,
-              scrub: 0.8,
+              start: "top 6rem",
+              end: () => `+=${getDistance()}`,
+              scrub: 1,
+              pin: true,
+              anticipatePin: 1,
               invalidateOnRefresh: true,
             },
           });

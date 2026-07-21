@@ -6,13 +6,13 @@ import { dbConnect } from "@/lib/mongodb";
 import { Blog, IBlog } from "@/models/Blog";
 
 const S = {
-  bg: "#080a0c",
-  bgCard: "#0d1117",
-  line: "rgba(255,255,255,0.07)",
-  accent: "#67e8f9",
-  white: "#f0f4f8",
-  muted: "#f0f4f8",
-  faint: "#475569",
+  bg: "var(--color-bg)",
+  bgCard: "var(--color-bg-elevated)",
+  line: "var(--color-line)",
+  accent: "var(--color-accent)",
+  white: "var(--color-heading)",
+  muted: "var(--color-text-muted)",
+  faint: "var(--color-text-faint)",
   mono: "var(--font-mono, monospace)",
   heading: "var(--font-display, var(--font-heading, sans-serif))",
 };
@@ -25,10 +25,15 @@ export const metadata = {
 export const revalidate = 0; // Disable caching for the blogs list to ensure freshness
 
 async function getBlogs() {
-  await dbConnect();
-  const blogs = await Blog.find({ status: "published" }).sort({ createdAt: -1 }).lean();
-  // Stringify the IDs so they can be passed to client components safely if needed
-  return JSON.parse(JSON.stringify(blogs)) as IBlog[];
+  try {
+    await dbConnect();
+    const blogs = await Blog.find({ status: "published" }).sort({ createdAt: -1 }).lean();
+    // Stringify the IDs so they can be passed to client components safely if needed
+    return JSON.parse(JSON.stringify(blogs)) as IBlog[];
+  } catch (error) {
+    console.error("Failed to fetch blogs:", error);
+    return [];
+  }
 }
 
 export default async function BlogsPage() {
@@ -36,18 +41,18 @@ export default async function BlogsPage() {
 
   return (
     <div style={{ background: S.bg, minHeight: "100svh" }}>
-      <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", padding: "7rem 0 4rem" }}>
+      <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", padding: "7rem 0 4rem", background: "#05080b" }}>
         <HeroLightfall />
         <Container size="wide" className="hero-content-layer">
-          <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: S.accent, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
+          <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: "#67e8f9", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
             [ NEMNIDHI.COM / BLOGS ]
           </p>
           <HeroBlurTitle
-            lines={[{ text: "INSIGHTS &", color: S.white }, { text: "ARTICLES.", color: S.accent }]}
+            lines={[{ text: "INSIGHTS &", color: "#f0f4f8" }, { text: "ARTICLES.", color: "#67e8f9" }]}
             style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(2.35rem, 5.8vw, 5.2rem)", textTransform: "uppercase", lineHeight: 0.95, letterSpacing: "-0.015em", marginBottom: "2rem" }}
             lineStyle={{ display: "block" }}
           />
-          <p style={{ color: S.muted, fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.7, maxWidth: "36rem" }}>
+          <p style={{ color: "#94a3b8", fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.7, maxWidth: "36rem" }}>
             Thoughts on software engineering, custom business tools, and scaling operations without compromise.
           </p>
         </Container>

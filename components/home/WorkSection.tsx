@@ -64,10 +64,10 @@ export default function WorkSection() {
       ref={sectionRef}
       data-scroll-chapter
       style={{
-        background: "#080a0c",
+        background: "transparent",
         paddingTop: "5rem",
         paddingBottom: "5rem",
-        borderTop: "1px solid rgba(255,255,255,0.07)",
+        borderTop: "1px solid var(--color-line)",
         overflow: "hidden",
       }}
       className="project-showcase-section"
@@ -87,7 +87,7 @@ export default function WorkSection() {
               fontFamily: "var(--font-mono, monospace)",
               fontSize: "0.7rem",
               fontWeight: 600,
-              color: "#67e8f9",
+              color: "var(--color-accent)",
               letterSpacing: "0.1em",
             }}
           >
@@ -100,12 +100,12 @@ export default function WorkSection() {
               fontWeight: 500,
               letterSpacing: "0.14em",
               textTransform: "uppercase" as const,
-              color: "#f0f4f8",
+              color: "var(--color-text)",
             }}
           >
             PROJECT SHOWCASE
           </span>
-          <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.07)" }} />
+          <div style={{ flex: 1, height: "1px", background: "var(--color-line)" }} />
         </div>
       </Container>
 
@@ -133,9 +133,8 @@ export default function WorkSection() {
               width: "min(72vw, 34rem)",
               flexDirection: "column",
               justifyContent: "space-between",
-              border: "1px solid rgba(255,255,255,0.08)",
-              background:
-                "linear-gradient(145deg, rgba(13,17,23,0.98), rgba(8,10,12,0.98))",
+              border: "1px solid var(--color-line)",
+              background: "var(--color-bg-card)",
               padding: "2rem",
               textDecoration: "none",
             }}
@@ -155,7 +154,7 @@ export default function WorkSection() {
                     fontFamily: "var(--font-mono, monospace)",
                     fontSize: "0.75rem",
                     fontWeight: 700,
-                    color: "#67e8f9",
+                    color: "var(--color-accent)",
                     letterSpacing: "0.08em",
                   }}
                 >
@@ -165,7 +164,7 @@ export default function WorkSection() {
                   style={{
                     fontFamily: "var(--font-mono, monospace)",
                     fontSize: "0.7rem",
-                    color: "#f0f4f8",
+                    color: "var(--color-text-muted)",
                     letterSpacing: "0.08em",
                   }}
                 >
@@ -179,7 +178,7 @@ export default function WorkSection() {
                   fontWeight: 900,
                   fontSize: "clamp(1.8rem, 3.8vw, 3.1rem)",
                   textTransform: "uppercase" as const,
-                  color: "#f0f4f8",
+                  color: "var(--color-heading)",
                   letterSpacing: "-0.02em",
                   lineHeight: 0.92,
                   fontStyle: "normal",
@@ -192,7 +191,7 @@ export default function WorkSection() {
                 style={{
                   fontFamily: "var(--font-mono, monospace)",
                   fontSize: "0.68rem",
-                  color: "#475569",
+                  color: "var(--color-text-faint)",
                   letterSpacing: "0.06em",
                 }}
               >
@@ -206,8 +205,8 @@ export default function WorkSection() {
                   <span
                     key={tag}
                     style={{
-                      border: "1px solid rgba(255,255,255,0.12)",
-                      color: "#94a3b8",
+                      border: "1px solid var(--color-line)",
+                      color: "var(--color-text-muted)",
                       padding: "0.35rem 0.75rem",
                       fontFamily: "var(--font-mono, monospace)",
                       fontSize: "0.62rem",
@@ -219,7 +218,7 @@ export default function WorkSection() {
                   </span>
                 ))}
               </div>
-              <p style={{ color: "#f0f4f8", fontSize: "0.92rem", lineHeight: 1.7 }}>{project.desc}</p>
+              <p style={{ color: "var(--color-text)", fontSize: "0.92rem", lineHeight: 1.7 }}>{project.desc}</p>
             </div>
           </a>
         ))}
@@ -230,8 +229,8 @@ export default function WorkSection() {
           transition: border-color 180ms var(--ease-out), background 180ms var(--ease-out);
         }
         .project-showcase-card:hover {
-          border-color: rgba(103,232,249,0.35) !important;
-          background: linear-gradient(145deg, rgba(17,24,32,0.98), rgba(8,10,12,0.98)) !important;
+          border-color: var(--color-accent) !important;
+          background: var(--color-bg-card-hover) !important;
         }
         @media (max-width: 767px) {
           .project-showcase-section {

@@ -44,10 +44,10 @@ export default function ProcessSection() {
       ref={sectionRef}
       data-scroll-chapter
       style={{
-        background: "#080a0c",
-        paddingTop: "5rem",
-        paddingBottom: "5rem",
-        borderTop: "1px solid rgba(255,255,255,0.07)",
+        background: "transparent",
+        paddingTop: "2.5rem",
+        paddingBottom: "2.5rem",
+        borderTop: "1px solid var(--color-line)",
       }}
     >
       <Container size="wide">
@@ -65,7 +65,7 @@ export default function ProcessSection() {
               fontFamily: "var(--font-mono, monospace)",
               fontSize: "0.7rem",
               fontWeight: 600,
-              color: "#67e8f9",
+              color: "var(--color-accent)",
               letterSpacing: "0.1em",
             }}
           >
@@ -78,12 +78,12 @@ export default function ProcessSection() {
               fontWeight: 500,
               letterSpacing: "0.14em",
               textTransform: "uppercase" as const,
-              color: "#f0f4f8",
+              color: "var(--color-text)",
             }}
           >
             PROCESS TIMELINE
           </span>
-          <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.07)" }} />
+          <div style={{ flex: 1, height: "1px", background: "var(--color-line)" }} />
         </div>
 
         <div
@@ -102,7 +102,7 @@ export default function ProcessSection() {
                 fontWeight: 900,
                 fontSize: "clamp(1.95rem, 3.8vw, 3.6rem)",
                 textTransform: "uppercase" as const,
-                color: "#f0f4f8",
+                color: "var(--color-heading)",
                 letterSpacing: "-0.02em",
                 lineHeight: 0.95,
                 fontStyle: "normal",
@@ -113,7 +113,7 @@ export default function ProcessSection() {
             <p
               style={{
                 marginTop: "1.5rem",
-                color: "#f0f4f8",
+                color: "var(--color-text-muted)",
                 fontSize: "0.95rem",
                 lineHeight: 1.75,
                 maxWidth: "30rem",
@@ -132,7 +132,7 @@ export default function ProcessSection() {
                 top: "0.4rem",
                 bottom: "0.4rem",
                 width: "1px",
-                background: "rgba(255,255,255,0.09)",
+                background: "var(--color-line)",
               }}
             />
             <div
@@ -144,7 +144,7 @@ export default function ProcessSection() {
                 top: "0.4rem",
                 bottom: "0.4rem",
                 width: "1px",
-                background: "#67e8f9",
+                background: "var(--color-accent)",
                 boxShadow: "0 0 24px rgba(103,232,249,0.36)",
               }}
             />
@@ -170,9 +170,9 @@ export default function ProcessSection() {
                       width: "2.25rem",
                       height: "2.25rem",
                       placeItems: "center",
-                      border: "1px solid rgba(103,232,249,0.4)",
-                      background: "#080a0c",
-                      color: "#67e8f9",
+                      border: "1px solid var(--color-accent)",
+                      background: "var(--color-bg)",
+                      color: "var(--color-accent)",
                       fontFamily: "var(--font-mono, monospace)",
                       fontSize: "0.7rem",
                       fontWeight: 700,
@@ -184,8 +184,8 @@ export default function ProcessSection() {
                   <div
                     className="magic-bento-card"
                     style={{
-                      border: "1px solid rgba(255,255,255,0.07)",
-                      background: "#0d1117",
+                      border: "1px solid var(--color-line)",
+                      background: "var(--color-bg-elevated)",
                       padding: "1.5rem",
                     }}
                   >
@@ -195,7 +195,7 @@ export default function ProcessSection() {
                         fontWeight: 900,
                         fontSize: "clamp(1.15rem, 1.55vw, 1.45rem)",
                         textTransform: "uppercase" as const,
-                        color: "#f0f4f8",
+                        color: "var(--color-heading)",
                         letterSpacing: "-0.01em",
                         lineHeight: 1,
                         fontStyle: "normal",
@@ -206,7 +206,7 @@ export default function ProcessSection() {
                     <p
                       style={{
                         marginTop: "0.9rem",
-                        color: "#f0f4f8",
+                        color: "var(--color-text-muted)",
                         fontSize: "0.875rem",
                         lineHeight: 1.7,
                       }}

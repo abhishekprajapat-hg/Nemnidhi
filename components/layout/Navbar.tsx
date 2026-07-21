@@ -1,12 +1,13 @@
 "use client";
 
 import clsx from "clsx";
-import { Home, Briefcase, FolderOpen, Info, MessageCircle, BookOpen } from "lucide-react";
+import { Home, Briefcase, FolderOpen, Info, MessageCircle, BookOpen, Sun, Moon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Container from "./Container";
+import { useTheme } from "./ThemeProvider";
 
 const links = [
   { href: "/", label: "Home" },
@@ -29,6 +30,7 @@ const mobileTabs = [
 export function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const { theme, toggle } = useTheme();
 
   useEffect(() => {
     let ticking = false;
@@ -53,6 +55,7 @@ export function Navbar() {
   return (
     <header
       className={clsx("sticky top-0 z-50", scrolled && "nav-scrolled")}
+      style={{ background: "var(--color-bg)", transition: "background 0.3s ease" }}
     >
       <Container size="wide">
         <div className="nav-shell flex min-h-[4.5rem] items-center justify-between px-0 py-3">
@@ -97,8 +100,20 @@ export function Navbar() {
             })}
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* Theme Toggle + CTA Button */}
+          <div className="hidden md:flex items-center gap-3">
+            <button
+              id="theme-toggle-desktop"
+              onClick={toggle}
+              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              className="theme-toggle-btn"
+            >
+              {theme === "dark" ? (
+                <Sun className="h-4 w-4" aria-hidden />
+              ) : (
+                <Moon className="h-4 w-4" aria-hidden />
+              )}
+            </button>
             <Link href="/contact" className="btn-cta-nav">
               LET&apos;S TALK
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">

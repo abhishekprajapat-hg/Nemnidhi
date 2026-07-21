@@ -49,9 +49,7 @@ export default function ServicesSection({
 }) {
   const sectionRef = useRef<HTMLElement>(null);
 
-  // ── GSAP: section label fade-in
   useSectionLabel(sectionRef);
-  // ── GSAP: staggered card reveal (y:80→0, opacity:0→1, stagger 0.15s)
   useScrollReveal(sectionRef, { stagger: 0.15, startY: 80 });
 
   const items = services && services.length > 0 ? services : defaultServices;
@@ -62,7 +60,7 @@ export default function ServicesSection({
       ref={sectionRef}
       data-scroll-chapter
       style={{
-        background: "#080a0c",
+        background: "transparent",
         paddingTop: "5rem",
         paddingBottom: "5rem",
       }}
@@ -83,7 +81,7 @@ export default function ServicesSection({
               fontFamily: "var(--font-mono, monospace)",
               fontSize: "0.7rem",
               fontWeight: 600,
-              color: "#67e8f9",
+              color: "var(--color-accent)",
               letterSpacing: "0.1em",
             }}
           >
@@ -96,7 +94,7 @@ export default function ServicesSection({
               fontWeight: 500,
               letterSpacing: "0.14em",
               textTransform: "uppercase" as const,
-              color: "#f0f4f8",
+              color: "var(--color-text)",
             }}
           >
             WHAT WE BUILD
@@ -105,7 +103,7 @@ export default function ServicesSection({
             style={{
               flex: 1,
               height: "1px",
-              background: "rgba(255,255,255,0.07)",
+              background: "var(--color-line)",
             }}
           />
         </div>
@@ -116,8 +114,8 @@ export default function ServicesSection({
             display: "grid",
             gridTemplateColumns: "repeat(2, 1fr)",
             gap: "1px",
-            background: "rgba(255,255,255,0.07)",
-            border: "1px solid rgba(255,255,255,0.07)",
+            background: "var(--color-line)",
+            border: "1px solid var(--color-line)",
           }}
           className="services-grid-responsive"
         >
@@ -128,7 +126,7 @@ export default function ServicesSection({
               className="service-card-hover magic-bento-card"
               style={{
                 padding: "2.5rem",
-                background: "#080a0c",
+                background: "var(--color-bg-card)",
                 cursor: "pointer",
                 transition: "background 0.2s",
               }}
@@ -147,7 +145,7 @@ export default function ServicesSection({
                     fontFamily: "var(--font-mono, monospace)",
                     fontSize: "0.75rem",
                     fontWeight: 600,
-                    color: "#67e8f9",
+                    color: "var(--color-accent)",
                     letterSpacing: "0.06em",
                   }}
                 >
@@ -158,7 +156,7 @@ export default function ServicesSection({
                   height="14"
                   viewBox="0 0 14 14"
                   fill="none"
-                  style={{ color: "#475569" }}
+                  style={{ color: "var(--color-text-muted)" }}
                 >
                   <path
                     d="M2 12L12 2M12 2H4M12 2V10"
@@ -178,7 +176,7 @@ export default function ServicesSection({
                   fontWeight: 900,
                   fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)",
                   textTransform: "uppercase" as const,
-                  color: "#f0f4f8",
+                  color: "var(--color-heading)",
                   letterSpacing: "-0.01em",
                   lineHeight: 1.1,
                   marginBottom: "1rem",
@@ -191,7 +189,7 @@ export default function ServicesSection({
               {/* Description */}
               <p
                 style={{
-                  color: "#f0f4f8",
+                  color: "var(--color-text)",
                   fontSize: "0.875rem",
                   lineHeight: 1.65,
                   marginBottom: "1.5rem",
@@ -209,12 +207,12 @@ export default function ServicesSection({
                       style={{
                         display: "inline-block",
                         padding: "0.3rem 0.7rem",
-                        border: "1px solid rgba(255,255,255,0.1)",
+                        border: "1px solid var(--color-line)",
                         fontFamily: "var(--font-mono, monospace)",
                         fontSize: "0.62rem",
                         fontWeight: 500,
                         letterSpacing: "0.04em",
-                        color: "#94a3b8",
+                        color: "var(--color-text-muted)",
                       }}
                     >
                       {tag}
@@ -229,7 +227,7 @@ export default function ServicesSection({
 
       <style>{`
         .service-card-hover:hover {
-          background: #0d1117 !important;
+          background: var(--color-bg-card-hover) !important;
         }
         @media (max-width: 768px) {
           .services-grid-responsive {

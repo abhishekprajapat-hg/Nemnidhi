@@ -50,6 +50,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  formatDetection: {
+    telephone: false,
+  },
   verification: {
     google: "6P_uML8nzWPNZ5uOoSBzgpENRVKJ5E3C2JRMdYGr_e0",
   },
@@ -119,7 +122,6 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${bonaNovaSc.variable} ${barlowCondensed.variable} ${jetbrainsMono.variable} min-h-screen`}
-        style={{ background: "#080a0c" }}
       >
         <script
           type="application/ld+json"

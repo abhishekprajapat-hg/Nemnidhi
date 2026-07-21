@@ -5,21 +5,23 @@ import Container from "@/components/layout/Container";
 import { useFinalCtaAnimation, useSectionLabel } from "@/lib/useGsapAnimations";
 
 const S = {
-  bg: "#080a0c",
-  bgCard: "#0d1117",
-  line: "rgba(255,255,255,0.07)",
-  accent: "#67e8f9",
-  white: "#f0f4f8",
-  muted: "#f0f4f8",
-  faint: "#475569",
+  bg: "var(--color-bg)",
+  bgCard: "var(--color-bg-elevated)",
+  line: "var(--color-line)",
+  accent: "var(--color-accent)",
+  white: "var(--color-heading)",
+  muted: "var(--color-text-muted)",
+  faint: "var(--color-text-faint)",
   mono: "var(--font-mono, monospace)",
   heading: "var(--font-display, var(--font-heading, sans-serif))",
 };
 
 const contactInfo = [
-  { label: "GENERAL INQUIRIES", value: "hello@nemnidhi.com", href: "mailto:hello@nemnidhi.com" },
-  { label: "NEW PROJECTS", value: "projects@nemnidhi.com", href: "mailto:projects@nemnidhi.com" },
-  { label: "CAREERS", value: "careers@nemnidhi.com", href: "mailto:careers@nemnidhi.com" },
+  { label: "GENERAL INQUIRIES", value: "info@nemnidhi.com", href: "mailto:info@nemnidhi.com" },
+  { label: "SUPPORT", value: "support@nemnidhi.com", href: "mailto:support@nemnidhi.com" },
+  { label: "ADDRESS", value: "B20 - 5th Floor, Gravity Mall, Mechanic Nagar, Indore" },
+  { label: "PHONE", value: "7000445463" },
+  { label: "GSTIN", value: "23CGZPB7175E1Z5" },
 ];
 
 type FormState = {
@@ -87,9 +89,9 @@ export default function ContactSection() {
   const inputStyle: React.CSSProperties = {
     width: "100%",
     padding: "0.85rem 1rem",
-    background: "transparent",
-    border: `1px solid ${S.line}`,
-    color: S.white,
+    background: "var(--color-bg-card)",
+    border: `1px solid var(--color-line)`,
+    color: "var(--color-text)",
     fontSize: "0.875rem",
     outline: "none",
     transition: "border-color 0.2s",
@@ -120,10 +122,10 @@ export default function ContactSection() {
       ref={sectionRef}
       data-scroll-chapter
       style={{
-        background: "#080a0c",
+        background: "transparent",
         paddingTop: "5rem",
         paddingBottom: "5rem",
-        borderTop: "1px solid rgba(255,255,255,0.07)",
+        borderTop: "1px solid var(--color-line)",
         position: "relative",
         overflow: "hidden",
       }}
@@ -169,12 +171,12 @@ export default function ContactSection() {
               fontWeight: 500,
               letterSpacing: "0.14em",
               textTransform: "uppercase" as const,
-              color: "#f0f4f8",
+              color: "var(--color-text)",
             }}
           >
             GET IN TOUCH
           </span>
-          <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.07)" }} />
+          <div style={{ flex: 1, height: "1px", background: "var(--color-line)" }} />
         </div>
 
         {/* Two-column layout */}
@@ -202,14 +204,14 @@ export default function ContactSection() {
                 fontStyle: "normal",
               }}
             >
-              <span style={{ color: "#f0f4f8", display: "block" }}>READY TO</span>
-              <span style={{ color: "#67e8f9", display: "block" }}>BUILD?</span>
+              <span style={{ color: "var(--color-heading)", display: "block" }}>READY TO</span>
+              <span style={{ color: "var(--color-accent)", display: "block" }}>BUILD?</span>
             </h2>
 
             <p
               data-cta-copy
               style={{
-                color: "#f0f4f8",
+                color: "var(--color-text)",
                 fontSize: "0.9rem",
                 lineHeight: 1.7,
                 marginBottom: "2.5rem",
@@ -229,7 +231,7 @@ export default function ContactSection() {
                     justifyContent: "space-between",
                     alignItems: "center",
                     padding: "1rem 0",
-                    borderBottom: "1px solid rgba(255,255,255,0.07)",
+                    borderBottom: "1px solid var(--color-line)",
                   }}
                 >
                   <span
@@ -239,24 +241,50 @@ export default function ContactSection() {
                       fontWeight: 500,
                       letterSpacing: "0.12em",
                       textTransform: "uppercase" as const,
-                      color: "#475569",
+                      color: "var(--color-text-faint)",
                     }}
                   >
                     {item.label}
                   </span>
-                  <a
-                    href={item.href}
-                    style={{
-                      color: "#94a3b8",
-                      fontSize: "0.85rem",
-                      transition: "color 0.2s",
-                      textDecoration: "none"
-                    }}
-                    onMouseEnter={(e) => ((e.target as HTMLAnchorElement).style.color = "#f0f4f8")}
-                    onMouseLeave={(e) => ((e.target as HTMLAnchorElement).style.color = "#94a3b8")}
-                  >
-                    {item.value}
-                  </a>
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      style={{
+                        color: "var(--color-heading)",
+                        fontSize: "0.85rem",
+                        transition: "color 0.2s, background 0.2s",
+                        textDecoration: "none",
+                        textAlign: "right",
+                        lineHeight: 1.6,
+                        maxWidth: "60%",
+                        background: "transparent",
+                      }}
+                      onMouseEnter={(e) => {
+                        const target = e.target as HTMLAnchorElement;
+                        target.style.color = "var(--color-accent)";
+                        target.style.background = "transparent";
+                      }}
+                      onMouseLeave={(e) => {
+                        const target = e.target as HTMLAnchorElement;
+                        target.style.color = "var(--color-heading)";
+                        target.style.background = "transparent";
+                      }}
+                    >
+                      {item.value}
+                    </a>
+                  ) : (
+                    <div
+                      style={{
+                        color: "var(--color-heading)",
+                        fontSize: "0.85rem",
+                        textAlign: "right",
+                        lineHeight: 1.6,
+                        maxWidth: "60%",
+                      }}
+                    >
+                      {item.value}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

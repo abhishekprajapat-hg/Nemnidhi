@@ -17,13 +17,13 @@ type ServicesTimelineProps = {
 };
 
 const S = {
-  bg: "#080a0c",
-  bgCard: "#0d1117",
-  line: "rgba(255,255,255,0.07)",
-  accent: "#67e8f9",
-  white: "#f0f4f8",
-  muted: "#f0f4f8",
-  faint: "#475569",
+  bg: "var(--color-bg)",
+  bgCard: "var(--color-bg-elevated)",
+  line: "var(--color-line)",
+  accent: "var(--color-accent)",
+  white: "var(--color-heading)",
+  muted: "var(--color-text-muted)",
+  faint: "var(--color-text-faint)",
   mono: "var(--font-mono, monospace)",
   heading: "var(--font-display, var(--font-heading, sans-serif))",
 };

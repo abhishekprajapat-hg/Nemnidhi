@@ -7,13 +7,13 @@ import { dbConnect } from "@/lib/mongodb";
 import { Blog, IBlog } from "@/models/Blog";
 
 const S = {
-  bg: "#080a0c",
-  bgCard: "#0d1117",
-  line: "rgba(255,255,255,0.07)",
-  accent: "#67e8f9",
-  white: "#f0f4f8",
-  muted: "#f0f4f8",
-  faint: "#475569",
+  bg: "var(--color-bg)",
+  bgCard: "var(--color-bg-elevated)",
+  line: "var(--color-line)",
+  accent: "var(--color-accent)",
+  white: "var(--color-heading)",
+  muted: "var(--color-text-muted)",
+  faint: "var(--color-text-faint)",
   mono: "var(--font-mono, monospace)",
   heading: "var(--font-display, var(--font-heading, sans-serif))",
 };
@@ -22,23 +22,34 @@ export const revalidate = 0;
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  await dbConnect();
-  const blog = await Blog.findOne({ slug, status: "published" }).lean() as IBlog | null;
+  try {
+    await dbConnect();
+    const blog = await Blog.findOne({ slug, status: "published" }).lean() as IBlog | null;
 
-  if (!blog) {
-    return { title: "Blog Not Found" };
+    if (!blog) {
+      return { title: "Blog Not Found" };
+    }
+
+    return {
+      title: blog.metaTitle || `${blog.title} | Nemnidhi`,
+      description: blog.metaDescription || blog.excerpt,
+    };
+  } catch (error) {
+    console.error("Failed to fetch blog metadata:", error);
+    return { title: "Nemnidhi Blogs" };
   }
-
-  return {
-    title: blog.metaTitle || `${blog.title} | Nemnidhi`,
-    description: blog.metaDescription || blog.excerpt,
-  };
 }
 
 export default async function DynamicBlogPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  await dbConnect();
-  const blog = await Blog.findOne({ slug, status: "published" }).lean() as IBlog | null;
+  let blog: IBlog | null = null;
+  
+  try {
+    await dbConnect();
+    blog = await Blog.findOne({ slug, status: "published" }).lean() as IBlog | null;
+  } catch (error) {
+    console.error("Failed to fetch blog:", error);
+  }
 
   if (!blog) {
     notFound();
@@ -47,7 +58,7 @@ export default async function DynamicBlogPage({ params }: { params: Promise<{ sl
   return (
     <div style={{ background: S.bg, minHeight: "100svh", paddingBottom: "5rem" }}>
       {/* ─── Hero / Header ─── */}
-      <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", paddingTop: "7rem", paddingBottom: "3rem", borderBottom: `1px solid ${S.line}` }}>
+      <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", paddingTop: "7rem", paddingBottom: "3rem", borderBottom: `1px solid ${S.line}`, background: "#05080b" }}>
         <HeroLightfall />
         <Container size="default" className="hero-content-layer" style={{ maxWidth: "800px", margin: "0 auto" }}>
           <Link
@@ -57,7 +68,7 @@ export default async function DynamicBlogPage({ params }: { params: Promise<{ sl
               fontFamily: S.mono,
               fontSize: "0.7rem",
               fontWeight: 600,
-              color: S.accent,
+              color: "#67e8f9",
               letterSpacing: "0.12em",
               textTransform: "uppercase",
               textDecoration: "none",
@@ -68,20 +79,20 @@ export default async function DynamicBlogPage({ params }: { params: Promise<{ sl
           </Link>
 
           <HeroBlurTitle
-            lines={[{ text: blog.title, color: S.white }]}
+            lines={[{ text: blog.title, color: "#f0f4f8" }]}
             style={{
               fontFamily: S.heading,
               fontWeight: 900,
               fontSize: "clamp(2.5rem, 4.5vw, 4rem)",
               textTransform: "uppercase",
               lineHeight: 1.05,
-              color: S.white,
+              color: "#f0f4f8",
               marginBottom: "1.5rem",
               fontStyle: "normal",
             }}
             lineStyle={{ display: "block" }}
           />
-          <div style={{ display: "flex", gap: "1.5rem", fontFamily: S.mono, fontSize: "0.7rem", color: S.faint, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+          <div style={{ display: "flex", gap: "1.5rem", fontFamily: S.mono, fontSize: "0.7rem", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.05em" }}>
             <span>{blog.date}</span>
           </div>
         </Container>

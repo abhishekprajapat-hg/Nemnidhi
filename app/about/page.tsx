@@ -4,13 +4,13 @@ import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
 import HeroLightfall from "@/components/services/HeroLightfall";
 
 const S = {
-  bg: "#080a0c",
-  bgCard: "#0d1117",
-  line: "rgba(255,255,255,0.07)",
-  accent: "#67e8f9",
-  white: "#f0f4f8",
-  muted: "#f0f4f8",
-  faint: "#475569",
+  bg: "var(--color-bg)",
+  bgCard: "var(--color-bg-elevated)",
+  line: "var(--color-line)",
+  accent: "var(--color-accent)",
+  white: "var(--color-heading)",
+  muted: "var(--color-text-muted)",
+  faint: "var(--color-text-faint)",
   mono: "var(--font-mono, monospace)",
   heading: "var(--font-display, var(--font-heading, sans-serif))",
 };
@@ -55,18 +55,18 @@ export default function AboutPage() {
   return (
     <div style={{ background: S.bg, minHeight: "100svh" }}>
       {/* ─── Hero ─── */}
-      <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", padding: "7rem 0 4rem" }}>
+      <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", padding: "7rem 0 4rem", background: "#05080b" }}>
         <HeroLightfall />
         <Container size="wide" className="hero-content-layer">
-          <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: S.accent, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
+          <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: "#67e8f9", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
             [ NEMNIDHI.COM ] — EST. 2025
           </p>
           <HeroBlurTitle
-            lines={[{ text: "WHO", color: S.white }, { text: "WE ARE.", color: S.accent }]}
+            lines={[{ text: "WHO", color: "#f0f4f8" }, { text: "WE ARE.", color: "#67e8f9" }]}
             style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(2.35rem, 5.8vw, 5.2rem)", textTransform: "uppercase", lineHeight: 0.95, letterSpacing: "-0.015em", marginBottom: "2rem" }}
             lineStyle={{ display: "block" }}
           />
-          <p style={{ color: S.muted, fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.7, maxWidth: "36rem" }}>
+          <p style={{ color: "#94a3b8", fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.7, maxWidth: "36rem" }}>
             A focused software engineering studio building production-grade systems for startups and enterprises. Precision engineering, zero compromise.
           </p>
         </Container>

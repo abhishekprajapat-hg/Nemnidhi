@@ -19,7 +19,7 @@ export const Section = forwardRef<HTMLElement, SectionProps>(function Section({
 }, ref) {
   return (
     <section ref={ref} id={id} className={clsx("section-band", className)}>
-      <Container size={size} className={clsx("py-16 md:py-24 xl:py-28", containerClassName)} data-reveal>
+      <Container size={size} className={clsx("py-12 md:py-16 xl:py-20", containerClassName)} data-reveal>
         {children}
       </Container>
     </section>

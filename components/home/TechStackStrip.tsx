@@ -68,26 +68,78 @@ export default function TechStackStrip() {
 
       <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {stackGroups.map((group) => (
-          <Card key={group.label} className="p-6">
-            <div className="flex flex-wrap gap-3 text-[#91A0B5]">
+          <Card key={group.label} className="tech-stack-card p-6">
+            {/* Icon row */}
+            <div className="flex flex-wrap gap-3" style={{ color: "var(--color-text-muted)" }}>
               {group.items.map((Icon, index) => (
                 <span
                   key={index}
                   data-scale-reveal
-                  className="grid h-11 w-11 place-items-center rounded-[var(--radius-sm)] border border-white/10 bg-white/[0.035]"
+                  className="tech-icon-pill grid h-11 w-11 place-items-center rounded-[var(--radius-sm)]"
+                  style={{
+                    border: "1px solid var(--color-line)",
+                    background: "var(--color-bg-elevated)",
+                    color: "var(--color-text-muted)",
+                  }}
                 >
                   <Icon className="h-5 w-5" aria-hidden />
                 </span>
               ))}
             </div>
-            <h3 className="mt-8 text-xl font-semibold text-[#F8FBFF]">{group.label}</h3>
-            <p className="mt-3 text-sm leading-7 text-[#AFC0D6]">{group.description}</p>
-            <Link href={group.href} className="mt-6 inline-block text-sm font-extrabold text-[#F0D991]">
+
+            {/* Label */}
+            <h3
+              className="mt-8 text-xl font-semibold"
+              style={{ color: "var(--color-heading)" }}
+            >
+              {group.label}
+            </h3>
+
+            {/* Description */}
+            <p
+              className="mt-3 text-sm leading-7"
+              style={{ color: "var(--color-text-muted)" }}
+            >
+              {group.description}
+            </p>
+
+            {/* CTA link */}
+            <Link
+              href={group.href}
+              className="tech-explore-link mt-6 inline-flex items-center gap-1.5 text-sm font-bold"
+              style={{ color: "var(--color-accent)" }}
+            >
               Explore section
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
+                <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </Link>
           </Card>
         ))}
       </div>
+
+      <style>{`
+        /* Light mode: give cards elevation so they stand out from ivory bg */
+        [data-theme="light"] .tech-stack-card {
+          background: #FFFFFF !important;
+          border: 1px solid rgba(15,15,10,0.10) !important;
+          box-shadow: 0 2px 12px rgba(15,15,10,0.06) !important;
+        }
+        [data-theme="light"] .tech-icon-pill {
+          background: #F0EDE7 !important;
+          border-color: rgba(15,15,10,0.10) !important;
+          color: #3D3A31 !important;
+        }
+        .tech-explore-link:hover {
+          opacity: 0.75;
+        }
+        /* Dark mode icon pill hover */
+        [data-theme="dark"] .tech-icon-pill:hover,
+        :root:not([data-theme]) .tech-icon-pill:hover {
+          border-color: var(--color-accent) !important;
+          color: var(--color-accent) !important;
+        }
+      `}</style>
     </Section>
   );
 }

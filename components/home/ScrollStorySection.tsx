@@ -77,8 +77,9 @@ export default function ScrollStorySection() {
         </div>
       </Container>
       <div className="scroll-story-marquee" aria-hidden="true">
-        <div data-kinetic-text>
-          BUILD FAST / SHIP CLEAN / SCALE STEADY / BUILD FAST / SHIP CLEAN / SCALE STEADY /
+        <div className="scroll-story-marquee-track">
+          <span>BUILD FAST / SHIP CLEAN / SCALE STEADY / BUILD FAST / SHIP CLEAN / SCALE STEADY /&nbsp;</span>
+          <span>BUILD FAST / SHIP CLEAN / SCALE STEADY / BUILD FAST / SHIP CLEAN / SCALE STEADY /&nbsp;</span>
         </div>
       </div>
     </section>
