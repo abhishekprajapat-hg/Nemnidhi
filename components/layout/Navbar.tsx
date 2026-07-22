@@ -55,7 +55,10 @@ export function Navbar() {
   return (
     <header
       className={clsx("sticky top-0 z-50", scrolled && "nav-scrolled")}
-      style={{ background: "var(--color-bg)", transition: "background 0.3s ease" }}
+      style={{
+        background: scrolled ? "var(--color-bg)" : "transparent",
+        transition: "background 0.3s ease",
+      }}
     >
       <Container size="wide">
         <div className="nav-shell flex min-h-[4.5rem] items-center justify-between px-0 py-3">
@@ -99,6 +102,22 @@ export function Navbar() {
               );
             })}
           </nav>
+
+          {/* Mobile Theme Toggle */}
+          <div className="flex md:hidden items-center">
+            <button
+              id="theme-toggle-mobile"
+              onClick={toggle}
+              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              className="theme-toggle-btn"
+            >
+              {theme === "dark" ? (
+                <Sun className="h-5 w-5" aria-hidden />
+              ) : (
+                <Moon className="h-5 w-5" aria-hidden />
+              )}
+            </button>
+          </div>
 
           {/* Theme Toggle + CTA Button */}
           <div className="hidden md:flex items-center gap-3">

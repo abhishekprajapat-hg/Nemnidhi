@@ -55,8 +55,8 @@ export function Footer() {
         borderTop: "1px solid var(--footer-border)",
         background: "var(--footer-bg)",
         paddingTop: "2rem",
-        paddingBottom: "2rem",
       }}
+      className="site-footer"
     >
       <Container size="wide">
         <div

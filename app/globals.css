@@ -2099,3 +2099,16 @@
 [data-theme="light"] .stat-label {
   color: var(--color-text-muted) !important;
 }
+
+/* ─────────────────────────────────────────────────────────────
+   RESPONSIVE FOOTER CLEARANCE
+   ───────────────────────────────────────────────────────────── */
+.site-footer {
+  padding-bottom: 9rem !important; /* Clear fixed bottom nav + chatbot on mobile */
+}
+
+@media (min-width: 768px) {
+  .site-footer {
+    padding-bottom: 2.5rem !important; /* Standard padding on desktop */
+  }
+}

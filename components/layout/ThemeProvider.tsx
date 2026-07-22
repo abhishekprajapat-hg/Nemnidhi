@@ -7,14 +7,14 @@ type Theme = "dark" | "light";
 const ThemeContext = createContext<{
   theme: Theme;
   toggle: () => void;
-}>({ theme: "dark", toggle: () => {} });
+}>({ theme: "light", toggle: () => {} });
 
 export function useTheme() {
   return useContext(ThemeContext);
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>("light");
 
   // On mount: read saved preference or system preference
   useEffect(() => {
@@ -23,8 +23,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       setTheme(saved);
       document.documentElement.setAttribute("data-theme", saved);
     } else {
-      // Default to dark
-      document.documentElement.setAttribute("data-theme", "dark");
+      // Default to light
+      document.documentElement.setAttribute("data-theme", "light");
     }
   }, []);
 
