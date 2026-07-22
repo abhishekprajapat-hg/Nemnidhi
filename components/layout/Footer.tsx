@@ -59,17 +59,9 @@ export function Footer() {
       className="site-footer"
     >
       <Container size="wide">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: "1.5rem",
-          }}
-        >
-          {/* Left: Brand */}
-          <div>
+        <div className="footer-layout">
+          {/* Left: Brand & Copyright */}
+          <div className="footer-brand-group">
             <p
               style={{
                 fontFamily: "var(--font-mono, monospace)",
@@ -93,10 +85,13 @@ export function Footer() {
             >
               Software Development Studio — Indore, India
             </p>
+            <p className="footer-copyright">
+              © {year} Nemnidhi
+            </p>
           </div>
 
-          {/* Center: Social Icons */}
-          <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+          {/* Right: Social Icons */}
+          <div className="footer-social-group">
             {socials.map((s) => (
               <Link
                 key={s.label}
@@ -136,18 +131,6 @@ export function Footer() {
               </Link>
             ))}
           </div>
-
-          {/* Right: Copyright */}
-          <p
-            style={{
-              fontFamily: "var(--font-mono, monospace)",
-              fontSize: "0.62rem",
-              letterSpacing: "0.04em",
-              color: "var(--footer-muted, #555)",
-            }}
-          >
-            © {year} Nemnidhi
-          </p>
         </div>
       </Container>
     </footer>
