@@ -24,7 +24,7 @@ const socials = [
   },
   {
     label: "Facebook",
-    href: "#",
+    href: "https://www.facebook.com/nemnidhiofficial/",
     hoverColor: "#1877f2",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -34,7 +34,7 @@ const socials = [
   },
   {
     label: "X (Twitter)",
-    href: "#",
+    href: "https://x.com/hey_nemnidhi",
     hoverColor: "#e7e9ea",
     icon: (
       <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -146,7 +146,7 @@ export function Footer() {
               color: "var(--footer-muted, #555)",
             }}
           >
-            © {year} Nemnidhi Technologies Pvt. Ltd.
+            © {year} Nemnidhi
           </p>
         </div>
       </Container>
