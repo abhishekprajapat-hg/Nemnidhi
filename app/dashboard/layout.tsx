@@ -20,11 +20,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
   const accentColor = isDark ? "#67e8f9" : "#076D87";
 
   if (pathname === "/dashboard/login") {
-    return (
-      <div style={{ background: bg, minHeight: "100vh", color: textColor }}>
-        {children}
-      </div>
-    );
+    return <>{children}</>;
   }
 
   const handleLogout = async () => {

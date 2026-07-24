@@ -3,12 +3,47 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import RichEditor from "@/components/dashboard/RichEditor";
+import { useTheme } from "@/components/layout/ThemeProvider";
 
 export default function NewBlogPage() {
   const router = useRouter();
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const [form, setForm] = useState({
     title: "", slug: "", date: "", excerpt: "", content: "", metaTitle: "", metaDescription: "", status: "published"
   });
+
+  const colors = {
+    heading: isDark ? "#f0f4f8" : "#0A0907",
+    label: isDark ? "#94a3b8" : "#444",
+    inputBg: isDark ? "#0d1117" : "#ffffff",
+    inputBorder: isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.18)",
+    inputText: isDark ? "#f0f4f8" : "#0A0907",
+    accent: isDark ? "#67e8f9" : "#076D87",
+    accentText: isDark ? "#080a0c" : "#ffffff",
+  };
+
+  const inputStyle = {
+    width: "100%",
+    padding: "0.75rem",
+    background: colors.inputBg,
+    border: `1px solid ${colors.inputBorder}`,
+    color: colors.inputText,
+    marginBottom: "1rem",
+    outline: "none",
+    fontFamily: "inherit",
+    borderRadius: "4px",
+    transition: "background 0.3s, color 0.3s, border-color 0.3s",
+  };
+
+  const labelStyle = {
+    display: "block",
+    marginBottom: "0.5rem",
+    fontFamily: "var(--font-mono, monospace)",
+    fontSize: "0.8rem",
+    color: colors.label,
+    fontWeight: 600,
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,13 +59,10 @@ export default function NewBlogPage() {
     }
   };
 
-  const inputStyle = { width: "100%", padding: "0.75rem", background: "#0d1117", border: "1px solid rgba(255,255,255,0.07)", color: "#f0f4f8", marginBottom: "1rem", outline: "none", fontFamily: "inherit" };
-  const labelStyle = { display: "block", marginBottom: "0.5rem", fontFamily: "var(--font-mono, monospace)", fontSize: "0.8rem", color: "#94a3b8" };
-
   return (
     <div>
-      <h1 style={{ fontFamily: "var(--font-display, var(--font-heading, sans-serif))", fontSize: "2rem", color: "#f0f4f8", marginBottom: "2rem" }}>New Blog</h1>
-      
+      <h1 style={{ fontFamily: "var(--font-display, var(--font-heading, sans-serif))", fontSize: "2rem", color: colors.heading, marginBottom: "2rem" }}>New Blog</h1>
+
       <form onSubmit={handleSubmit}>
         <label style={labelStyle}>Title</label>
         <input style={inputStyle} value={form.title} onChange={e => setForm({...form, title: e.target.value})} required />
@@ -61,7 +93,9 @@ export default function NewBlogPage() {
           <option value="draft">Draft</option>
         </select>
 
-        <button type="submit" style={{ background: "#67e8f9", color: "#080a0c", padding: "0.75rem 2rem", border: "none", borderRadius: "4px", cursor: "pointer", fontFamily: "var(--font-mono, monospace)", fontWeight: 700 }}>Save Blog</button>
+        <button type="submit" style={{ background: colors.accent, color: colors.accentText, padding: "0.75rem 2rem", border: "none", borderRadius: "4px", cursor: "pointer", fontFamily: "var(--font-mono, monospace)", fontWeight: 700 }}>
+          Save Blog
+        </button>
       </form>
     </div>
   );
