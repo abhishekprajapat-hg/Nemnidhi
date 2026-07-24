@@ -56,7 +56,7 @@ export function Navbar() {
     <header
       className={clsx("sticky top-0 z-50", scrolled && "nav-scrolled")}
       style={{
-        background: scrolled ? "var(--color-bg)" : "transparent",
+        background: "transparent",
         transition: "background 0.3s ease",
       }}
     >

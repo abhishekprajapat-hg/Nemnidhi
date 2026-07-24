@@ -18,8 +18,8 @@ export default function HeroLightfall() {
     const show = () => setShouldRender(true);
     const idleId =
       "requestIdleCallback" in window
-        ? window.requestIdleCallback(show, { timeout: 1600 })
-        : globalThis.setTimeout(show, 500);
+        ? window.requestIdleCallback(show, { timeout: 200 })
+        : globalThis.setTimeout(show, 100);
 
     return () => {
       if ("cancelIdleCallback" in window && typeof idleId === "number") {
