@@ -95,6 +95,10 @@ export default function MotionProvider({ children }: { children: ReactNode }) {
         wheelMultiplier: 0.78,
       });
 
+      // Fix: Ensure page starts at top on route change
+      window.scrollTo(0, 0);
+      lenis.scrollTo(0, { immediate: true });
+
       lenis.on("scroll", ScrollTrigger.update);
 
       const ticker = (time: number) => lenis.raf(time * 1000);
