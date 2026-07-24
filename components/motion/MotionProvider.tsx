@@ -54,8 +54,7 @@ function settleCounters() {
 export default function MotionProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const progressRef = useRef<HTMLDivElement | null>(null);
-  const cursorRef = useRef<HTMLDivElement | null>(null);
-  const cursorDotRef = useRef<HTMLDivElement | null>(null);
+
   const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
@@ -65,13 +64,11 @@ export default function MotionProvider({ children }: { children: ReactNode }) {
 
     if (prefersReducedMotion || !supportsDesktopMotion) {
       document.documentElement.classList.add("reduce-motion");
-      document.documentElement.classList.remove("has-custom-cursor");
       settleCounters();
       return () => document.documentElement.classList.remove("reduce-motion");
     }
 
     document.documentElement.classList.remove("reduce-motion");
-    document.documentElement.classList.add("has-custom-cursor");
 
     let disposed = false;
     let cleanup: (() => void) | undefined;
@@ -105,48 +102,17 @@ export default function MotionProvider({ children }: { children: ReactNode }) {
       gsap.ticker.lagSmoothing(0);
 
       const context = gsap.context(() => {
-        const cursor = cursorRef.current;
-        const cursorDot = cursorDotRef.current;
+        // Track mouse position for CSS variable-based effects (e.g. orb glow)
+        const onPointerMove = (event: PointerEvent) => {
+          document.documentElement.style.setProperty("--mouse-x", `${event.clientX}px`);
+          document.documentElement.style.setProperty("--mouse-y", `${event.clientY}px`);
+        };
 
-        if (cursor && cursorDot) {
-          const moveCursorX = gsap.quickTo(cursor, "x", { duration: 0.42, ease: "power3.out" });
-          const moveCursorY = gsap.quickTo(cursor, "y", { duration: 0.42, ease: "power3.out" });
-          const moveDotX = gsap.quickTo(cursorDot, "x", { duration: 0.12, ease: "power2.out" });
-          const moveDotY = gsap.quickTo(cursorDot, "y", { duration: 0.12, ease: "power2.out" });
+        window.addEventListener("pointermove", onPointerMove, { passive: true });
 
-          const onPointerMove = (event: PointerEvent) => {
-            document.documentElement.style.setProperty("--mouse-x", `${event.clientX}px`);
-            document.documentElement.style.setProperty("--mouse-y", `${event.clientY}px`);
-            moveCursorX(event.clientX);
-            moveCursorY(event.clientY);
-            moveDotX(event.clientX);
-            moveDotY(event.clientY);
-          };
-
-          const interactiveItems = Array.from(
-            document.querySelectorAll<HTMLElement>("a, button, [data-cursor='interactive']"),
-          );
-          const setInteractive = () => {
-            cursor.dataset.cursor = "interactive";
-          };
-          const unsetInteractive = () => {
-            cursor.dataset.cursor = "default";
-          };
-
-          window.addEventListener("pointermove", onPointerMove, { passive: true });
-          interactiveItems.forEach((item) => {
-            item.addEventListener("pointerenter", setInteractive);
-            item.addEventListener("pointerleave", unsetInteractive);
-          });
-
-          cleanupFns.push(() => {
-            window.removeEventListener("pointermove", onPointerMove);
-            interactiveItems.forEach((item) => {
-              item.removeEventListener("pointerenter", setInteractive);
-              item.removeEventListener("pointerleave", unsetInteractive);
-            });
-          });
-        }
+        cleanupFns.push(() => {
+          window.removeEventListener("pointermove", onPointerMove);
+        });
 
         document.querySelectorAll<HTMLElement>("[data-magnetic]").forEach((item) => {
           const moveX = gsap.quickTo(item, "x", { duration: 0.34, ease: "power3.out" });
@@ -459,7 +425,6 @@ export default function MotionProvider({ children }: { children: ReactNode }) {
     return () => {
       disposed = true;
       cleanup?.();
-      document.documentElement.classList.remove("has-custom-cursor");
     };
   }, [pathname, prefersReducedMotion]);
 
@@ -468,8 +433,7 @@ export default function MotionProvider({ children }: { children: ReactNode }) {
       <div className="scroll-progress" aria-hidden>
         <div ref={progressRef} />
       </div>
-      <div ref={cursorRef} className="custom-cursor" aria-hidden />
-      <div ref={cursorDotRef} className="custom-cursor-dot" aria-hidden />
+
       {children}
     </>
   );
