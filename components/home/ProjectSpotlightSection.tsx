@@ -10,14 +10,14 @@ const TRUSTED = ["NEM", "OS", "CRM", "WEB"];
 
 export default function ProjectSpotlightSection() {
   return (
-    <Section size="wide" containerClassName="pt-10 md:pt-16">
+    <Section size="wide" containerClassName="section-padding">
       <div className="grid gap-8 lg:grid-cols-[0.58fr_0.42fr] lg:items-end">
         <div>
           <Badge>Enterprise product studio</Badge>
           <Heading className="mt-5">We design digital systems that make businesses look credible and operate sharper.</Heading>
         </div>
         <div>
-          <p className="section-copy">
+          <p className="text-body text-prose text-[var(--color-text-muted)]">
             Nemnidhi combines strategy, interface design, engineering, and automation into one connected delivery layer for growth-focused teams.
           </p>
           <div className="mt-6 flex flex-wrap gap-5">
@@ -37,10 +37,10 @@ export default function ProjectSpotlightSection() {
         <Card className="p-6 md:p-8">
           <p className="section-eyebrow">Operating belief</p>
           <div className="mt-6 grid gap-6 md:grid-cols-2">
-            <p className="section-copy">
+            <p className="text-body text-prose text-[var(--color-text-muted)]">
               Premium fintech websites win when they feel clear, stable, and trustworthy from the first interaction. The foundation must do the quiet work before motion is layered in.
             </p>
-            <p className="section-copy">
+            <p className="text-body text-prose text-[var(--color-text-muted)]">
               This system is built around accessible contrast, reusable primitives, conservative spacing, and surfaces that can scale across landing pages, dashboards, and product workflows.
             </p>
           </div>

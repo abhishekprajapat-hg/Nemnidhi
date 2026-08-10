@@ -133,7 +133,7 @@ export default function ServicesPage() {
       <div style={{ width: "100%", height: "1px", background: S.line }} />
 
       {/* ─── CTA ─── */}
-      <section style={{ padding: "5rem 0" }}>
+      <section className="section-padding">
         <Container size="wide">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "2rem" }}>
             <div>

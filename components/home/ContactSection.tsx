@@ -121,10 +121,9 @@ export default function ContactSection() {
       id="contact"
       ref={sectionRef}
       data-scroll-chapter
+      className="section-padding"
       style={{
         background: "transparent",
-        paddingTop: "5rem",
-        paddingBottom: "5rem",
         borderTop: "1px solid var(--color-line)",
         position: "relative",
         overflow: "hidden",
@@ -193,16 +192,7 @@ export default function ContactSection() {
           <div>
             <h2
               data-cta-copy
-              style={{
-                fontFamily: "var(--font-display, var(--font-heading, sans-serif))",
-                fontWeight: 900,
-                fontSize: "clamp(2rem, 3.8vw, 3.1rem)",
-                textTransform: "uppercase" as const,
-                lineHeight: 0.95,
-                letterSpacing: "-0.02em",
-                marginBottom: "1.5rem",
-                fontStyle: "normal",
-              }}
+              className="text-h2 uppercase mb-6"
             >
               <span style={{ color: "var(--color-heading)", display: "block" }}>READY TO</span>
               <span style={{ color: "var(--color-accent)", display: "block" }}>BUILD?</span>
@@ -210,13 +200,8 @@ export default function ContactSection() {
 
             <p
               data-cta-copy
-              style={{
-                color: "var(--color-text)",
-                fontSize: "0.9rem",
-                lineHeight: 1.7,
-                marginBottom: "2.5rem",
-                maxWidth: "26rem",
-              }}
+              className="text-body text-prose mb-10"
+              style={{ maxWidth: "26rem" }}
             >
               Tell us what you're working on. We respond within 24 hours and move fast from there.
             </p>

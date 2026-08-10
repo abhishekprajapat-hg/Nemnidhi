@@ -61,7 +61,7 @@ export default function TechStackStrip() {
       <div className="grid gap-8 lg:grid-cols-[0.38fr_0.62fr] lg:items-end">
         <div>
           <Badge tone="blue">Technology layer</Badge>
-          <p className="mt-4 section-copy">Modern tooling, selected for maintainable delivery rather than novelty.</p>
+          <p className="mt-4 text-body text-prose text-[var(--color-text-muted)]">Modern tooling, selected for maintainable delivery rather than novelty.</p>
         </div>
         <Heading>Reusable foundations for product, data, cloud, and conversion workflows.</Heading>
       </div>
@@ -88,17 +88,13 @@ export default function TechStackStrip() {
             </div>
 
             {/* Label */}
-            <h3
-              className="mt-8 text-xl font-semibold"
-              style={{ color: "var(--color-heading)" }}
-            >
+            <h3 className="text-h4 mt-6">
               {group.label}
             </h3>
 
             {/* Description */}
             <p
-              className="mt-3 text-sm leading-7"
-              style={{ color: "var(--color-text-muted)" }}
+              className="mt-2 text-body text-prose text-[var(--color-text-muted)]"
             >
               {group.description}
             </p>

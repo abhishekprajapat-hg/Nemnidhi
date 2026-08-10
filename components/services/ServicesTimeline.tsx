@@ -37,8 +37,8 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
   return (
     <section
       ref={sectionRef}
+      className="section-padding"
       style={{
-        padding: "5rem 0",
         borderTop: `1px solid ${S.line}`,
       }}
     >
@@ -66,29 +66,10 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
           }}
         >
           <div className="services-timeline-intro" style={{ position: "sticky", top: "7rem" }}>
-            <h2
-              style={{
-                fontFamily: S.heading,
-                fontWeight: 900,
-                fontSize: "clamp(1.95rem, 3.8vw, 3.6rem)",
-                textTransform: "uppercase" as const,
-                color: S.white,
-                letterSpacing: "-0.02em",
-                lineHeight: 0.95,
-                fontStyle: "normal",
-              }}
-            >
+            <h2 className="text-h2 uppercase">
               Six capabilities. One delivery engine.
             </h2>
-            <p
-              style={{
-                marginTop: "1.5rem",
-                color: S.muted,
-                fontSize: "0.95rem",
-                lineHeight: 1.75,
-                maxWidth: "30rem",
-              }}
-            >
+            <p className="text-body text-prose mt-6 text-[var(--color-text-muted)]">
               Explore the core service tracks we combine to plan, build, launch, and improve production-grade digital systems.
             </p>
           </div>
@@ -119,7 +100,7 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
               }}
             />
 
-            <div style={{ display: "grid", gap: "1rem" }}>
+            <div style={{ display: "grid", gap: "var(--space-card-gap)" }}>
               {services.map((svc) => (
                 <article
                   key={svc.num}
@@ -160,15 +141,15 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
                     }}
                   >
                     <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", alignItems: "flex-start", marginBottom: "1rem" }}>
-                      <h2 style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(1.15rem, 1.55vw, 1.45rem)", textTransform: "uppercase", color: S.white, letterSpacing: "-0.005em", lineHeight: 1.15, margin: 0 }}>
+                      <h3 className="text-h4 uppercase m-0">
                         {svc.title}
-                      </h2>
+                      </h3>
                       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ color: S.faint, flex: "0 0 auto", marginTop: "0.2rem" }}>
                         <path d="M2 12L12 2M12 2H4M12 2V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </div>
 
-                    <p style={{ color: S.muted, fontSize: "0.875rem", lineHeight: 1.65, marginBottom: "1.5rem" }}>
+                    <p className="text-body text-prose mt-2 mb-6 text-[var(--color-text-muted)]">
                       {svc.desc}
                     </p>
 

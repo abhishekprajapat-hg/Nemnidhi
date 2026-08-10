@@ -3,6 +3,21 @@
 import { useRef } from "react";
 import Container from "@/components/layout/Container";
 import { useScrollReveal, useSectionLabel } from "@/lib/useGsapAnimations";
+import {
+  UndrawCoding,
+  UndrawMobileApps,
+  UndrawCloudHosting,
+  UndrawArtificialIntelligence,
+} from "react-undraw-illustrations";
+
+const SERVICE_ILLUSTRATIONS = [
+  UndrawCoding,
+  UndrawMobileApps,
+  UndrawCloudHosting,
+  UndrawArtificialIntelligence,
+];
+
+const BRAND_CYAN = "#67e8f9";
 
 type Service = {
   _id?: string;
@@ -59,11 +74,7 @@ export default function ServicesSection({
       id="services"
       ref={sectionRef}
       data-scroll-chapter
-      style={{
-        background: "transparent",
-        paddingTop: "5rem",
-        paddingBottom: "5rem",
-      }}
+      className="section-padding"
     >
       <Container size="wide">
         {/* Section label */}
@@ -119,7 +130,9 @@ export default function ServicesSection({
           }}
           className="services-grid-responsive"
         >
-          {items.map((service, i) => (
+          {items.map((service, i) => {
+            const Illustration = SERVICE_ILLUSTRATIONS[i % SERVICE_ILLUSTRATIONS.length];
+            return (
             <div
               key={service._id ?? i}
               data-reveal
@@ -131,6 +144,11 @@ export default function ServicesSection({
                 transition: "background 0.2s",
               }}
             >
+              {/* Illustration */}
+              <div style={{ marginBottom: "1.5rem", opacity: 0.9 }}>
+                <Illustration primaryColor={BRAND_CYAN} height="160px" />
+              </div>
+
               {/* Number + arrow row */}
               <div
                 style={{
@@ -169,32 +187,12 @@ export default function ServicesSection({
               </div>
 
               {/* Title */}
-              <h3
-                style={{
-                  fontFamily:
-                    "var(--font-display, var(--font-heading, sans-serif))",
-                  fontWeight: 900,
-                  fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)",
-                  textTransform: "uppercase" as const,
-                  color: "var(--color-heading)",
-                  letterSpacing: "-0.01em",
-                  lineHeight: 1.1,
-                  marginBottom: "1rem",
-                  fontStyle: "normal",
-                }}
-              >
+              <h3 className="text-h3">
                 {service.title.replace(/^0\d\s*/, "")}
               </h3>
 
               {/* Description */}
-              <p
-                style={{
-                  color: "var(--color-text)",
-                  fontSize: "0.875rem",
-                  lineHeight: 1.65,
-                  marginBottom: "1.5rem",
-                }}
-              >
+              <p className="text-prose mb-6" style={{ color: "var(--color-text-muted)" }}>
                 {service.description}
               </p>
 
@@ -221,7 +219,7 @@ export default function ServicesSection({
                 </div>
               )}
             </div>
-          ))}
+          );})}
         </div>
       </Container>
 

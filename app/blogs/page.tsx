@@ -60,7 +60,7 @@ export default async function BlogsPage() {
 
       <div style={{ width: "100%", height: "1px", background: S.line }} />
 
-      <section style={{ padding: "5rem 0" }}>
+      <section className="section-padding" style={{ borderTop: `1px solid ${S.line}` }}>
         <Container size="wide">
           <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "2rem" }}>
             {blogs.length === 0 && (

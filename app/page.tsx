@@ -9,7 +9,6 @@ import WorkSection from "@/components/home/WorkSection";
 import ProcessSection from "@/components/home/ProcessSection";
 import TechStackStrip from "@/components/home/TechStackStrip";
 import ContactSection from "@/components/home/ContactSection";
-
 import { dbConnect } from "@/lib/mongodb";
 import { Service } from "@/models/Service";
 import { HeroSettings } from "@/models/HeroSettings";

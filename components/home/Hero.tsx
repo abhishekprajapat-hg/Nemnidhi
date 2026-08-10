@@ -29,16 +29,16 @@ export default function Hero({ hero }: HeroProps) {
   useHeroParallax(sectionRef);
 
   const badge = hero?.badgeText ?? "[ NEMNIDHI.COM ] — EST. 2025";
-  const headingLine1 = hero?.headingMain ?? "ENGINEERING";
-  const headingLine2 = hero?.headingHighlight ?? "SOFTWARE";
-  const headingLine3 = hero?.headingSuffix ?? "THAT SCALES.";
+  const headingLine1 = hero?.headingMain ?? "WE TURN BUSINESS PROBLEMS";
+  const headingLine2 = hero?.headingHighlight ?? "INTO ";
+  const headingLine3 = hero?.headingSuffix ?? "SOFTWARE SOLUTIONS.";
   const sub =
     hero?.subheading ??
-    "We build production-grade software for startups and enterprises — from architecture to deployment. Precision engineering, zero compromise.";
+    "Custom software, AI integration, and automation built around how your business actually works — not a generic template.";
   const primaryHref = hero?.primaryCtaHref ?? "/contact";
-  const primaryLabel = hero?.primaryCtaLabel ?? "START PROJECT →";
+  const primaryLabel = hero?.primaryCtaLabel ?? "Start Your Project →";
   const secondaryHref = hero?.secondaryCtaHref ?? "/projects";
-  const secondaryLabel = hero?.secondaryCtaLabel ?? "VIEW WORK";
+  const secondaryLabel = hero?.secondaryCtaLabel ?? "View Our Work";
 
   return (
     <section
@@ -75,13 +75,14 @@ export default function Hero({ hero }: HeroProps) {
         {/* Giant Heading — each line is a separate anim target */}
         <h1
           style={{
-            fontFamily: "var(--font-display, var(--font-heading, sans-serif))",
+            fontFamily: "var(--font-condensed, sans-serif)",
             fontWeight: 900,
-            fontSize: "clamp(2.9rem, 7.8vw, 6.8rem)",
-            lineHeight: 0.88,
-            letterSpacing: "-0.02em",
+            fontSize: "clamp(2.5rem, 5vw, 4rem)",
+            lineHeight: 0.95,
+            letterSpacing: "-0.01em",
             textTransform: "uppercase" as const,
             margin: 0,
+            maxWidth: "950px", // Plenty of room for "INTO SOFTWARE SOLUTIONS."
           }}
         >
           <BlurText
@@ -91,9 +92,8 @@ export default function Hero({ hero }: HeroProps) {
             delay={90}
             stepDuration={0.42}
             style={{
-              display: "flex",
+              display: "flex", // Forces a line break after this block
               color: "var(--color-heading)",
-              WebkitTextStroke: "1px var(--color-line)",
             }}
           />
           <BlurText
@@ -103,7 +103,7 @@ export default function Hero({ hero }: HeroProps) {
             delay={90}
             stepDuration={0.42}
             style={{
-              display: "flex",
+              display: "inline-flex", // Sits side-by-side with the next block
               color: "var(--color-heading)",
             }}
           />
@@ -114,8 +114,8 @@ export default function Hero({ hero }: HeroProps) {
             delay={90}
             stepDuration={0.42}
             style={{
-              display: "flex",
-              color: "var(--color-accent)",
+              display: "inline-flex",
+              color: "#67e8f9",
             }}
           />
         </h1>
@@ -125,35 +125,34 @@ export default function Hero({ hero }: HeroProps) {
           data-hero-anim
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr auto",
-            alignItems: "flex-end",
-            gap: "3rem",
+            gridTemplateColumns: "1fr",
+            gap: "2.5rem",
             marginTop: "3rem",
           }}
           className="hero-bottom-row"
         >
           <p
             style={{
-              color: "#f0f4f8",
-              fontSize: "clamp(0.9rem, 1.2vw, 1rem)",
+              color: "var(--color-text-muted)",
+              fontSize: "clamp(1rem, 1.2vw, 1.1rem)",
               lineHeight: 1.7,
-              maxWidth: "28rem",
+              maxWidth: "34rem",
             }}
           >
             {sub}
           </p>
 
           {/* CTA Buttons */}
-          <div style={{ display: "flex", gap: "1rem", flexShrink: 0 }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", flexShrink: 0 }}>
             <Link
               href={secondaryHref}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 padding: "0.9rem 1.75rem",
-                border: "1px solid rgba(255,255,255,0.18)",
+                border: "1px solid var(--color-line)",
                 background: "transparent",
-                color: "#f0f4f8",
+                color: "var(--color-heading)",
                 fontFamily: "var(--font-mono, monospace)",
                 fontSize: "0.7rem",
                 fontWeight: 700,
@@ -186,6 +185,40 @@ export default function Hero({ hero }: HeroProps) {
               {primaryLabel}
             </Link>
           </div>
+        </div>
+
+        {/* Trust Indicators */}
+        <div 
+          data-hero-anim
+          style={{
+            marginTop: "3.5rem",
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "1.5rem",
+            alignItems: "center",
+            fontFamily: "var(--font-mono, monospace)",
+            fontSize: "0.65rem",
+            fontWeight: 600,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            color: "var(--color-text-muted)",
+          }}
+        >
+          <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "var(--color-accent)" }} /> Projects Delivered
+          </span>
+          <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "var(--color-accent)" }} /> Industries Served
+          </span>
+          <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "var(--color-accent)" }} /> Modern Tech Stack
+          </span>
+          <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "var(--color-accent)" }} /> Fast Delivery
+          </span>
+          <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "var(--color-accent)" }} /> Ongoing Support
+          </span>
         </div>
       </Container>
 

@@ -63,14 +63,12 @@ export default function WorkSection() {
       id="work"
       ref={sectionRef}
       data-scroll-chapter
+      className="project-showcase-section section-padding"
       style={{
         background: "transparent",
-        paddingTop: "5rem",
-        paddingBottom: "5rem",
         borderTop: "1px solid var(--color-line)",
         overflow: "hidden",
       }}
-      className="project-showcase-section"
     >
       <Container size="wide">
         <div
@@ -114,7 +112,7 @@ export default function WorkSection() {
         className="project-hscroll-track"
         style={{
           display: "flex",
-          gap: "1rem",
+          gap: "var(--space-card-gap)",
           width: "max-content",
           paddingInline: "max(var(--space-page-x), calc((100vw - var(--container-wide)) / 2 + var(--space-page-x)))",
           willChange: "transform",
@@ -172,19 +170,7 @@ export default function WorkSection() {
                 </span>
               </div>
 
-              <h3
-                style={{
-                  fontFamily: "var(--font-display, var(--font-heading, sans-serif))",
-                  fontWeight: 900,
-                  fontSize: "clamp(1.8rem, 3.8vw, 3.1rem)",
-                  textTransform: "uppercase" as const,
-                  color: "var(--color-heading)",
-                  letterSpacing: "-0.02em",
-                  lineHeight: 0.92,
-                  fontStyle: "normal",
-                  marginBottom: "1rem",
-                }}
-              >
+              <h3 className="text-h2 mb-4 text-transform-uppercase">
                 {project.title}
               </h3>
               <p
@@ -218,7 +204,7 @@ export default function WorkSection() {
                   </span>
                 ))}
               </div>
-              <p style={{ color: "var(--color-text)", fontSize: "0.92rem", lineHeight: 1.7 }}>{project.desc}</p>
+              <p className="text-body text-prose mt-4">{project.desc}</p>
             </div>
           </a>
         ))}

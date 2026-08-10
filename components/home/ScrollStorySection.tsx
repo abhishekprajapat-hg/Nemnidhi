@@ -60,9 +60,6 @@ export default function ScrollStorySection() {
           <h2 id="protocol-heading" data-split className="scroll-story-heading" aria-label={heading}>
             <SplitWords text={heading} />
           </h2>
-          <p data-reveal className="scroll-story-copy">
-            Inspired by the Raven-style motion language: large typography, pinned context, and sections that respond as you move.
-          </p>
         </div>
 
         <div className="scroll-story-panels" data-panel-stack>
@@ -71,7 +68,7 @@ export default function ScrollStorySection() {
               <span className="scroll-story-number">{chapter.number}</span>
               <p>{chapter.kicker}</p>
               <h3>{chapter.title}</h3>
-              <span>{chapter.copy}</span>
+              <span className="text-body text-[var(--color-text-muted)] mt-4 block leading-relaxed">{chapter.copy}</span>
             </article>
           ))}
         </div>

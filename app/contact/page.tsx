@@ -135,7 +135,7 @@ export default function ContactPage() {
       <div style={{ width: "100%", height: "1px", background: S.line }} />
 
       {/* ─── Contact Grid ─── */}
-      <section style={{ padding: "5rem 0" }}>
+      <section className="section-padding">
         <Container size="wide">
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: "5rem", alignItems: "start" }} className="contact-page-grid">
 

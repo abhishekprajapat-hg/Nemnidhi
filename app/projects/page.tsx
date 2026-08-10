@@ -127,7 +127,7 @@ export default function ProjectsPage() {
       <div style={{ width: "100%", height: "1px", background: S.line }} />
 
       {/* ─── Project List ─── */}
-      <section style={{ padding: "5rem 0" }}>
+      <section className="section-padding">
         <Container size="wide">
           {/* Section label */}
           <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "3rem" }}>
@@ -219,7 +219,7 @@ export default function ProjectsPage() {
       <div style={{ width: "100%", height: "1px", background: S.line }} />
 
       {/* ─── CTA ─── */}
-      <section style={{ padding: "5rem 0" }}>
+      <section className="section-padding">
         <Container size="wide">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "2rem" }}>
             <div>

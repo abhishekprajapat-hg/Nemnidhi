@@ -22,7 +22,7 @@ export default function StatsSection() {
       ref={sectionRef}
       data-scroll-chapter
       suppressHydrationWarning
-      className="scroll-proof-section"
+      className="scroll-proof-section section-padding"
     >
       <Container size="wide">
         <div className="stats-grid stats-grid-responsive">

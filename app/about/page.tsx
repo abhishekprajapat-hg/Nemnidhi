@@ -91,7 +91,7 @@ export default function AboutPage() {
       <div style={{ width: "100%", height: "1px", background: S.line }} />
 
       {/* ─── Studio Model ─── */}
-      <section style={{ padding: "5rem 0" }}>
+      <section className="section-padding">
         <Container size="wide">
           <SectionLabel number="[ 01 ]" text="STUDIO MODEL" />
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "start" }} className="about-two-col">
@@ -126,7 +126,7 @@ export default function AboutPage() {
       <div style={{ width: "100%", height: "1px", background: S.line }} />
 
       {/* ─── Principles ─── */}
-      <section style={{ padding: "5rem 0" }}>
+      <section className="section-padding">
         <Container size="wide">
           <SectionLabel number="[ 02 ]" text="OUR PRINCIPLES" />
           <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "1px", background: S.line, border: `1px solid ${S.line}` }} className="about-principles-grid">
@@ -144,7 +144,7 @@ export default function AboutPage() {
       <div style={{ width: "100%", height: "1px", background: S.line }} />
 
       {/* ─── Process ─── */}
-      <section style={{ padding: "5rem 0" }}>
+      <section className="section-padding">
         <Container size="wide">
           <SectionLabel number="[ 03 ]" text="HOW WE ENGAGE" />
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", border: `1px solid ${S.line}` }} className="about-process-grid">
@@ -165,7 +165,7 @@ export default function AboutPage() {
       <div style={{ width: "100%", height: "1px", background: S.line }} />
 
       {/* ─── CTA ─── */}
-      <section style={{ padding: "5rem 0" }}>
+      <section className="section-padding" style={{ background: "#05080b" }}>
         <Container size="wide">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "2rem" }}>
             <div>

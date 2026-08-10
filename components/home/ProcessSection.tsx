@@ -3,32 +3,46 @@
 import { useRef } from "react";
 import Container from "@/components/layout/Container";
 import { useSectionLabel, useTimelineGrow } from "@/lib/useGsapAnimations";
+import {
+  UndrawBrainstorming,
+  UndrawWireframing,
+  UndrawProgramming,
+  UndrawQaEngineers,
+  UndrawRising,
+} from "react-undraw-illustrations";
+
+const BRAND_CYAN = "#67e8f9";
 
 const steps = [
   {
     num: "01",
     title: "Discovery",
     desc: "We map requirements, constraints, success metrics, and the commercial outcome the software has to create.",
+    Illustration: UndrawBrainstorming,
   },
   {
     num: "02",
     title: "Design",
     desc: "We shape product flows, visual systems, data models, and technical architecture before heavy engineering begins.",
+    Illustration: UndrawWireframing,
   },
   {
     num: "03",
     title: "Development",
     desc: "Senior engineers build in focused sprints with frequent demos, clean handoffs, and deployable increments.",
+    Illustration: UndrawProgramming,
   },
   {
     num: "04",
     title: "Testing",
     desc: "We validate performance, responsive behavior, edge cases, integrations, and release readiness.",
+    Illustration: UndrawQaEngineers,
   },
   {
     num: "05",
     title: "Launch",
     desc: "We ship with monitoring, deployment confidence, documentation, and a clear plan for the next iteration.",
+    Illustration: UndrawRising,
   },
 ];
 
@@ -43,10 +57,9 @@ export default function ProcessSection() {
       id="process"
       ref={sectionRef}
       data-scroll-chapter
+      className="section-padding"
       style={{
         background: "transparent",
-        paddingTop: "2.5rem",
-        paddingBottom: "2.5rem",
         borderTop: "1px solid var(--color-line)",
       }}
     >
@@ -96,29 +109,10 @@ export default function ProcessSection() {
           className="process-timeline-layout"
         >
           <div style={{ position: "sticky", top: "7rem" }} className="process-timeline-intro">
-            <h2
-              style={{
-                fontFamily: "var(--font-display, var(--font-heading, sans-serif))",
-                fontWeight: 900,
-                fontSize: "clamp(1.95rem, 3.8vw, 3.6rem)",
-                textTransform: "uppercase" as const,
-                color: "var(--color-heading)",
-                letterSpacing: "-0.02em",
-                lineHeight: 0.95,
-                fontStyle: "normal",
-              }}
-            >
+            <h2 className="text-h2 uppercase">
               From signal to shipped software.
             </h2>
-            <p
-              style={{
-                marginTop: "1.5rem",
-                color: "var(--color-text-muted)",
-                fontSize: "0.95rem",
-                lineHeight: 1.75,
-                maxWidth: "30rem",
-              }}
-            >
+            <p className="text-body text-prose mt-6 text-[var(--color-text-muted)]">
               A lean delivery rhythm that keeps strategy, design, engineering, and release quality moving together.
             </p>
           </div>
@@ -149,7 +143,7 @@ export default function ProcessSection() {
               }}
             />
 
-            <div style={{ display: "grid", gap: "1rem" }}>
+            <div style={{ display: "grid", gap: "var(--space-card-gap)" }}>
               {steps.map((step) => (
                 <article
                   key={step.num}
@@ -189,28 +183,14 @@ export default function ProcessSection() {
                       padding: "1.5rem",
                     }}
                   >
-                    <h3
-                      style={{
-                        fontFamily: "var(--font-display, var(--font-heading, sans-serif))",
-                        fontWeight: 900,
-                        fontSize: "clamp(1.15rem, 1.55vw, 1.45rem)",
-                        textTransform: "uppercase" as const,
-                        color: "var(--color-heading)",
-                        letterSpacing: "-0.01em",
-                        lineHeight: 1,
-                        fontStyle: "normal",
-                      }}
-                    >
+                    <h3 className="text-h4 uppercase">
                       {step.title}
                     </h3>
-                    <p
-                      style={{
-                        marginTop: "0.9rem",
-                        color: "var(--color-text-muted)",
-                        fontSize: "0.875rem",
-                        lineHeight: 1.7,
-                      }}
-                    >
+                    {/* Step Illustration */}
+                    <div style={{ margin: "0.9rem 0", opacity: 0.85 }}>
+                      <step.Illustration primaryColor={BRAND_CYAN} height="120px" />
+                    </div>
+                    <p className="text-body text-prose mt-2 text-[var(--color-text-muted)]">
                       {step.desc}
                     </p>
                   </div>

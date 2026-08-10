@@ -5,9 +5,9 @@ type HeadingLevel = "h1" | "h2" | "h3";
 type HeadingSize = "hero" | "section" | "card";
 
 const sizes: Record<HeadingSize, string> = {
-  hero: "text-[clamp(2.4rem,6.5vw,6.2rem)] font-bold leading-[0.9] tracking-[-0.035em]",
-  section: "section-title",
-  card: "text-xl font-semibold leading-tight tracking-[-0.015em] md:text-2xl",
+  hero: "text-h1 uppercase",
+  section: "text-h2 uppercase",
+  card: "text-h3",
 };
 
 function SplitWords({ text }: { text: string }) {

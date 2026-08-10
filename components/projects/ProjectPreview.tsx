@@ -1,4 +1,5 @@
 import Image from "next/image";
+import BrowserFrameMockup from "@/components/ui/BrowserFrameMockup";
 
 type ProjectPreviewProps = {
   href: string;
@@ -34,13 +35,7 @@ export default function ProjectPreview({
             />
           </div>
         ) : (
-          <iframe
-            src={href}
-            title="Project preview"
-            loading="lazy"
-            className="h-[360px] w-full"
-            referrerPolicy="no-referrer"
-          />
+          <BrowserFrameMockup projectName={staticPreviewAlt || "Project"} className="h-[360px] w-full" />
         )}
       </div>
     </div>
