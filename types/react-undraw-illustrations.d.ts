@@ -52,3 +52,17 @@ declare module "react-undraw-illustrations/lib/components/UndrawData" {
   export default FC<UndrawProps>;
 }
 
+declare module "react-undraw-illustrations/lib/components/UndrawBrainstorming" {
+  import { FC } from "react";
+  interface UndrawProps { primaryColor?: string; height?: string; style?: import("react").CSSProperties; }
+  export const UndrawBrainstorming: FC<UndrawProps>;
+  export default FC<UndrawProps>;
+}
+
+declare module "react-undraw-illustrations/lib/components/UndrawWireframing" {
+  import { FC } from "react";
+  interface UndrawProps { primaryColor?: string; height?: string; style?: import("react").CSSProperties; }
+  export const UndrawWireframing: FC<UndrawProps>;
+  export default FC<UndrawProps>;
+}
+
