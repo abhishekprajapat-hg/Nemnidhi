@@ -4,6 +4,7 @@ declare module "react-undraw-illustrations" {
   interface UndrawProps {
     primaryColor?: string;
     height?: string;
+    style?: React.CSSProperties;
     class?: string;
   }
 
@@ -21,3 +22,33 @@ declare module "react-undraw-illustrations" {
   const _default: { [key: string]: FC<UndrawProps> };
   export default _default;
 }
+
+// Deep-path imports for tree-shaken usage in ServicesTimeline
+declare module "react-undraw-illustrations/lib/components/UndrawDashboard" {
+  import { FC } from "react";
+  interface UndrawProps { primaryColor?: string; height?: string; style?: import("react").CSSProperties; }
+  export const UndrawDashboard: FC<UndrawProps>;
+  export default FC<UndrawProps>;
+}
+
+declare module "react-undraw-illustrations/lib/components/UndrawDevices" {
+  import { FC } from "react";
+  interface UndrawProps { primaryColor?: string; height?: string; style?: import("react").CSSProperties; }
+  export const UndrawDevices: FC<UndrawProps>;
+  export default FC<UndrawProps>;
+}
+
+declare module "react-undraw-illustrations/lib/components/UndrawServer" {
+  import { FC } from "react";
+  interface UndrawProps { primaryColor?: string; height?: string; style?: import("react").CSSProperties; }
+  export const UndrawServer: FC<UndrawProps>;
+  export default FC<UndrawProps>;
+}
+
+declare module "react-undraw-illustrations/lib/components/UndrawData" {
+  import { FC } from "react";
+  interface UndrawProps { primaryColor?: string; height?: string; style?: import("react").CSSProperties; }
+  export const UndrawData: FC<UndrawProps>;
+  export default FC<UndrawProps>;
+}
+

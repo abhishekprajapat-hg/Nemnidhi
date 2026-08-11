@@ -1,8 +1,42 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, lazy, Suspense } from "react";
+import type { FC, CSSProperties } from "react";
+import Link from "next/link";
 import Container from "@/components/layout/Container";
 import { useSectionLabel, useTimelineGrow } from "@/lib/useGsapAnimations";
+
+interface UndrawProps {
+  primaryColor?: string;
+  height?: string;
+  style?: CSSProperties;
+}
+
+// ─── Lazy-load illustrations (tree-shaken, below-the-fold safe) ───
+const UndrawDashboard = lazy(() =>
+  import("react-undraw-illustrations/lib/components/UndrawDashboard").then(
+    (m) => ({ default: (m.UndrawDashboard ?? m.default) as FC<UndrawProps> })
+  )
+);
+const UndrawDevices = lazy(() =>
+  import("react-undraw-illustrations/lib/components/UndrawDevices").then(
+    (m) => ({ default: (m.UndrawDevices ?? m.default) as FC<UndrawProps> })
+  )
+);
+const UndrawServer = lazy(() =>
+  import("react-undraw-illustrations/lib/components/UndrawServer").then(
+    (m) => ({ default: (m.UndrawServer ?? m.default) as FC<UndrawProps> })
+  )
+);
+const UndrawData = lazy(() =>
+  import("react-undraw-illustrations/lib/components/UndrawData").then(
+    (m) => ({ default: (m.UndrawData ?? m.default) as FC<UndrawProps> })
+  )
+);
+
+const BRAND_CYAN = "#67e8f9";
+
+type MiniFaq = { q: string; a: string };
 
 type Service = {
   num: string;
@@ -10,6 +44,13 @@ type Service = {
   desc: string;
   tags: string[];
   details: string[];
+  // Enhanced fields (only on first 4 services)
+  industries?: string[];        // PLACEHOLDER — confirm accuracy
+  timeline?: string;            // PLACEHOLDER — needs real estimate from team
+  deliverables?: string[];
+  pricing?: string;             // PLACEHOLDER — needs real business decision on pricing model
+  miniFaq?: MiniFaq[];
+  illustrationKey?: "dashboard" | "devices" | "server" | "data";
 };
 
 type ServicesTimelineProps = {
@@ -28,6 +69,48 @@ const S = {
   heading: "var(--font-display, var(--font-heading, sans-serif))",
 };
 
+// ─── Illustration dispatcher ───
+function ServiceIllustration({ illustrationKey }: { illustrationKey: Service["illustrationKey"] }) {
+  if (!illustrationKey) return null;
+
+  const sharedProps = {
+    primaryColor: BRAND_CYAN,
+    style: { width: "100%", height: "auto", maxWidth: 220 },
+  };
+
+  return (
+    <Suspense fallback={<div style={{ width: 220, height: 180 }} />}>
+      {illustrationKey === "dashboard" && <UndrawDashboard {...sharedProps} />}
+      {illustrationKey === "devices" && <UndrawDevices {...sharedProps} />}
+      {illustrationKey === "server" && <UndrawServer {...sharedProps} />}
+      {illustrationKey === "data" && <UndrawData {...sharedProps} />}
+    </Suspense>
+  );
+}
+
+// ─── Mini-accordion for per-service FAQs ───
+function ServiceFaq({ faqs }: { faqs: MiniFaq[] }) {
+  return (
+    <div style={{ marginTop: "1.5rem", borderTop: `1px solid ${S.line}`, paddingTop: "1.25rem" }}>
+      <p style={{ fontFamily: S.mono, fontSize: "0.62rem", fontWeight: 700, color: S.accent, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.75rem" }}>
+        FAQ
+      </p>
+      <div style={{ display: "grid", gap: "0.9rem" }}>
+        {faqs.map((faq, i) => (
+          <div key={i}>
+            <p style={{ fontFamily: S.mono, fontSize: "0.72rem", fontWeight: 600, color: S.white, marginBottom: "0.3rem", letterSpacing: "0.01em" }}>
+              {faq.q}
+            </p>
+            <p style={{ fontSize: "0.88rem", lineHeight: 1.7, color: S.muted }}>
+              {faq.a}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function ServicesTimeline({ services }: ServicesTimelineProps) {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -38,9 +121,7 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
     <section
       ref={sectionRef}
       className="section-padding"
-      style={{
-        borderTop: `1px solid ${S.line}`,
-      }}
+      style={{ borderTop: `1px solid ${S.line}` }}
     >
       <Container size="wide">
         <div
@@ -75,6 +156,7 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
           </div>
 
           <div style={{ position: "relative" }}>
+            {/* Timeline track */}
             <div
               aria-hidden="true"
               style={{
@@ -113,6 +195,7 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
                     minHeight: "13rem",
                   }}
                 >
+                  {/* Step dot */}
                   <span
                     style={{
                       position: "relative",
@@ -132,6 +215,7 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
                     {svc.num}
                   </span>
 
+                  {/* Card */}
                   <div
                     className="service-page-card magic-bento-card"
                     style={{
@@ -140,19 +224,22 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
                       padding: "clamp(1.35rem, 3vw, 2.5rem)",
                     }}
                   >
-                    <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", alignItems: "flex-start", marginBottom: "1rem" }}>
-                      <h3 className="text-h4 uppercase m-0">
-                        {svc.title}
-                      </h3>
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ color: S.faint, flex: "0 0 auto", marginTop: "0.2rem" }}>
-                        <path d="M2 12L12 2M12 2H4M12 2V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
+                    {/* Header row — title + illustration */}
+                    <div style={{ display: "flex", justifyContent: "space-between", gap: "1.5rem", alignItems: "flex-start", marginBottom: "1rem" }}>
+                      <div style={{ flex: 1 }}>
+                        <h3 className="text-h4 uppercase m-0">{svc.title}</h3>
+                        <p className="text-body text-prose mt-2 mb-0 text-[var(--color-text-muted)]">
+                          {svc.desc}
+                        </p>
+                      </div>
+                      {svc.illustrationKey && (
+                        <div style={{ flexShrink: 0, width: 200, display: "flex", alignItems: "center", justifyContent: "flex-end" }} className="svc-illustration-col">
+                          <ServiceIllustration illustrationKey={svc.illustrationKey} />
+                        </div>
+                      )}
                     </div>
 
-                    <p className="text-body text-prose mt-2 mb-6 text-[var(--color-text-muted)]">
-                      {svc.desc}
-                    </p>
-
+                    {/* What we deliver */}
                     <ul style={{ marginBottom: "1.5rem", display: "grid", gap: "0.5rem" }}>
                       {svc.details.map((detail) => (
                         <li key={detail} style={{ display: "flex", alignItems: "center", gap: "0.75rem", fontFamily: S.mono, fontSize: "0.7rem", color: S.muted, letterSpacing: "0.02em" }}>
@@ -162,13 +249,95 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
                       ))}
                     </ul>
 
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+                    {/* Tags */}
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: svc.industries ? "1.5rem" : 0 }}>
                       {svc.tags.map((tag) => (
                         <span key={tag} style={{ padding: "0.3rem 0.7rem", border: "1px solid rgba(255,255,255,0.1)", fontFamily: S.mono, fontSize: "0.62rem", color: "#94a3b8" }}>
                           {tag}
                         </span>
                       ))}
                     </div>
+
+                    {/* ── Enhanced content (first 4 services only) ── */}
+                    {svc.industries && (
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.25rem", borderTop: `1px solid ${S.line}`, paddingTop: "1.25rem" }} className="svc-meta-grid">
+
+                        {/* Industries */}
+                        <div>
+                          <p style={{ fontFamily: S.mono, fontSize: "0.62rem", fontWeight: 700, color: S.accent, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.6rem" }}>
+                            Industries {/* PLACEHOLDER — confirm accuracy */}
+                          </p>
+                          <ul style={{ display: "grid", gap: "0.35rem" }}>
+                            {svc.industries.map((ind) => (
+                              <li key={ind} style={{ display: "flex", alignItems: "center", gap: "0.6rem", fontSize: "0.83rem", color: S.muted }}>
+                                <span style={{ width: 3, height: 3, borderRadius: "50%", background: S.faint, flexShrink: 0, display: "inline-block" }} />
+                                {ind}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        {/* Timeline + Deliverables */}
+                        <div>
+                          {svc.timeline && (
+                            <div style={{ marginBottom: "1rem" }}>
+                              <p style={{ fontFamily: S.mono, fontSize: "0.62rem", fontWeight: 700, color: S.accent, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.35rem" }}>
+                                Timeline {/* PLACEHOLDER — needs real estimate from team */}
+                              </p>
+                              <p style={{ fontSize: "0.83rem", color: S.muted, lineHeight: 1.5 }}>{svc.timeline}</p>
+                            </div>
+                          )}
+                          {svc.pricing && (
+                            <div>
+                              <p style={{ fontFamily: S.mono, fontSize: "0.62rem", fontWeight: 700, color: S.accent, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.35rem" }}>
+                                Pricing {/* PLACEHOLDER — needs real business decision on pricing model */}
+                              </p>
+                              <p style={{ fontSize: "0.83rem", color: S.muted, lineHeight: 1.5 }}>{svc.pricing}</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Deliverables */}
+                    {svc.deliverables && (
+                      <div style={{ borderTop: `1px solid ${S.line}`, paddingTop: "1.25rem", marginTop: "1.25rem" }}>
+                        <p style={{ fontFamily: S.mono, fontSize: "0.62rem", fontWeight: 700, color: S.accent, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.6rem" }}>
+                          Deliverables
+                        </p>
+                        <ul style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+                          {svc.deliverables.map((d) => (
+                            <li key={d} style={{ padding: "0.3rem 0.75rem", border: `1px solid ${S.line}`, fontFamily: S.mono, fontSize: "0.62rem", color: S.muted }}>
+                              {d}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Mini FAQ */}
+                    {svc.miniFaq && <ServiceFaq faqs={svc.miniFaq} />}
+
+                    {/* Related links */}
+                    {svc.industries && (
+                      <div style={{ display: "flex", gap: "1.25rem", alignItems: "center", marginTop: "1.5rem", borderTop: `1px solid ${S.line}`, paddingTop: "1.25rem" }}>
+                        <p style={{ fontFamily: S.mono, fontSize: "0.62rem", color: S.faint, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                          Related:
+                        </p>
+                        <Link
+                          href="/work"
+                          style={{ fontFamily: S.mono, fontSize: "0.65rem", color: S.accent, letterSpacing: "0.06em", textDecoration: "none", borderBottom: `1px solid rgba(103,232,249,0.3)`, paddingBottom: "0.1rem" }}
+                        >
+                          View Our Work →
+                        </Link>
+                        <Link
+                          href="/contact"
+                          style={{ fontFamily: S.mono, fontSize: "0.65rem", color: S.muted, letterSpacing: "0.06em", textDecoration: "none", borderBottom: `1px solid rgba(255,255,255,0.12)`, paddingBottom: "0.1rem" }}
+                        >
+                          Start a Project →
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 </article>
               ))}
@@ -187,6 +356,15 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
           }
         }
 
+        @media (max-width: 640px) {
+          .svc-illustration-col {
+            display: none !important;
+          }
+          .svc-meta-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+
         @media (max-width: 560px) {
           .services-timeline-layout article {
             grid-template-columns: 1.9rem 1fr !important;
@@ -196,6 +374,10 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
             width: 1.9rem !important;
             height: 1.9rem !important;
           }
+        }
+
+        [data-theme="light"] .service-page-card {
+          background: var(--color-bg-elevated) !important;
         }
       `}</style>
     </section>

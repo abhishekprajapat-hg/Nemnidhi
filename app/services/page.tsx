@@ -17,7 +17,6 @@ const S = {
   heading: "var(--font-display, var(--font-heading, sans-serif))",
 };
 
-// ─── section label component (inline helper) ───
 const services = [
   {
     num: "01",
@@ -31,6 +30,29 @@ const services = [
       "API design & backend systems",
       "Database architecture & optimization",
     ],
+    // PLACEHOLDER — confirm accuracy
+    industries: ["SaaS & Startups", "E-commerce", "FinTech", "Real Estate"],
+    // PLACEHOLDER — needs real estimate from team
+    timeline: "6–14 weeks depending on scope and feature complexity",
+    deliverables: [
+      "Full source code (Git repo)",
+      "Technical documentation",
+      "Production deployment",
+      "30-day post-launch support",
+    ],
+    // PLACEHOLDER — needs real business decision on pricing model
+    pricing: "Scoped per project — fixed price agreed after discovery",
+    miniFaq: [
+      {
+        q: "Can you take over an existing codebase?",
+        a: "Yes, we audit and extend existing systems. We'll assess what's there before committing to timelines.",
+      },
+      {
+        q: "Do you build with our in-house team or independently?",
+        a: "Both. We work as the full team or alongside yours — whichever fits your structure.",
+      },
+    ],
+    illustrationKey: "dashboard" as const,
   },
   {
     num: "02",
@@ -44,6 +66,29 @@ const services = [
       "Push notifications & real-time features",
       "Offline-first architecture",
     ],
+    // PLACEHOLDER — confirm accuracy
+    industries: ["HealthTech", "Real Estate", "Retail", "EdTech"],
+    // PLACEHOLDER — needs real estimate from team
+    timeline: "8–16 weeks depending on platform and feature scope",
+    deliverables: [
+      "Full source code (Git repo)",
+      "App Store & Play Store submission",
+      "API documentation",
+      "30-day post-launch support",
+    ],
+    // PLACEHOLDER — needs real business decision on pricing model
+    pricing: "Scoped per project — fixed price agreed after discovery",
+    miniFaq: [
+      {
+        q: "Do you build for both iOS and Android?",
+        a: "Yes. We use React Native for cross-platform or go native when platform-specific performance demands it.",
+      },
+      {
+        q: "Can you publish the app to our existing developer account?",
+        a: "Yes, we handle the full submission to your accounts on both stores.",
+      },
+    ],
+    illustrationKey: "devices" as const,
   },
   {
     num: "03",
@@ -57,6 +102,30 @@ const services = [
       "Infrastructure as Code",
       "Monitoring & alerting systems",
     ],
+    // PLACEHOLDER — confirm accuracy
+    industries: ["SaaS", "FinTech", "Healthcare", "Media & Streaming"],
+    // PLACEHOLDER — needs real estimate from team
+    timeline: "4–10 weeks depending on existing infrastructure complexity",
+    deliverables: [
+      "Infrastructure-as-Code files",
+      "CI/CD pipeline",
+      "Monitoring dashboards",
+      "Runbooks & documentation",
+      "30-day post-launch support",
+    ],
+    // PLACEHOLDER — needs real business decision on pricing model
+    pricing: "Scoped per project or retainer — agreed after discovery",
+    miniFaq: [
+      {
+        q: "Do you manage cloud costs as part of the engagement?",
+        a: "We architect with cost-efficiency in mind and document all resource usage. Ongoing management is available as a retainer.",
+      },
+      {
+        q: "Which cloud providers do you work with?",
+        a: "Primarily AWS, with GCP and Azure support depending on your stack.",
+      },
+    ],
+    illustrationKey: "server" as const,
   },
   {
     num: "04",
@@ -70,6 +139,29 @@ const services = [
       "Document intelligence pipelines",
       "Model fine-tuning & evaluation",
     ],
+    // PLACEHOLDER — confirm accuracy
+    industries: ["Legal Tech", "Healthcare", "E-commerce", "Business Operations"],
+    // PLACEHOLDER — needs real estimate from team
+    timeline: "6–12 weeks depending on model complexity and data availability",
+    deliverables: [
+      "Integration layer / API endpoints",
+      "Model evaluation reports",
+      "Deployment & handoff",
+      "30-day post-launch support",
+    ],
+    // PLACEHOLDER — needs real business decision on pricing model
+    pricing: "Scoped per project — fixed price agreed after discovery",
+    miniFaq: [
+      {
+        q: "Do we need to provide training data?",
+        a: "Depends on the use case. For RAG and LLM integration, your existing documents often suffice. For fine-tuning, we'll advise on data requirements upfront.",
+      },
+      {
+        q: "Can AI be added to our existing product?",
+        a: "Yes. Most of our AI work is embedded into existing products via API layers — we don't require a full rebuild.",
+      },
+    ],
+    illustrationKey: "data" as const,
   },
   {
     num: "05",
@@ -98,6 +190,7 @@ const services = [
     ],
   },
 ];
+
 
 export const metadata = {
   title: "Services",
