@@ -33,6 +33,16 @@ const UndrawData = lazy(() =>
     (m) => ({ default: (m.UndrawData ?? m.default) as FC<UndrawProps> })
   )
 );
+const UndrawBrainstorming = lazy(() =>
+  import("react-undraw-illustrations/lib/components/UndrawBrainstorming").then(
+    (m) => ({ default: (m.UndrawBrainstorming ?? m.default) as FC<UndrawProps> })
+  )
+);
+const UndrawWireframing = lazy(() =>
+  import("react-undraw-illustrations/lib/components/UndrawWireframing").then(
+    (m) => ({ default: (m.UndrawWireframing ?? m.default) as FC<UndrawProps> })
+  )
+);
 
 const BRAND_CYAN = "#67e8f9";
 
@@ -40,6 +50,7 @@ type MiniFaq = { q: string; a: string };
 
 type Service = {
   num: string;
+  slug?: string;
   title: string;
   desc: string;
   tags: string[];
@@ -50,7 +61,7 @@ type Service = {
   deliverables?: string[];
   pricing?: string;             // PLACEHOLDER — needs real business decision on pricing model
   miniFaq?: MiniFaq[];
-  illustrationKey?: "dashboard" | "devices" | "server" | "data";
+  illustrationKey?: "dashboard" | "devices" | "server" | "data" | "brainstorming" | "wireframing";
 };
 
 type ServicesTimelineProps = {
@@ -84,6 +95,8 @@ function ServiceIllustration({ illustrationKey }: { illustrationKey: Service["il
       {illustrationKey === "devices" && <UndrawDevices {...sharedProps} />}
       {illustrationKey === "server" && <UndrawServer {...sharedProps} />}
       {illustrationKey === "data" && <UndrawData {...sharedProps} />}
+      {illustrationKey === "brainstorming" && <UndrawBrainstorming {...sharedProps} />}
+      {illustrationKey === "wireframing" && <UndrawWireframing {...sharedProps} />}
     </Suspense>
   );
 }
@@ -320,10 +333,18 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
 
                     {/* Related links */}
                     {svc.industries && (
-                      <div style={{ display: "flex", gap: "1.25rem", alignItems: "center", marginTop: "1.5rem", borderTop: `1px solid ${S.line}`, paddingTop: "1.25rem" }}>
+                      <div style={{ display: "flex", gap: "1.25rem", alignItems: "center", marginTop: "1.5rem", borderTop: `1px solid ${S.line}`, paddingTop: "1.25rem", flexWrap: "wrap" }}>
                         <p style={{ fontFamily: S.mono, fontSize: "0.62rem", color: S.faint, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                           Related:
                         </p>
+                        {svc.slug && (
+                          <Link
+                            href={`/services/${svc.slug}`}
+                            style={{ fontFamily: S.mono, fontSize: "0.65rem", color: S.accent, letterSpacing: "0.06em", textDecoration: "none", borderBottom: `1px solid rgba(103,232,249,0.3)`, paddingBottom: "0.1rem" }}
+                          >
+                            Learn More →
+                          </Link>
+                        )}
                         <Link
                           href="/work"
                           style={{ fontFamily: S.mono, fontSize: "0.65rem", color: S.accent, letterSpacing: "0.06em", textDecoration: "none", borderBottom: `1px solid rgba(103,232,249,0.3)`, paddingBottom: "0.1rem" }}
