@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import Script from "next/script";
 import "./globals.css";
 import { Bona_Nova_SC, Barlow_Condensed, JetBrains_Mono } from "next/font/google";
 import SiteShell from "@/components/layout/SiteShell";
 
 const siteUrl = "https://www.nemnidhi.com";
+const GA_MEASUREMENT_ID = "G-BGTNZFVV31";
 
 const bonaNovaSc = Bona_Nova_SC({
   subsets: ["latin"],
@@ -127,6 +129,18 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
         <SiteShell>{children}</SiteShell>
       </body>
     </html>
