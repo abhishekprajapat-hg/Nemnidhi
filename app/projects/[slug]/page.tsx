@@ -6,7 +6,7 @@ import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
 import HeroLightfall from "@/components/services/HeroLightfall";
 import { projects, getProjectBySlug } from "@/lib/data/projects";
 
-const siteUrl = "https://nemnidhi.com";
+const siteUrl = "https://www.nemnidhi.com";
 
 const S = {
   bg: "var(--color-bg)",

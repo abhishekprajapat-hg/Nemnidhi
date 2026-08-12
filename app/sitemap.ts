@@ -4,7 +4,7 @@ import { Blog, IBlog } from "@/models/Blog";
 import { services } from "@/lib/data/services";
 import { projects } from "@/lib/data/projects";
 
-const baseUrl = "https://nemnidhi.com";
+const baseUrl = "https://www.nemnidhi.com";
 
 const routes = ["", "/about", "/services", "/solutions", "/projects", "/blogs", "/contact", "/privacy", "/terms"];
 const highPriorityRoutes = ["/locations/indore"];

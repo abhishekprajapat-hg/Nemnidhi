@@ -4,7 +4,7 @@ import "./globals.css";
 import { Bona_Nova_SC, Barlow_Condensed, JetBrains_Mono } from "next/font/google";
 import SiteShell from "@/components/layout/SiteShell";
 
-const siteUrl = "https://nemnidhi.com";
+const siteUrl = "https://www.nemnidhi.com";
 
 const bonaNovaSc = Bona_Nova_SC({
   subsets: ["latin"],
