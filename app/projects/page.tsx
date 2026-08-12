@@ -2,6 +2,7 @@ import Link from "next/link";
 import Container from "@/components/layout/Container";
 import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
 import HeroLightfall from "@/components/services/HeroLightfall";
+import { projects } from "@/lib/data/projects";
 
 const S = {
   bg: "var(--color-bg)",
@@ -14,89 +15,6 @@ const S = {
   mono: "var(--font-mono, monospace)",
   heading: "var(--font-display, var(--font-heading, sans-serif))",
 };
-
-const projects = [
-  {
-    id: "01",
-    title: "NEMNIDHI.COM",
-    tags: ["Marketing", "SaaS"],
-    year: "2024",
-    href: "https://www.nemnidhi.com",
-    domain: "www.nemnidhi.com",
-    desc: "Primary marketing site built for clarity-led positioning, conversion-ready user flow, and premium brand communication.",
-    highlights: [
-      "Conversion-first architecture",
-      "Premium brand positioning",
-      "CMS-backed service pages",
-      "Sub-1s page loads",
-    ],
-    stack: ["Next.js", "Node.js", "MongoDB", "Vercel"],
-  },
-  {
-    id: "02",
-    title: "SAMVID-OS",
-    tags: ["Cloud", "SaaS"],
-    year: "2024",
-    href: "https://nemnidhi.cloud",
-    domain: "nemnidhi.cloud",
-    desc: "Cloud-native operating system for internal platform delivery — secure workspace, infrastructure orchestration, and team collaboration.",
-    highlights: [
-      "Multi-tenant architecture",
-      "Role-based access control",
-      "Secure cloud workspace",
-      "Infrastructure-backed delivery",
-    ],
-    stack: ["React", "Node.js", "PostgreSQL", "Docker", "AWS"],
-  },
-  {
-    id: "03",
-    title: "NEMNIDHI GLAM",
-    tags: ["E-Commerce", "Fashion"],
-    year: "2024",
-    href: "https://glam.nemnidhi.com",
-    domain: "glam.nemnidhi.com",
-    desc: "Modern ethnic atelier — e-commerce platform for handloom & artisan fashion with campaign-focused growth execution and catalog management.",
-    highlights: [
-      "Full e-commerce catalog",
-      "Handloom & artisan focus",
-      "Campaign growth engine",
-      "Mobile-first experience",
-    ],
-    stack: ["Next.js", "Shopify API", "Stripe", "Cloudinary"],
-  },
-  {
-    id: "04",
-    title: "FINEDGE ACADEMY",
-    tags: ["Fintech", "EdTech"],
-    year: "2023",
-    href: "https://finedge.nemnidhi.com",
-    domain: "finedge.nemnidhi.com",
-    desc: "Financial services education platform — structured finance courses, risk profiling tools, and high-intent lead capture for wealth advisory.",
-    highlights: [
-      "Structured finance curriculum",
-      "Risk profiling module",
-      "High-intent lead capture",
-      "Trust-first UX design",
-    ],
-    stack: ["Next.js", "Node.js", "MongoDB", "Razorpay"],
-  },
-  {
-    id: "05",
-    title: "PUNYANIDHI",
-    tags: ["NGO", "Community"],
-    year: "2023",
-    href: "https://nemnidhi.tech",
-    domain: "nemnidhi.tech",
-    desc: "Shri Jain Shwetambar Mandir — digital home for darshan, seva, transparent giving, upcoming observances, library access, and community life.",
-    highlights: [
-      "Digital darshan portal",
-      "Transparent donation system",
-      "Community event calendar",
-      "Sacred library access",
-    ],
-    stack: ["Next.js", "MongoDB", "Node.js", "Razorpay"],
-  },
-];
 
 export const metadata = {
   title: "Work",
@@ -196,9 +114,16 @@ export default function ProjectsPage() {
                     </div>
                   </div>
 
-                  {/* Year + Open link */}
+                  {/* Year + Case study + Open link */}
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.75rem", paddingTop: "0.35rem", flexShrink: 0 }}>
                     <span style={{ fontFamily: S.mono, fontSize: "0.7rem", color: S.muted }}>{project.year}</span>
+                    <Link
+                      href={`/projects/${project.slug}`}
+                      className="project-open-link"
+                      style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", fontFamily: S.mono, fontSize: "0.62rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: S.white, textDecoration: "none", border: `1px solid ${S.line}`, padding: "0.4rem 0.75rem", transition: "border-color 0.2s, background 0.2s" }}
+                    >
+                      CASE STUDY →
+                    </Link>
                     <a
                       href={project.href}
                       target="_blank"

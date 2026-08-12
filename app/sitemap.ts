@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { dbConnect } from "@/lib/mongodb";
 import { Blog, IBlog } from "@/models/Blog";
 import { services } from "@/lib/data/services";
+import { projects } from "@/lib/data/projects";
 
 const baseUrl = "https://nemnidhi.com";
 
@@ -32,6 +33,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
+  const projectEntries: MetadataRoute.Sitemap = projects.map((project) => ({
+    url: `${baseUrl}/projects/${project.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
   let blogEntries: MetadataRoute.Sitemap = [];
   try {
     await dbConnect();
@@ -46,5 +54,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error("Failed to fetch blogs for sitemap:", error);
   }
 
-  return [...staticEntries, ...highPriorityEntries, ...serviceEntries, ...blogEntries];
+  return [...staticEntries, ...highPriorityEntries, ...serviceEntries, ...projectEntries, ...blogEntries];
 }
