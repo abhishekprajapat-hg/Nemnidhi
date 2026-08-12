@@ -120,6 +120,22 @@ export function Footer() {
             >
               Software Development Studio — Indore, India
             </Link>
+
+            <div className="footer-contact-block">
+              <a href="mailto:info@nemnidhi.com" className="footer-contact-line">
+                info@nemnidhi.com
+              </a>
+              <a href="tel:+917000445463" className="footer-contact-line">
+                7000445463
+              </a>
+              <p className="footer-contact-line footer-contact-static">
+                B20 - 5th Floor, Gravity Mall, Mechanic Nagar, Indore
+              </p>
+              <p className="footer-contact-line footer-contact-static">
+                GSTIN: 23CGZPB7175E1Z5
+              </p>
+            </div>
+
             <p className="footer-copyright">
               © {year} Nemnidhi
             </p>
