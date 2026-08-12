@@ -44,6 +44,38 @@ const socials = [
   },
 ];
 
+const footerLinkColumns = [
+  {
+    heading: "Services",
+    links: [
+      { label: "All Services", href: "/services" },
+      { label: "Web Engineering", href: "/services/web-engineering" },
+      { label: "Mobile Development", href: "/services/mobile-development" },
+      { label: "Cloud & DevOps", href: "/services/cloud-devops" },
+      { label: "AI Integration", href: "/services/ai-integration" },
+      { label: "Product Strategy", href: "/services/product-strategy" },
+      { label: "UI/UX Design", href: "/services/ui-ux-design" },
+    ],
+  },
+  {
+    heading: "Company",
+    links: [
+      { label: "About", href: "/about" },
+      { label: "Work", href: "/projects" },
+      { label: "Blogs", href: "/blogs" },
+      { label: "Contact", href: "/contact" },
+      { label: "Indore Office", href: "/locations/indore" },
+    ],
+  },
+  {
+    heading: "Legal",
+    links: [
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms of Service", href: "/terms" },
+    ],
+  },
+];
+
 export function Footer() {
   const year = new Date().getFullYear();
 
@@ -91,6 +123,20 @@ export function Footer() {
             <p className="footer-copyright">
               © {year} Nemnidhi
             </p>
+          </div>
+
+          {/* Middle: Link Columns */}
+          <div className="footer-links-group">
+            {footerLinkColumns.map((col) => (
+              <div key={col.heading} className="footer-links-column">
+                <p className="footer-links-heading">{col.heading}</p>
+                {col.links.map((link) => (
+                  <Link key={link.href} href={link.href} className="footer-link">
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            ))}
           </div>
 
           {/* Right: Social Icons */}
