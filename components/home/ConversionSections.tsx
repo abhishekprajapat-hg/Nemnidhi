@@ -299,8 +299,8 @@ export function FinalCTASection() {
             </p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row lg:flex-col">
               <CTA href="/contact">Start a briefing</CTA>
-              <a href="tel:+917000455463" className="inline-flex items-center justify-center rounded-[var(--radius-sm)] border px-5 py-3 text-sm font-bold transition-colors" style={{ border: "1px solid var(--color-line)", background: "var(--color-bg-card)", color: "var(--color-heading)" }}>
-                Call +91 70004 55463
+              <a href="tel:+917000445463" className="inline-flex items-center justify-center rounded-[var(--radius-sm)] border px-5 py-3 text-sm font-bold transition-colors" style={{ border: "1px solid var(--color-line)", background: "var(--color-bg-card)", color: "var(--color-heading)" }}>
+                Call +91 70004 45463
               </a>
             </div>
           </div>

@@ -26,7 +26,7 @@ const ADDRESS = {
   country: "IN",
 };
 const FULL_ADDRESS = `${ADDRESS.street}, ${ADDRESS.locality}, ${ADDRESS.region} ${ADDRESS.postalCode}`;
-const PHONE = "+91 70004 55463";
+const PHONE = "+91 70004 45463";
 const EMAIL = "info@nemnidhi.com";
 
 const napItems = [

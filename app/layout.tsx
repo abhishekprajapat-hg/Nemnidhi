@@ -106,7 +106,7 @@ export default function RootLayout({
     url: siteUrl,
     logo: `${siteUrl}/images/logo.png`,
     email: "info@nemnidhi.com",
-    telephone: "+91 70004 55463",
+    telephone: "+91 70004 45463",
     address: {
       "@type": "PostalAddress",
       streetAddress: "B20, 5th Floor Gravity Mall, Mechanic Nagar",
