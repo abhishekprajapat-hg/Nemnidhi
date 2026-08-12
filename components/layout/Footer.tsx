@@ -74,17 +74,20 @@ export function Footer() {
             >
               NEMNIDHI.
             </p>
-            <p
+            <Link
+              href="/locations/indore"
               style={{
+                display: "inline-block",
                 fontFamily: "var(--font-mono, monospace)",
                 fontSize: "0.62rem",
                 letterSpacing: "0.06em",
                 marginTop: "0.25rem",
                 color: "var(--footer-muted, #555)",
+                textDecoration: "none",
               }}
             >
               Software Development Studio — Indore, India
-            </p>
+            </Link>
             <p className="footer-copyright">
               © {year} Nemnidhi
             </p>

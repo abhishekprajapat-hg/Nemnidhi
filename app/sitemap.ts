@@ -6,6 +6,7 @@ import { services } from "@/lib/data/services";
 const baseUrl = "https://nemnidhi.com";
 
 const routes = ["", "/about", "/services", "/solutions", "/projects", "/blogs", "/contact", "/privacy", "/terms"];
+const highPriorityRoutes = ["/locations/indore"];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
@@ -15,6 +16,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: now,
     changeFrequency: route === "" ? "weekly" : "monthly",
     priority: route === "" ? 1 : 0.7,
+  }));
+
+  const highPriorityEntries: MetadataRoute.Sitemap = highPriorityRoutes.map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.8,
   }));
 
   const serviceEntries: MetadataRoute.Sitemap = services.map((service) => ({
@@ -38,5 +46,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error("Failed to fetch blogs for sitemap:", error);
   }
 
-  return [...staticEntries, ...serviceEntries, ...blogEntries];
+  return [...staticEntries, ...highPriorityEntries, ...serviceEntries, ...blogEntries];
 }
