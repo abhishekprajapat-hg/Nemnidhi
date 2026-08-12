@@ -46,8 +46,6 @@ const UndrawWireframing = lazy(() =>
 
 const BRAND_CYAN = "#67e8f9";
 
-type MiniFaq = { q: string; a: string };
-
 type Service = {
   num: string;
   slug?: string;
@@ -55,12 +53,6 @@ type Service = {
   desc: string;
   tags: string[];
   details: string[];
-  // Enhanced fields (only on first 4 services)
-  industries?: string[];        // PLACEHOLDER — confirm accuracy
-  timeline?: string;            // PLACEHOLDER — needs real estimate from team
-  deliverables?: string[];
-  pricing?: string;             // PLACEHOLDER — needs real business decision on pricing model
-  miniFaq?: MiniFaq[];
   illustrationKey?: "dashboard" | "devices" | "server" | "data" | "brainstorming" | "wireframing";
 };
 
@@ -98,29 +90,6 @@ function ServiceIllustration({ illustrationKey }: { illustrationKey: Service["il
       {illustrationKey === "brainstorming" && <UndrawBrainstorming {...sharedProps} />}
       {illustrationKey === "wireframing" && <UndrawWireframing {...sharedProps} />}
     </Suspense>
-  );
-}
-
-// ─── Mini-accordion for per-service FAQs ───
-function ServiceFaq({ faqs }: { faqs: MiniFaq[] }) {
-  return (
-    <div style={{ marginTop: "1.5rem", borderTop: `1px solid ${S.line}`, paddingTop: "1.25rem" }}>
-      <p style={{ fontFamily: S.mono, fontSize: "0.62rem", fontWeight: 700, color: S.accent, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.75rem" }}>
-        FAQ
-      </p>
-      <div style={{ display: "grid", gap: "0.9rem" }}>
-        {faqs.map((faq, i) => (
-          <div key={i}>
-            <p style={{ fontFamily: S.mono, fontSize: "0.72rem", fontWeight: 600, color: S.white, marginBottom: "0.3rem", letterSpacing: "0.01em" }}>
-              {faq.q}
-            </p>
-            <p style={{ fontSize: "0.88rem", lineHeight: 1.7, color: S.muted }}>
-              {faq.a}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
   );
 }
 
@@ -263,7 +232,7 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
                     </ul>
 
                     {/* Tags */}
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: svc.industries ? "1.5rem" : 0 }}>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
                       {svc.tags.map((tag) => (
                         <span key={tag} style={{ padding: "0.3rem 0.7rem", border: "1px solid rgba(255,255,255,0.1)", fontFamily: S.mono, fontSize: "0.62rem", color: "#94a3b8" }}>
                           {tag}
@@ -271,91 +240,14 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
                       ))}
                     </div>
 
-                    {/* ── Enhanced content (first 4 services only) ── */}
-                    {svc.industries && (
-                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.25rem", borderTop: `1px solid ${S.line}`, paddingTop: "1.25rem" }} className="svc-meta-grid">
-
-                        {/* Industries */}
-                        <div>
-                          <p style={{ fontFamily: S.mono, fontSize: "0.62rem", fontWeight: 700, color: S.accent, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.6rem" }}>
-                            Industries {/* PLACEHOLDER — confirm accuracy */}
-                          </p>
-                          <ul style={{ display: "grid", gap: "0.35rem" }}>
-                            {svc.industries.map((ind) => (
-                              <li key={ind} style={{ display: "flex", alignItems: "center", gap: "0.6rem", fontSize: "0.83rem", color: S.muted }}>
-                                <span style={{ width: 3, height: 3, borderRadius: "50%", background: S.faint, flexShrink: 0, display: "inline-block" }} />
-                                {ind}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        {/* Timeline + Deliverables */}
-                        <div>
-                          {svc.timeline && (
-                            <div style={{ marginBottom: "1rem" }}>
-                              <p style={{ fontFamily: S.mono, fontSize: "0.62rem", fontWeight: 700, color: S.accent, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.35rem" }}>
-                                Timeline {/* PLACEHOLDER — needs real estimate from team */}
-                              </p>
-                              <p style={{ fontSize: "0.83rem", color: S.muted, lineHeight: 1.5 }}>{svc.timeline}</p>
-                            </div>
-                          )}
-                          {svc.pricing && (
-                            <div>
-                              <p style={{ fontFamily: S.mono, fontSize: "0.62rem", fontWeight: 700, color: S.accent, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.35rem" }}>
-                                Pricing {/* PLACEHOLDER — needs real business decision on pricing model */}
-                              </p>
-                              <p style={{ fontSize: "0.83rem", color: S.muted, lineHeight: 1.5 }}>{svc.pricing}</p>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Deliverables */}
-                    {svc.deliverables && (
-                      <div style={{ borderTop: `1px solid ${S.line}`, paddingTop: "1.25rem", marginTop: "1.25rem" }}>
-                        <p style={{ fontFamily: S.mono, fontSize: "0.62rem", fontWeight: 700, color: S.accent, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.6rem" }}>
-                          Deliverables
-                        </p>
-                        <ul style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-                          {svc.deliverables.map((d) => (
-                            <li key={d} style={{ padding: "0.3rem 0.75rem", border: `1px solid ${S.line}`, fontFamily: S.mono, fontSize: "0.62rem", color: S.muted }}>
-                              {d}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    {/* Mini FAQ */}
-                    {svc.miniFaq && <ServiceFaq faqs={svc.miniFaq} />}
-
-                    {/* Related links */}
-                    {svc.industries && (
-                      <div style={{ display: "flex", gap: "1.25rem", alignItems: "center", marginTop: "1.5rem", borderTop: `1px solid ${S.line}`, paddingTop: "1.25rem", flexWrap: "wrap" }}>
-                        <p style={{ fontFamily: S.mono, fontSize: "0.62rem", color: S.faint, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-                          Related:
-                        </p>
-                        {svc.slug && (
-                          <Link
-                            href={`/services/${svc.slug}`}
-                            style={{ fontFamily: S.mono, fontSize: "0.65rem", color: S.accent, letterSpacing: "0.06em", textDecoration: "none", borderBottom: `1px solid rgba(103,232,249,0.3)`, paddingBottom: "0.1rem" }}
-                          >
-                            Learn More →
-                          </Link>
-                        )}
+                    {/* Industries, timeline, pricing, deliverables, and FAQ live on the dedicated service page — not duplicated here */}
+                    {svc.slug && (
+                      <div style={{ marginTop: "1.5rem", borderTop: `1px solid ${S.line}`, paddingTop: "1.25rem" }}>
                         <Link
-                          href="/work"
-                          style={{ fontFamily: S.mono, fontSize: "0.65rem", color: S.accent, letterSpacing: "0.06em", textDecoration: "none", borderBottom: `1px solid rgba(103,232,249,0.3)`, paddingBottom: "0.1rem" }}
+                          href={`/services/${svc.slug}`}
+                          style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.75rem 1.5rem", background: S.accent, color: "#080a0c", fontFamily: S.mono, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", textDecoration: "none" }}
                         >
-                          View Our Work →
-                        </Link>
-                        <Link
-                          href="/contact"
-                          style={{ fontFamily: S.mono, fontSize: "0.65rem", color: S.muted, letterSpacing: "0.06em", textDecoration: "none", borderBottom: `1px solid rgba(255,255,255,0.12)`, paddingBottom: "0.1rem" }}
-                        >
-                          Start a Project →
+                          View Full Details →
                         </Link>
                       </div>
                     )}
