@@ -7,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/api"],
     },
-    sitemap: "https://nemnidhi.com/sitemap.xml",
-    host: "https://nemnidhi.com",
+    sitemap: "https://www.nemnidhi.com/sitemap.xml",
+    host: "https://www.nemnidhi.com",
   };
 }

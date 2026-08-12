@@ -4,7 +4,7 @@ import Container from "@/components/layout/Container";
 import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
 import HeroLightfall from "@/components/services/HeroLightfall";
 
-const siteUrl = "https://nemnidhi.com";
+const siteUrl = "https://www.nemnidhi.com";
 
 const S = {
   bg: "var(--color-bg)",
