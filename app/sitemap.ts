@@ -9,6 +9,11 @@ const baseUrl = "https://nemnidhi.com";
 const routes = ["", "/about", "/services", "/solutions", "/projects", "/blogs", "/contact", "/privacy", "/terms"];
 const highPriorityRoutes = ["/locations/indore"];
 
+// Without this, Next.js prerenders sitemap.xml once at build time — new
+// blog posts published via the dashboard (no code deploy) would never
+// show up in the live sitemap until the next deployment.
+export const dynamic = "force-dynamic";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
