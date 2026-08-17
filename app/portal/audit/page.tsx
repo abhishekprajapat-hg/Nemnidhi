@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Container from "@/components/layout/Container";
 import { S, inputStyle, labelStyle, buttonStyle, secondaryButtonStyle, cardStyle, formatInr } from "../portal-styles";
+import { SelectableComponentList, computeSelectedTotal, type SelectableComponent } from "../blueprint-shared";
 
 type Segment = { key: string; label: string; description: string };
 type Industry = { key: string; label: string; segments: Segment[] };
@@ -18,40 +19,12 @@ type Question = {
   options?: QuestionOption[];
 };
 
-type Pillar = "marketing_sales" | "operations" | "documentation_admin" | "service_support";
-
-type PackageComponentLine = {
-  code: string;
-  title: string;
-  rationale: string;
-  packageStatus: "included" | "addon";
-  pillar: Pillar;
-  oneTimePrice: number;
-  monthlyPrice: number;
-};
-
-const PILLAR_ORDER: Pillar[] = ["marketing_sales", "operations", "documentation_admin", "service_support"];
-const PILLAR_LABEL: Record<Pillar, string> = {
-  marketing_sales: "Marketing & Sales",
-  operations: "Operations",
-  documentation_admin: "Documentation & Admin",
-  service_support: "Service & Support",
-};
-
-function groupByPillar(components: PackageComponentLine[]) {
-  return PILLAR_ORDER.map((pillar) => ({
-    pillar,
-    label: PILLAR_LABEL[pillar],
-    items: components.filter((c) => c.pillar === pillar),
-  })).filter((group) => group.items.length > 0);
-}
-
 type EstimateRange = { oneTimeMin: number; oneTimeMax: number; monthlyMin: number; monthlyMax: number; currency: string };
 
 type SubmitResult = {
   leadId: string;
   blueprint: {
-    components: PackageComponentLine[];
+    components: SelectableComponent[];
     estimate: EstimateRange;
     assumptions: string[];
   };
@@ -83,7 +56,7 @@ export default function PortalAuditPage() {
   const [alreadyLinked, setAlreadyLinked] = useState(false);
   const [result, setResult] = useState<SubmitResult | null>(null);
 
-  const [selectedAddonCodes, setSelectedAddonCodes] = useState<Set<string>>(new Set());
+  const [selectedCodes, setSelectedCodes] = useState<Set<string>>(new Set());
   const [finalizing, setFinalizing] = useState(false);
   const [finalizeError, setFinalizeError] = useState<string | null>(null);
   const [finalized, setFinalized] = useState<FinalizeResult | null>(null);
@@ -144,8 +117,8 @@ export default function PortalAuditPage() {
     setAnswers((prev) => ({ ...prev, [code]: [value] }));
   }
 
-  function toggleAddon(code: string) {
-    setSelectedAddonCodes((prev) => {
+  function toggleComponent(code: string) {
+    setSelectedCodes((prev) => {
       const next = new Set(prev);
       if (next.has(code)) next.delete(code);
       else next.add(code);
@@ -181,8 +154,9 @@ export default function PortalAuditPage() {
         }
         throw new Error(data?.error?.message ?? "Failed to submit. Please try again.");
       }
-      setResult(data.data as SubmitResult);
-      setSelectedAddonCodes(new Set());
+      const submitResult = data.data as SubmitResult;
+      setResult(submitResult);
+      setSelectedCodes(new Set(submitResult.blueprint.components.filter((c) => c.packageStatus === "included").map((c) => c.code)));
       setFinalized(null);
       setFinalizeError(null);
       setStep("result");
@@ -201,7 +175,7 @@ export default function PortalAuditPage() {
       const res = await fetch("/api/portal/questionnaire/finalize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ selectedAddonCodes: [...selectedAddonCodes] }),
+        body: JSON.stringify({ selectedComponentCodes: [...selectedCodes] }),
       });
       const data = await res.json();
       if (!data.success) throw new Error(data?.error?.message ?? "Failed to confirm your selection. Please try again.");
@@ -228,23 +202,19 @@ export default function PortalAuditPage() {
     );
   }
 
-  const includedComponents = result?.blueprint.components.filter((c) => c.packageStatus === "included") ?? [];
-  const addonComponents = result?.blueprint.components.filter((c) => c.packageStatus === "addon") ?? [];
-  const includedGroups = groupByPillar(includedComponents);
-  const addonGroups = groupByPillar(addonComponents);
+  const components = result?.blueprint.components ?? [];
 
   let liveEstimate: EstimateRange | null = null;
   if (result) {
-    const baseline = result.blueprint.estimate;
-    const selectedAddons = addonComponents.filter((c) => selectedAddonCodes.has(c.code));
-    const addonOneTime = selectedAddons.reduce((sum, c) => sum + c.oneTimePrice, 0);
-    const addonMonthly = selectedAddons.reduce((sum, c) => sum + c.monthlyPrice, 0);
+    const total = computeSelectedTotal(components, selectedCodes);
+    // A live, unrounded preview from a flat sum - the real range (with the
+    // "informed" confidence spread) comes back from finalize once confirmed.
     liveEstimate = {
-      oneTimeMin: baseline.oneTimeMin + addonOneTime,
-      oneTimeMax: baseline.oneTimeMax + addonOneTime,
-      monthlyMin: baseline.monthlyMin + addonMonthly,
-      monthlyMax: baseline.monthlyMax + addonMonthly,
-      currency: baseline.currency,
+      oneTimeMin: total.oneTime,
+      oneTimeMax: total.oneTime,
+      monthlyMin: total.monthly,
+      monthlyMax: total.monthly,
+      currency: result.blueprint.estimate.currency,
     };
   }
 
@@ -388,81 +358,27 @@ export default function PortalAuditPage() {
               {finalized ? "Confirmed setup" : "Estimated setup"}
             </p>
             <p style={{ color: S.white, fontSize: "1.6rem", fontWeight: 700, marginBottom: "1rem" }}>
-              {formatInr(displayEstimate.oneTimeMin)} – {formatInr(displayEstimate.oneTimeMax)}
+              {finalized ? `${formatInr(displayEstimate.oneTimeMin)} – ${formatInr(displayEstimate.oneTimeMax)}` : formatInr(displayEstimate.oneTimeMin)}
             </p>
             <p style={{ color: S.faint, fontSize: "0.7rem", fontFamily: S.mono, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "0.5rem" }}>
               {finalized ? "Confirmed monthly" : "Estimated monthly"}
             </p>
             <p style={{ color: S.white, fontSize: "1.2rem", fontWeight: 700 }}>
-              {formatInr(displayEstimate.monthlyMin)} – {formatInr(displayEstimate.monthlyMax)}
+              {finalized ? `${formatInr(displayEstimate.monthlyMin)} – ${formatInr(displayEstimate.monthlyMax)}` : formatInr(displayEstimate.monthlyMin)}
             </p>
           </div>
 
-          <div style={{ ...cardStyle, marginBottom: "1.5rem", display: "grid", gap: "1.5rem" }}>
-            <p style={{ color: S.faint, fontSize: "0.7rem", fontFamily: S.mono, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-              What&apos;s included
+          <div style={{ ...cardStyle, marginBottom: "1.5rem" }}>
+            <p style={{ color: S.faint, fontSize: "0.7rem", fontFamily: S.mono, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>
+              Your blueprint - uncheck anything you don&apos;t need
             </p>
-            {includedGroups.map((group) => (
-              <div key={group.pillar}>
-                <p style={{ color: S.accent, fontWeight: 600, fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.6rem" }}>
-                  {group.label}
-                </p>
-                <div style={{ display: "grid", gap: "0.6rem" }}>
-                  {group.items.map((component) => (
-                    <div key={component.code} style={{ borderBottom: `1px solid ${S.line}`, paddingBottom: "0.6rem" }}>
-                      <p style={{ color: S.white, fontWeight: 600, fontSize: "0.85rem" }}>{component.title}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
+            <SelectableComponentList
+              components={components}
+              selectedCodes={selectedCodes}
+              onToggle={toggleComponent}
+              editable={!finalized}
+            />
           </div>
-
-          {addonGroups.length > 0 ? (
-            <div style={{ ...cardStyle, marginBottom: "1.5rem", display: "grid", gap: "1.5rem" }}>
-              <p style={{ color: S.faint, fontSize: "0.7rem", fontFamily: S.mono, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                Optional add-ons
-              </p>
-              {addonGroups.map((group) => (
-                <div key={group.pillar}>
-                  <p style={{ color: S.accent, fontWeight: 600, fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.6rem" }}>
-                    {group.label}
-                  </p>
-                  <div style={{ display: "grid", gap: "0.6rem" }}>
-                    {group.items.map((component) => (
-                      <label
-                        key={component.code}
-                        style={{
-                          display: "flex",
-                          alignItems: "flex-start",
-                          justifyContent: "space-between",
-                          gap: "1rem",
-                          borderBottom: `1px solid ${S.line}`,
-                          paddingBottom: "0.6rem",
-                          cursor: finalized ? "default" : "pointer",
-                        }}
-                      >
-                        <div style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
-                          <input
-                            type="checkbox"
-                            checked={selectedAddonCodes.has(component.code)}
-                            disabled={Boolean(finalized)}
-                            onChange={() => toggleAddon(component.code)}
-                            style={{ marginTop: "0.2rem" }}
-                          />
-                          <p style={{ color: S.white, fontWeight: 600, fontSize: "0.85rem" }}>{component.title}</p>
-                        </div>
-                        <p style={{ color: S.faint, fontSize: "0.75rem", whiteSpace: "nowrap" }}>
-                          +{formatInr(component.oneTimePrice)}
-                          {component.monthlyPrice > 0 ? ` / +${formatInr(component.monthlyPrice)} mo` : ""}
-                        </p>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : null}
 
           {result.blueprint.assumptions.map((assumption, i) => (
             <p key={i} style={{ color: S.faint, fontSize: "0.75rem", fontStyle: "italic", marginBottom: "0.5rem" }}>
@@ -480,8 +396,8 @@ export default function PortalAuditPage() {
             <button
               type="button"
               onClick={confirmSelection}
-              disabled={finalizing}
-              style={{ ...buttonStyle, opacity: finalizing ? 0.6 : 1, marginTop: "1rem" }}
+              disabled={finalizing || selectedCodes.size === 0}
+              style={{ ...buttonStyle, opacity: finalizing || selectedCodes.size === 0 ? 0.6 : 1, marginTop: "1rem" }}
             >
               {finalizing ? "Confirming..." : "Confirm my selection"}
             </button>
