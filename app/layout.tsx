@@ -126,6 +126,20 @@ export default function RootLayout({
         className={`${bonaNovaSc.variable} ${barlowCondensed.variable} ${jetbrainsMono.variable} min-h-screen`}
       >
         <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                var savedTheme = localStorage.getItem('nemnidhi-theme');
+                if (savedTheme === 'dark') {
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                  document.documentElement.setAttribute('data-theme', 'light');
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />

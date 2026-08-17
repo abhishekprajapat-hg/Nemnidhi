@@ -16,15 +16,12 @@ export function useTheme() {
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>("light");
 
-  // On mount: read saved preference or system preference
+  // Read the initial theme from the document on mount (already set by our head script)
+  // to keep React state in sync with the DOM without causing a double-render.
   useEffect(() => {
-    const saved = localStorage.getItem("nemnidhi-theme") as Theme | null;
-    if (saved === "light" || saved === "dark") {
-      setTheme(saved);
-      document.documentElement.setAttribute("data-theme", saved);
-    } else {
-      // Default to light
-      document.documentElement.setAttribute("data-theme", "light");
+    const currentTheme = document.documentElement.getAttribute("data-theme") as Theme | null;
+    if (currentTheme === "light" || currentTheme === "dark") {
+      setTheme(currentTheme);
     }
   }, []);
 

@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Orb from "@/components/effects/Orb";
+import dynamic from "next/dynamic";
+
+const Orb = dynamic(() => import("@/components/effects/Orb"), {
+  ssr: false,
+  loading: () => <div style={{ width: "100%", height: "100%", opacity: 0 }} />,
+});
 
 export default function HomeOrbBackground() {
   const [bgColor, setBgColor] = useState("#080a0c");
