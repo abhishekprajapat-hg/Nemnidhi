@@ -18,14 +18,33 @@ type Question = {
   options?: QuestionOption[];
 };
 
+type Pillar = "marketing_sales" | "operations" | "documentation_admin" | "service_support";
+
 type PackageComponentLine = {
   code: string;
   title: string;
   rationale: string;
   packageStatus: "included" | "addon";
+  pillar: Pillar;
   oneTimePrice: number;
   monthlyPrice: number;
 };
+
+const PILLAR_ORDER: Pillar[] = ["marketing_sales", "operations", "documentation_admin", "service_support"];
+const PILLAR_LABEL: Record<Pillar, string> = {
+  marketing_sales: "Marketing & Sales",
+  operations: "Operations",
+  documentation_admin: "Documentation & Admin",
+  service_support: "Service & Support",
+};
+
+function groupByPillar(components: PackageComponentLine[]) {
+  return PILLAR_ORDER.map((pillar) => ({
+    pillar,
+    label: PILLAR_LABEL[pillar],
+    items: components.filter((c) => c.pillar === pillar),
+  })).filter((group) => group.items.length > 0);
+}
 
 type EstimateRange = { oneTimeMin: number; oneTimeMax: number; monthlyMin: number; monthlyMax: number; currency: string };
 
@@ -211,6 +230,8 @@ export default function PortalAuditPage() {
 
   const includedComponents = result?.blueprint.components.filter((c) => c.packageStatus === "included") ?? [];
   const addonComponents = result?.blueprint.components.filter((c) => c.packageStatus === "addon") ?? [];
+  const includedGroups = groupByPillar(includedComponents);
+  const addonGroups = groupByPillar(addonComponents);
 
   let liveEstimate: EstimateRange | null = null;
   if (result) {
@@ -377,59 +398,69 @@ export default function PortalAuditPage() {
             </p>
           </div>
 
-          <div style={{ ...cardStyle, marginBottom: "1.5rem" }}>
-            <p style={{ color: S.faint, fontSize: "0.7rem", fontFamily: S.mono, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "1rem" }}>
+          <div style={{ ...cardStyle, marginBottom: "1.5rem", display: "grid", gap: "1.5rem" }}>
+            <p style={{ color: S.faint, fontSize: "0.7rem", fontFamily: S.mono, textTransform: "uppercase", letterSpacing: "0.08em" }}>
               What&apos;s included
             </p>
-            <div style={{ display: "grid", gap: "0.85rem" }}>
-              {includedComponents.map((component) => (
-                <div key={component.code} style={{ borderBottom: `1px solid ${S.line}`, paddingBottom: "0.85rem" }}>
-                  <p style={{ color: S.white, fontWeight: 600, fontSize: "0.9rem" }}>{component.title}</p>
-                  <p style={{ color: S.muted, fontSize: "0.8rem", marginTop: "0.25rem" }}>{component.rationale}</p>
+            {includedGroups.map((group) => (
+              <div key={group.pillar}>
+                <p style={{ color: S.accent, fontWeight: 600, fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.6rem" }}>
+                  {group.label}
+                </p>
+                <div style={{ display: "grid", gap: "0.6rem" }}>
+                  {group.items.map((component) => (
+                    <div key={component.code} style={{ borderBottom: `1px solid ${S.line}`, paddingBottom: "0.6rem" }}>
+                      <p style={{ color: S.white, fontWeight: 600, fontSize: "0.85rem" }}>{component.title}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
 
-          {addonComponents.length > 0 ? (
-            <div style={{ ...cardStyle, marginBottom: "1.5rem" }}>
-              <p style={{ color: S.faint, fontSize: "0.7rem", fontFamily: S.mono, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "1rem" }}>
+          {addonGroups.length > 0 ? (
+            <div style={{ ...cardStyle, marginBottom: "1.5rem", display: "grid", gap: "1.5rem" }}>
+              <p style={{ color: S.faint, fontSize: "0.7rem", fontFamily: S.mono, textTransform: "uppercase", letterSpacing: "0.08em" }}>
                 Optional add-ons
               </p>
-              <div style={{ display: "grid", gap: "0.85rem" }}>
-                {addonComponents.map((component) => (
-                  <label
-                    key={component.code}
-                    style={{
-                      display: "flex",
-                      alignItems: "flex-start",
-                      justifyContent: "space-between",
-                      gap: "1rem",
-                      borderBottom: `1px solid ${S.line}`,
-                      paddingBottom: "0.85rem",
-                      cursor: finalized ? "default" : "pointer",
-                    }}
-                  >
-                    <div style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
-                      <input
-                        type="checkbox"
-                        checked={selectedAddonCodes.has(component.code)}
-                        disabled={Boolean(finalized)}
-                        onChange={() => toggleAddon(component.code)}
-                        style={{ marginTop: "0.2rem" }}
-                      />
-                      <div>
-                        <p style={{ color: S.white, fontWeight: 600, fontSize: "0.9rem" }}>{component.title}</p>
-                        <p style={{ color: S.muted, fontSize: "0.8rem", marginTop: "0.25rem" }}>{component.rationale}</p>
-                      </div>
-                    </div>
-                    <p style={{ color: S.faint, fontSize: "0.75rem", whiteSpace: "nowrap" }}>
-                      +{formatInr(component.oneTimePrice)}
-                      {component.monthlyPrice > 0 ? ` / +${formatInr(component.monthlyPrice)} mo` : ""}
-                    </p>
-                  </label>
-                ))}
-              </div>
+              {addonGroups.map((group) => (
+                <div key={group.pillar}>
+                  <p style={{ color: S.accent, fontWeight: 600, fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.6rem" }}>
+                    {group.label}
+                  </p>
+                  <div style={{ display: "grid", gap: "0.6rem" }}>
+                    {group.items.map((component) => (
+                      <label
+                        key={component.code}
+                        style={{
+                          display: "flex",
+                          alignItems: "flex-start",
+                          justifyContent: "space-between",
+                          gap: "1rem",
+                          borderBottom: `1px solid ${S.line}`,
+                          paddingBottom: "0.6rem",
+                          cursor: finalized ? "default" : "pointer",
+                        }}
+                      >
+                        <div style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
+                          <input
+                            type="checkbox"
+                            checked={selectedAddonCodes.has(component.code)}
+                            disabled={Boolean(finalized)}
+                            onChange={() => toggleAddon(component.code)}
+                            style={{ marginTop: "0.2rem" }}
+                          />
+                          <p style={{ color: S.white, fontWeight: 600, fontSize: "0.85rem" }}>{component.title}</p>
+                        </div>
+                        <p style={{ color: S.faint, fontSize: "0.75rem", whiteSpace: "nowrap" }}>
+                          +{formatInr(component.oneTimePrice)}
+                          {component.monthlyPrice > 0 ? ` / +${formatInr(component.monthlyPrice)} mo` : ""}
+                        </p>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           ) : null}
 
