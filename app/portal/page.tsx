@@ -6,6 +6,7 @@ import Link from "next/link";
 import Container from "@/components/layout/Container";
 import { S, buttonStyle, secondaryButtonStyle, cardStyle, formatInr, inputStyle } from "./portal-styles";
 import { TIER_LABEL, isTier, humanizeKey } from "@/lib/portal/tier-display";
+import { SelectableComponentList, computeSelectedTotal, type SelectableComponent } from "./blueprint-shared";
 
 type DashboardData = {
   lead: {
@@ -26,8 +27,9 @@ type DashboardData = {
   blueprint: {
     _id: string;
     status: string;
+    origin: "staff_call" | "self_service";
     estimate: { oneTimeMin: number; oneTimeMax: number; monthlyMin: number; monthlyMax: number; currency: string };
-    components: Array<{ code: string; title: string; rationale: string; oneTimePrice: number }>;
+    components: Array<SelectableComponent & { rationale: string; included: boolean }>;
   } | null;
   proposal: {
     _id: string;
@@ -47,13 +49,24 @@ export default function PortalDashboardPage() {
   const [reason, setReason] = useState("");
   const [acting, setActing] = useState(false);
 
+  const [selectedCodes, setSelectedCodes] = useState<Set<string>>(new Set());
+  const [finalizing, setFinalizing] = useState(false);
+  const [finalizeError, setFinalizeError] = useState<string | null>(null);
+
   function load() {
     setLoading(true);
     fetch("/api/portal/dashboard")
       .then((res) => res.json())
       .then((json) => {
-        if (json.success) setData(json.data as DashboardData);
-        else setError(json?.error?.message ?? "Failed to load your dashboard");
+        if (json.success) {
+          const dashboardData = json.data as DashboardData;
+          setData(dashboardData);
+          if (dashboardData.blueprint?.origin === "self_service" && dashboardData.blueprint.status === "draft") {
+            setSelectedCodes(new Set(dashboardData.blueprint.components.filter((c) => c.included).map((c) => c.code)));
+          }
+        } else {
+          setError(json?.error?.message ?? "Failed to load your dashboard");
+        }
       })
       .catch(() => setError("Failed to load your dashboard"))
       .finally(() => setLoading(false));
@@ -62,6 +75,34 @@ export default function PortalDashboardPage() {
   useEffect(() => {
     load();
   }, []);
+
+  function toggleComponent(code: string) {
+    setSelectedCodes((prev) => {
+      const next = new Set(prev);
+      if (next.has(code)) next.delete(code);
+      else next.add(code);
+      return next;
+    });
+  }
+
+  async function confirmSelection() {
+    setFinalizing(true);
+    setFinalizeError(null);
+    try {
+      const res = await fetch("/api/portal/questionnaire/finalize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ selectedComponentCodes: [...selectedCodes] }),
+      });
+      const json = await res.json();
+      if (!json.success) throw new Error(json?.error?.message ?? "Failed to confirm your selection. Please try again.");
+      load();
+    } catch (err) {
+      setFinalizeError(err instanceof Error ? err.message : "Failed to confirm your selection. Please try again.");
+    } finally {
+      setFinalizing(false);
+    }
+  }
 
   async function logout() {
     await fetch("/api/portal/auth/logout", { method: "POST" });
@@ -240,27 +281,61 @@ export default function PortalDashboardPage() {
               <h2 style={{ fontFamily: S.heading, fontSize: "1.1rem", color: S.white, marginBottom: "0.5rem" }}>
                 Recommended blueprint
               </h2>
-              <p style={{ color: S.muted, fontSize: "0.8rem", marginBottom: "1rem" }}>Status: {data.blueprint.status}</p>
-              <div style={{ marginBottom: "1rem" }}>
-                {data.blueprint.components.map((c) => (
-                  <div
-                    key={c.code}
-                    style={{ display: "flex", justifyContent: "space-between", padding: "0.5rem 0", borderBottom: `1px solid ${S.line}` }}
-                  >
-                    <div>
-                      <div style={{ color: S.white, fontSize: "0.875rem" }}>{c.title}</div>
-                      <div style={{ color: S.faint, fontSize: "0.75rem" }}>{c.rationale}</div>
-                    </div>
-                    <div style={{ color: S.white, fontSize: "0.875rem" }}>{formatInr(c.oneTimePrice)}</div>
+              <p style={{ color: S.muted, fontSize: "0.8rem", marginBottom: "1.5rem" }}>Status: {data.blueprint.status}</p>
+
+              {data.blueprint.origin === "self_service" && data.blueprint.status === "draft" ? (
+                <>
+                  <p style={{ color: S.faint, fontSize: "0.75rem", marginBottom: "1rem" }}>
+                    Uncheck anything you don&apos;t need, or add optional upgrades, then save your changes.
+                  </p>
+                  <div style={{ marginBottom: "1.5rem" }}>
+                    <SelectableComponentList
+                      components={data.blueprint.components}
+                      selectedCodes={selectedCodes}
+                      onToggle={toggleComponent}
+                      editable
+                    />
                   </div>
-                ))}
-              </div>
-              <p style={{ color: S.white, fontSize: "0.875rem", marginBottom: "1rem" }}>
-                Estimate: {formatInr(data.blueprint.estimate.oneTimeMin)}–{formatInr(data.blueprint.estimate.oneTimeMax)} one-time
-                {data.blueprint.estimate.monthlyMax > 0
-                  ? `, ${formatInr(data.blueprint.estimate.monthlyMin)}–${formatInr(data.blueprint.estimate.monthlyMax)}/mo`
-                  : ""}
-              </p>
+                  {(() => {
+                    const total = computeSelectedTotal(data.blueprint.components, selectedCodes);
+                    return (
+                      <p style={{ color: S.white, fontSize: "0.9rem", fontWeight: 600, marginBottom: "1rem" }}>
+                        Current total: {formatInr(total.oneTime)}
+                        {total.monthly > 0 ? ` + ${formatInr(total.monthly)}/mo` : ""}
+                      </p>
+                    );
+                  })()}
+                  {finalizeError ? (
+                    <p style={{ color: S.danger, fontSize: "0.8rem", marginBottom: "1rem" }}>{finalizeError}</p>
+                  ) : null}
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginBottom: "1rem" }}>
+                    <button
+                      onClick={confirmSelection}
+                      disabled={finalizing || selectedCodes.size === 0}
+                      style={{ ...buttonStyle, opacity: finalizing || selectedCodes.size === 0 ? 0.6 : 1 }}
+                    >
+                      {finalizing ? "Saving..." : "Save my selection"}
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div style={{ marginBottom: "1.5rem" }}>
+                    <SelectableComponentList
+                      components={data.blueprint.components.filter((c) => c.included)}
+                      selectedCodes={new Set(data.blueprint.components.filter((c) => c.included).map((c) => c.code))}
+                      onToggle={() => {}}
+                      editable={false}
+                    />
+                  </div>
+                  <p style={{ color: S.white, fontSize: "0.875rem", marginBottom: "1rem" }}>
+                    Estimate: {formatInr(data.blueprint.estimate.oneTimeMin)}–{formatInr(data.blueprint.estimate.oneTimeMax)} one-time
+                    {data.blueprint.estimate.monthlyMax > 0
+                      ? `, ${formatInr(data.blueprint.estimate.monthlyMin)}–${formatInr(data.blueprint.estimate.monthlyMax)}/mo`
+                      : ""}
+                  </p>
+                </>
+              )}
 
               <Link
                 href={`/portal/book?leadId=${data.lead._id}`}
