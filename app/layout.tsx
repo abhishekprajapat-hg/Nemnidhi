@@ -121,7 +121,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme="light" suppressHydrationWarning>
       <body
         className={`${bonaNovaSc.variable} ${barlowCondensed.variable} ${jetbrainsMono.variable} min-h-screen`}
       >

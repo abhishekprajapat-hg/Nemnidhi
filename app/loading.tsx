@@ -6,8 +6,8 @@ export default function Loading() {
         alignItems: "center",
         justifyContent: "center",
         minHeight: "100vh",
-        background: "var(--color-bg, #080a0c)",
-        color: "var(--color-heading, #ffffff)",
+        background: "var(--color-bg, #f7f5f0)",
+        color: "var(--color-heading, #080a0c)",
         fontFamily: "var(--font-mono, monospace)",
       }}
     >
