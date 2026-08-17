@@ -168,13 +168,17 @@ export default function PortalDashboardPage() {
 
       {!data?.lead ? (
         <div style={cardStyle}>
-          <p style={{ color: S.muted, fontSize: "0.875rem" }}>
-            No project is linked to your account yet.{" "}
-            <Link href="/portal/queries" style={{ color: S.accent }}>
-              Head to Queries &amp; onboarding
-            </Link>{" "}
-            to get started.
+          <p style={{ color: S.muted, fontSize: "0.875rem", marginBottom: "1rem" }}>
+            No project is linked to your account yet.
           </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
+            <Link href="/portal/audit" style={{ ...buttonStyle, textDecoration: "none", display: "inline-block" }}>
+              Get an instant estimate
+            </Link>
+            <Link href="/portal/queries" style={{ ...secondaryButtonStyle, textDecoration: "none", display: "inline-block" }}>
+              Head to Queries &amp; onboarding
+            </Link>
+          </div>
         </div>
       ) : (
         <>
@@ -257,6 +261,13 @@ export default function PortalDashboardPage() {
                   ? `, ${formatInr(data.blueprint.estimate.monthlyMin)}–${formatInr(data.blueprint.estimate.monthlyMax)}/mo`
                   : ""}
               </p>
+
+              <Link
+                href={`/portal/book?leadId=${data.lead._id}`}
+                style={{ ...secondaryButtonStyle, textDecoration: "none", display: "inline-block", marginBottom: "1rem" }}
+              >
+                Book a meeting to discuss this
+              </Link>
 
               {data.blueprint.status === "shared" ? (
                 <div>
