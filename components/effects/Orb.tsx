@@ -275,8 +275,12 @@ export default function Orb({
       targetHover = 0;
     };
 
+    let isVisible = typeof document !== 'undefined' ? !document.hidden : true;
+
     const update = (time: number) => {
       rafId = requestAnimationFrame(update);
+      if (!isVisible) return;
+
       const dt = (time - lastTime) * 0.001;
       lastTime = time;
 
@@ -295,7 +299,15 @@ export default function Orb({
       renderer.render({ scene: mesh });
     };
 
+    const handleVisibilityChange = () => {
+      isVisible = !document.hidden;
+      if (isVisible) {
+        lastTime = performance.now(); // Reset lastTime so dt doesn't spike on resume
+      }
+    };
+
     window.addEventListener("resize", resize);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
     containerEl.addEventListener("mousemove", handleMouseMove);
     containerEl.addEventListener("mouseleave", handleMouseLeave);
     resize();
@@ -307,6 +319,7 @@ export default function Orb({
     return () => {
       cancelAnimationFrame(rafId);
       window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       containerEl.removeEventListener("mousemove", handleMouseMove);
       containerEl.removeEventListener("mouseleave", handleMouseLeave);
       if (gl.canvas.parentNode === containerEl) {

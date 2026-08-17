@@ -103,7 +103,6 @@ export default function MotionProvider({ children }: { children: ReactNode }) {
 
       const ticker = (time: number) => lenis.raf(time * 1000);
       gsap.ticker.add(ticker);
-      gsap.ticker.lagSmoothing(0);
 
       const context = gsap.context(() => {
         // Track mouse position for CSS variable-based effects (e.g. orb glow)

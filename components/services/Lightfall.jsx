@@ -281,8 +281,12 @@ const Lightfall = ({
       canvas.addEventListener('pointermove', onPointerMove);
     }
 
+    let isVisible = typeof document !== 'undefined' ? !document.hidden : true;
+
     const loop = t => {
       rafRef.current = requestAnimationFrame(loop);
+      if (!isVisible) return;
+
       uniforms.iTime.value = t * 0.001;
       if (mouseDampening > 0) {
         if (!lastTimeRef.current) lastTimeRef.current = t;
@@ -306,10 +310,20 @@ const Lightfall = ({
         }
       }
     };
+
+    const handleVisibilityChange = () => {
+      isVisible = !document.hidden;
+      if (isVisible) {
+        lastTimeRef.current = performance.now();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     rafRef.current = requestAnimationFrame(loop);
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       if (mouseInteraction) canvas.removeEventListener('pointermove', onPointerMove);
       ro.disconnect();
       if (canvas.parentElement === container) {
