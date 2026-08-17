@@ -25,11 +25,20 @@ export const PILLAR_LABEL: Record<Pillar, string> = {
   service_support: "Service & Support",
 };
 
+// Blueprints created before `pillar` existed on stored components have it
+// missing (undefined) rather than defaulted, since Mongoose only applies
+// schema defaults on document creation, not on reads of pre-existing raw
+// documents - fall back to "operations" (the schema's own default) instead
+// of silently dropping those items from every group.
+function normalizedPillar(pillar: Pillar | null | undefined): Pillar {
+  return pillar && PILLAR_ORDER.includes(pillar) ? pillar : "operations";
+}
+
 export function groupByPillar<T extends { pillar: Pillar }>(components: T[]) {
   return PILLAR_ORDER.map((pillar) => ({
     pillar,
     label: PILLAR_LABEL[pillar],
-    items: components.filter((c) => c.pillar === pillar),
+    items: components.filter((c) => normalizedPillar(c.pillar) === pillar),
   })).filter((group) => group.items.length > 0);
 }
 
