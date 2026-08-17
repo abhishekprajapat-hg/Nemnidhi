@@ -1,21 +1,50 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, lazy, Suspense } from "react";
+import type { FC } from "react";
 import Container from "@/components/layout/Container";
 import { useScrollReveal, useSectionLabel } from "@/lib/useGsapAnimations";
-import {
-  UndrawCoding,
-  UndrawMobileApps,
-  UndrawCloudHosting,
-  UndrawArtificialIntelligence,
-} from "react-undraw-illustrations";
 
-const SERVICE_ILLUSTRATIONS = [
-  UndrawCoding,
-  UndrawMobileApps,
-  UndrawCloudHosting,
-  UndrawArtificialIntelligence,
-];
+// ─── PERF FIX: Lazy-loaded via direct paths (tree-shaken, deferred from initial bundle)
+// Previously eager imports from main entry point added ~90kB to initial JS
+interface IllustrationProps { primaryColor?: string; height?: string; }
+
+const UndrawCoding = lazy(() =>
+  import("react-undraw-illustrations/lib/components/UndrawCoding").then(
+    (m) => ({ default: (m.UndrawCoding ?? m.default) as FC<IllustrationProps> })
+  )
+);
+const UndrawMobileApps = lazy(() =>
+  import("react-undraw-illustrations/lib/components/UndrawMobileApps").then(
+    (m) => ({ default: (m.UndrawMobileApps ?? m.default) as FC<IllustrationProps> })
+  )
+);
+const UndrawCloudHosting = lazy(() =>
+  import("react-undraw-illustrations/lib/components/UndrawCloudHosting").then(
+    (m) => ({ default: (m.UndrawCloudHosting ?? m.default) as FC<IllustrationProps> })
+  )
+);
+const UndrawArtificialIntelligence = lazy(() =>
+  import("react-undraw-illustrations/lib/components/UndrawArtificialIntelligence").then(
+    (m) => ({ default: (m.UndrawArtificialIntelligence ?? m.default) as FC<IllustrationProps> })
+  )
+);
+
+const SERVICE_ILLUSTRATION_KEYS = ["coding", "mobile", "cloud", "ai"] as const;
+type IllustrationKey = typeof SERVICE_ILLUSTRATION_KEYS[number];
+
+function ServiceCardIllustration({ index }: { index: number }) {
+  const key: IllustrationKey = SERVICE_ILLUSTRATION_KEYS[index % SERVICE_ILLUSTRATION_KEYS.length];
+  const props: IllustrationProps = { primaryColor: BRAND_CYAN, height: "160px" };
+  return (
+    <Suspense fallback={<div style={{ height: "160px" }} />}>
+      {key === "coding" && <UndrawCoding {...props} />}
+      {key === "mobile" && <UndrawMobileApps {...props} />}
+      {key === "cloud" && <UndrawCloudHosting {...props} />}
+      {key === "ai" && <UndrawArtificialIntelligence {...props} />}
+    </Suspense>
+  );
+}
 
 const BRAND_CYAN = "#67e8f9";
 
@@ -131,7 +160,6 @@ export default function ServicesSection({
           className="services-grid-responsive"
         >
           {items.map((service, i) => {
-            const Illustration = SERVICE_ILLUSTRATIONS[i % SERVICE_ILLUSTRATIONS.length];
             return (
             <div
               key={service._id ?? i}
@@ -144,9 +172,9 @@ export default function ServicesSection({
                 transition: "background 0.2s",
               }}
             >
-              {/* Illustration */}
+              {/* Illustration — lazy-loaded, deferred from initial render */}
               <div style={{ marginBottom: "1.5rem", opacity: 0.9 }}>
-                <Illustration primaryColor={BRAND_CYAN} height="160px" />
+                <ServiceCardIllustration index={i} />
               </div>
 
               {/* Number + arrow row */}

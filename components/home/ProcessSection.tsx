@@ -1,50 +1,89 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, lazy, Suspense } from "react";
+import type { FC } from "react";
 import Container from "@/components/layout/Container";
 import { useSectionLabel, useTimelineGrow } from "@/lib/useGsapAnimations";
-import {
-  UndrawBrainstorming,
-  UndrawWireframing,
-  UndrawProgramming,
-  UndrawQaEngineers,
-  UndrawRising,
-} from "react-undraw-illustrations";
+
+// ─── PERF FIX: All 5 illustrations lazy-loaded via direct paths (tree-shaken)
+// Previously imported eagerly from main entry point — added ~120kB to initial bundle
+interface IllustrationProps { primaryColor?: string; height?: string; }
+
+const UndrawBrainstorming = lazy(() =>
+  import("react-undraw-illustrations/lib/components/UndrawBrainstorming").then(
+    (m) => ({ default: (m.UndrawBrainstorming ?? m.default) as FC<IllustrationProps> })
+  )
+);
+const UndrawWireframing = lazy(() =>
+  import("react-undraw-illustrations/lib/components/UndrawWireframing").then(
+    (m) => ({ default: (m.UndrawWireframing ?? m.default) as FC<IllustrationProps> })
+  )
+);
+const UndrawProgramming = lazy(() =>
+  import("react-undraw-illustrations/lib/components/UndrawProgramming").then(
+    (m) => ({ default: (m.UndrawProgramming ?? m.default) as FC<IllustrationProps> })
+  )
+);
+const UndrawQaEngineers = lazy(() =>
+  import("react-undraw-illustrations/lib/components/UndrawQaEngineers").then(
+    (m) => ({ default: (m.UndrawQaEngineers ?? m.default) as FC<IllustrationProps> })
+  )
+);
+const UndrawRising = lazy(() =>
+  import("react-undraw-illustrations/lib/components/UndrawRising").then(
+    (m) => ({ default: (m.UndrawRising ?? m.default) as FC<IllustrationProps> })
+  )
+);
 
 const BRAND_CYAN = "#67e8f9";
 
-const steps = [
+type IllustrationKey = "brainstorming" | "wireframing" | "programming" | "qa" | "rising";
+
+const steps: { num: string; title: string; desc: string; illustrationKey: IllustrationKey }[] = [
   {
     num: "01",
     title: "Discovery",
     desc: "We map requirements, constraints, success metrics, and the commercial outcome the software has to create.",
-    Illustration: UndrawBrainstorming,
+    illustrationKey: "brainstorming",
   },
   {
     num: "02",
     title: "Design",
     desc: "We shape product flows, visual systems, data models, and technical architecture before heavy engineering begins.",
-    Illustration: UndrawWireframing,
+    illustrationKey: "wireframing",
   },
   {
     num: "03",
     title: "Development",
     desc: "Senior engineers build in focused sprints with frequent demos, clean handoffs, and deployable increments.",
-    Illustration: UndrawProgramming,
+    illustrationKey: "programming",
   },
   {
     num: "04",
     title: "Testing",
     desc: "We validate performance, responsive behavior, edge cases, integrations, and release readiness.",
-    Illustration: UndrawQaEngineers,
+    illustrationKey: "qa",
   },
   {
     num: "05",
     title: "Launch",
     desc: "We ship with monitoring, deployment confidence, documentation, and a clear plan for the next iteration.",
-    Illustration: UndrawRising,
+    illustrationKey: "rising",
   },
 ];
+
+function StepIllustration({ illustrationKey }: { illustrationKey: IllustrationKey }) {
+  const props: IllustrationProps = { primaryColor: BRAND_CYAN, height: "120px" };
+  return (
+    <Suspense fallback={<div style={{ height: "120px" }} />}>
+      {illustrationKey === "brainstorming" && <UndrawBrainstorming {...props} />}
+      {illustrationKey === "wireframing" && <UndrawWireframing {...props} />}
+      {illustrationKey === "programming" && <UndrawProgramming {...props} />}
+      {illustrationKey === "qa" && <UndrawQaEngineers {...props} />}
+      {illustrationKey === "rising" && <UndrawRising {...props} />}
+    </Suspense>
+  );
+}
 
 export default function ProcessSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -183,12 +222,10 @@ export default function ProcessSection() {
                       padding: "1.5rem",
                     }}
                   >
-                    <h3 className="text-h4 uppercase">
-                      {step.title}
-                    </h3>
-                    {/* Step Illustration */}
+                    <h3 className="text-h4 uppercase">{step.title}</h3>
+                    {/* Lazy illustration — deferred until React hydrates this card */}
                     <div style={{ margin: "0.9rem 0", opacity: 0.85 }}>
-                      <step.Illustration primaryColor={BRAND_CYAN} height="120px" />
+                      <StepIllustration illustrationKey={step.illustrationKey} />
                     </div>
                     <p className="text-body text-prose mt-2 text-[var(--color-text-muted)]">
                       {step.desc}
