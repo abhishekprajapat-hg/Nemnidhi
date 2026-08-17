@@ -8,6 +8,7 @@ import ServicesSection from "@/components/home/ServicesSection";
 import WorkSection from "@/components/home/WorkSection";
 import ProcessSection from "@/components/home/ProcessSection";
 import TechStackStrip from "@/components/home/TechStackStrip";
+import PortalCTASection from "@/components/home/PortalCTASection";
 import ContactSection from "@/components/home/ContactSection";
 import FAQSection from "@/components/home/FAQSection";
 import { dbConnect } from "@/lib/mongodb";
@@ -72,6 +73,7 @@ export default async function HomePage() {
         <WorkSection />
         <ProcessSection />
         <TechStackStrip />
+        <PortalCTASection />
         <FAQSection />
         <ContactSection />
       </div>

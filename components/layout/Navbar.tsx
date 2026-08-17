@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { Home, Briefcase, FolderOpen, Info, MessageCircle, BookOpen, Sun, Moon } from "lucide-react";
+import { Home, Briefcase, FolderOpen, Info, MessageCircle, BookOpen, UserCircle2, Sun, Moon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -16,6 +16,7 @@ const links = [
   { href: "/about", label: "About" },
   { href: "/blogs", label: "Blogs" },
   { href: "/contact", label: "Contact" },
+  { href: "/portal", label: "Portal" },
 ];
 
 const mobileTabs = [
@@ -25,6 +26,7 @@ const mobileTabs = [
   { href: "/about", label: "About", icon: Info },
   { href: "/blogs", label: "Blogs", icon: BookOpen },
   { href: "/contact", label: "Contact", icon: MessageCircle },
+  { href: "/portal", label: "Portal", icon: UserCircle2 },
 ];
 
 export function Navbar() {
@@ -145,7 +147,7 @@ export function Navbar() {
 
       {/* Mobile Bottom Nav */}
       <nav className="fixed inset-x-0 bottom-0 z-50 px-3 pb-[calc(0.65rem+env(safe-area-inset-bottom))] md:hidden" aria-label="Mobile navigation">
-        <div className="mobile-nav mx-auto grid max-w-lg grid-cols-6 gap-1 rounded-lg p-1.5">
+        <div className="mobile-nav mx-auto grid max-w-lg grid-cols-7 gap-1 rounded-lg p-1.5">
           {mobileTabs.map((tab) => {
             const active = isActive(tab.href);
             const Icon = tab.icon;
