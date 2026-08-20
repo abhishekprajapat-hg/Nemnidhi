@@ -16,7 +16,6 @@ const links = [
   { href: "/about", label: "About" },
   { href: "/blogs", label: "Blogs" },
   { href: "/contact", label: "Contact" },
-  { href: "/portal", label: "Portal" },
 ];
 
 const mobileTabs = [
@@ -26,13 +25,19 @@ const mobileTabs = [
   { href: "/about", label: "About", icon: Info },
   { href: "/blogs", label: "Blogs", icon: BookOpen },
   { href: "/contact", label: "Contact", icon: MessageCircle },
-  { href: "/portal", label: "Portal", icon: UserCircle2 },
 ];
 
 export function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const [portalAuthenticated, setPortalAuthenticated] = useState(false);
   const { theme, toggle } = useTheme();
+
+  const authLink = portalAuthenticated
+    ? { href: "/portal", label: "Account", icon: UserCircle2 }
+    : { href: "/login", label: "Login", icon: UserCircle2 };
+  const navLinks = [...links, { href: authLink.href, label: authLink.label }];
+  const navTabs = [...mobileTabs, authLink];
 
   useEffect(() => {
     let ticking = false;
@@ -51,6 +56,26 @@ export function Navbar() {
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    let active = true;
+
+    fetch("/api/portal/auth/session", {
+      credentials: "same-origin",
+      cache: "no-store",
+    })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((data: { authenticated?: boolean } | null) => {
+        if (active) setPortalAuthenticated(Boolean(data?.authenticated));
+      })
+      .catch(() => {
+        if (active) setPortalAuthenticated(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [pathname]);
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
@@ -90,7 +115,7 @@ export function Navbar() {
 
           {/* Desktop Nav Links */}
           <nav className="hidden items-center gap-0 md:flex" aria-label="Primary navigation">
-            {links.map((link) => {
+            {navLinks.map((link) => {
               const active = isActive(link.href);
               return (
                 <Link
@@ -146,9 +171,9 @@ export function Navbar() {
       </Container>
 
       {/* Mobile Bottom Nav */}
-      <nav className="fixed inset-x-0 bottom-0 z-50 px-3 pb-[calc(0.65rem+env(safe-area-inset-bottom))] md:hidden" aria-label="Mobile navigation">
+      <nav className="fixed inset-x-0 bottom-0 z-[80] px-3 pb-[calc(0.65rem+env(safe-area-inset-bottom))] md:hidden" aria-label="Mobile navigation">
         <div className="mobile-nav mx-auto grid max-w-lg grid-cols-7 gap-1 rounded-lg p-1.5">
-          {mobileTabs.map((tab) => {
+          {navTabs.map((tab) => {
             const active = isActive(tab.href);
             const Icon = tab.icon;
             return (

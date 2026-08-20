@@ -64,7 +64,7 @@ export default function PortalCTASection() {
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "center" }}>
               <Link
-                href="/portal/signup"
+                href="/signup"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -83,7 +83,7 @@ export default function PortalCTASection() {
                 Create your profile ↗
               </Link>
               <Link
-                href="/portal/login"
+                href="/login"
                 style={{
                   fontFamily: "var(--font-mono, monospace)",
                   fontSize: "0.7rem",

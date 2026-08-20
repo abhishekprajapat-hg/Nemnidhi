@@ -48,7 +48,7 @@ export default function Hero({ hero }: HeroProps) {
       suppressHydrationWarning
       className="home-hero-section"
     >
-      <HeroImageBackdrop src="/images/hero/home-engineering.jpg" focus="center" />
+      <HeroImageBackdrop src="/images/hero/home-platform-hero.png" focus="center" />
 
       {/* ── Parallax dot-grid background ─────────────────────────── */}
       <Container size="wide" className="home-hero-content">

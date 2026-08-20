@@ -106,7 +106,7 @@ export default function PortalDashboardPage() {
 
   async function logout() {
     await fetch("/api/portal/auth/logout", { method: "POST" });
-    router.push("/portal/login");
+    router.push("/login");
     router.refresh();
   }
 

@@ -403,19 +403,34 @@
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
+    overflow: hidden;
   }
 
   .mobile-nav-link {
     display: grid;
-    min-height: 3.25rem;
+    min-width: 0;
+    min-height: 3rem;
     place-items: center;
+    gap: 0.15rem;
     border-radius: var(--radius-md);
     color: var(--color-text-muted);
-    font-size: 0.65rem;
+    font-size: clamp(0.46rem, 1.45vw, 0.56rem);
     font-weight: 600;
     font-family: var(--font-mono);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0;
+    line-height: 1;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .mobile-nav-link span {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .mobile-nav-link.is-active {
@@ -2204,6 +2219,59 @@ a.footer-contact-line:hover {
 
   .footer-links-column {
     align-items: flex-start;
+  }
+}
+
+@media (max-width: 767px) {
+  body {
+    padding-bottom: calc(4.85rem + env(safe-area-inset-bottom));
+  }
+
+  .home-hero-section {
+    min-height: auto !important;
+    justify-content: flex-start !important;
+    padding-top: 1.75rem !important;
+    padding-bottom: calc(7.75rem + env(safe-area-inset-bottom)) !important;
+  }
+
+  .home-hero-content {
+    padding-top: 0.75rem;
+  }
+
+  .home-hero-section h1 {
+    font-size: clamp(2rem, 10vw, 3.15rem) !important;
+    line-height: 1.02 !important;
+    max-width: min(100%, 22rem) !important;
+  }
+
+  .home-hero-section .hero-bottom-row {
+    gap: 1.35rem !important;
+    margin-top: 2rem !important;
+  }
+
+  .home-hero-section .hero-bottom-row p {
+    max-width: 20rem !important;
+    color: #d8e5f0 !important;
+    font-size: 0.95rem !important;
+    line-height: 1.62 !important;
+    text-shadow: 0 1px 18px rgba(0, 0, 0, 0.65);
+  }
+
+  .home-hero-section .hero-bottom-row > div {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 0.85rem !important;
+    width: min(100%, 18rem);
+  }
+
+  .home-hero-section .hero-bottom-row a {
+    width: 100%;
+    justify-content: center;
+    min-height: 3.4rem;
+  }
+
+  .home-hero-section [data-hero-anim]:last-child {
+    display: none !important;
   }
 }
 

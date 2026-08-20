@@ -78,7 +78,7 @@ export default function PortalLoginPage() {
 
           <p style={{ fontSize: "0.8rem", color: S.faint }}>
             New here?{" "}
-            <Link href="/portal/signup" style={{ color: S.accent }}>
+            <Link href="/signup" style={{ color: S.accent }}>
               Create an account
             </Link>
           </p>

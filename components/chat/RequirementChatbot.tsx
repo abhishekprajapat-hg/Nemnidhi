@@ -261,7 +261,7 @@ export default function RequirementChatbot() {
 
   return (
     <div
-      className="fixed bottom-[5.25rem] right-3 z-[70] md:bottom-6 md:right-6"
+      className="fixed bottom-[6.35rem] right-3 z-[70] md:bottom-6 md:right-6"
       onKeyDown={(event) => {
         if (event.key === "Escape") {
           setIsOpen(false);

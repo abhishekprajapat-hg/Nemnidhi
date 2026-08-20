@@ -42,7 +42,7 @@ export default async function BlogsPage() {
   return (
     <div style={{ background: S.bg, minHeight: "100svh" }}>
       <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", padding: "7rem 0 4rem", background: "#05080b" }}>
-        <HeroImageBackdrop src="/images/hero/blogs-editorial.jpg" focus="center" />
+        <HeroImageBackdrop src="/images/hero/blog-platform-hero.png" focus="center" />
         <Container size="wide" className="hero-content-layer">
           <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: "#67e8f9", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
             [ NEMNIDHI.COM / BLOGS ]

@@ -15,6 +15,8 @@ const RequirementChatbot = dynamic(() => import("@/components/chat/RequirementCh
 export default function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isDashboardRoute = pathname.startsWith("/dashboard");
+  const isAuthRoute = ["/login", "/signin", "/sign-in", "/signup", "/sign-up", "/portal/login", "/portal/signup"].includes(pathname);
+  const showSiteChrome = !isDashboardRoute && !isAuthRoute;
 
   return (
     <ThemeProvider>
@@ -27,12 +29,12 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
             <a href="#main-content" className="skip-link">
               Skip to main content
             </a>
-            {!isDashboardRoute && <Navbar />}
-            <main id="main-content" tabIndex={-1} className="relative z-[2] flex-1 pb-24 md:pb-0">
+            {showSiteChrome && <Navbar />}
+            <main id="main-content" tabIndex={-1} className={`relative z-[2] flex-1 ${showSiteChrome ? "pb-24 md:pb-0" : ""}`}>
               {children}
             </main>
-            {!isDashboardRoute && <Footer />}
-            {!isDashboardRoute && <RequirementChatbot />}
+            {showSiteChrome && <Footer />}
+            {showSiteChrome && <RequirementChatbot />}
           </MotionProvider>
       </div>
     </ThemeProvider>
