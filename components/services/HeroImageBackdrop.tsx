@@ -1,17 +1,28 @@
 "use client";
 
+import Image from "next/image";
+
 type HeroImageBackdropProps = {
   src: string;
   focus?: string;
+  priority?: boolean;
 };
 
-export default function HeroImageBackdrop({ src, focus = "center" }: HeroImageBackdropProps) {
+export default function HeroImageBackdrop({ src, focus = "center", priority = false }: HeroImageBackdropProps) {
   const clearSrc = src.replace(/\.jpg$/i, "-clear.jpg");
-  const imageUrl = `${clearSrc}?v=clear-hero-2`;
 
   return (
     <div className="hero-image-backdrop" aria-hidden="true">
-      <img className="hero-image-backdrop__image" src={imageUrl} alt="" style={{ objectPosition: focus }} decoding="async" />
+      <Image
+        className="hero-image-backdrop__image"
+        src={clearSrc}
+        alt=""
+        fill
+        priority={priority}
+        quality={72}
+        sizes="100vw"
+        style={{ objectPosition: focus }}
+      />
       <div className="hero-image-backdrop__shade" />
 
       <style jsx global>{`

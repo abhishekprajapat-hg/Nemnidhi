@@ -51,6 +51,16 @@ function settleCounters() {
   });
 }
 
+function scheduleMotionSetup(callback: () => void) {
+  if ("requestIdleCallback" in window) {
+    const idleId = window.requestIdleCallback(callback, { timeout: 1400 });
+    return () => window.cancelIdleCallback(idleId);
+  }
+
+  const timeoutId = globalThis.setTimeout(callback, 650);
+  return () => globalThis.clearTimeout(timeoutId);
+}
+
 export default function MotionProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const progressRef = useRef<HTMLDivElement | null>(null);
@@ -423,10 +433,13 @@ export default function MotionProvider({ children }: { children: ReactNode }) {
       };
     };
 
-    void setupMotion();
+    const cancelScheduledSetup = scheduleMotionSetup(() => {
+      void setupMotion();
+    });
 
     return () => {
       disposed = true;
+      cancelScheduledSetup?.();
       cleanup?.();
     };
   }, [pathname, prefersReducedMotion]);

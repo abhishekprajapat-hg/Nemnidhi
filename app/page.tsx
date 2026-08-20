@@ -14,6 +14,8 @@ import { dbConnect } from "@/lib/mongodb";
 import { Service } from "@/models/Service";
 import { HeroSettings } from "@/models/HeroSettings";
 
+export const revalidate = 300;
+
 type ServiceDoc = {
   _id: { toString: () => string };
   title: string;
@@ -24,7 +26,10 @@ type ServiceDoc = {
 async function getServices() {
   try {
     await dbConnect();
-    const docs = await Service.find().sort({ createdAt: 1 }).lean();
+    const docs = await Service.find()
+      .select("title description points")
+      .sort({ createdAt: 1 })
+      .lean();
     return (docs as ServiceDoc[]).map((doc) => ({
       _id: doc._id.toString(),
       title: doc.title,
@@ -39,7 +44,11 @@ async function getServices() {
 async function getHero() {
   try {
     await dbConnect();
-    const doc = await HeroSettings.findOne().lean();
+    const doc = await HeroSettings.findOne()
+      .select(
+        "badgeText headingMain headingHighlight headingSuffix subheading primaryCtaLabel primaryCtaHref secondaryCtaLabel secondaryCtaHref",
+      )
+      .lean();
     if (!doc) return null;
     return {
       badgeText: doc.badgeText,

@@ -59,21 +59,33 @@ export function Navbar() {
 
   useEffect(() => {
     let active = true;
+    let cancelSessionCheck: (() => void) | undefined;
 
-    fetch("/api/portal/auth/session", {
-      credentials: "same-origin",
-      cache: "no-store",
-    })
-      .then((response) => (response.ok ? response.json() : null))
-      .then((data: { authenticated?: boolean } | null) => {
-        if (active) setPortalAuthenticated(Boolean(data?.authenticated));
+    const checkSession = () => {
+      fetch("/api/portal/auth/session", {
+        credentials: "same-origin",
+        cache: "no-store",
       })
-      .catch(() => {
-        if (active) setPortalAuthenticated(false);
-      });
+        .then((response) => (response.ok ? response.json() : null))
+        .then((data: { authenticated?: boolean } | null) => {
+          if (active) setPortalAuthenticated(Boolean(data?.authenticated));
+        })
+        .catch(() => {
+          if (active) setPortalAuthenticated(false);
+        });
+    };
+
+    if ("requestIdleCallback" in window) {
+      const idleId = window.requestIdleCallback(checkSession, { timeout: 1800 });
+      cancelSessionCheck = () => window.cancelIdleCallback(idleId);
+    } else {
+      const timeoutId = globalThis.setTimeout(checkSession, 900);
+      cancelSessionCheck = () => globalThis.clearTimeout(timeoutId);
+    }
 
     return () => {
       active = false;
+      cancelSessionCheck?.();
     };
   }, [pathname]);
 
