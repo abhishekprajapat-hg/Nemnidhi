@@ -80,10 +80,7 @@ function getOriginForHrmsForward(request: Request) {
 }
 
 function getHrmsEndpoint() {
-  const endpoint = process.env.HRMS_LEAD_ENDPOINT?.trim();
-  if (!endpoint) {
-    return null;
-  }
+  const endpoint = process.env.HRMS_LEAD_ENDPOINT?.trim() || "https://vega.nemnidhi.com/api/public/leads";
 
   try {
     return new URL(endpoint).toString();
