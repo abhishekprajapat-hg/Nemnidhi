@@ -468,15 +468,6 @@
     padding-bottom: 4rem;
   }
 
-  .home-hero-grid {
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(circle, rgba(103, 232, 249, 0.06) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    will-change: transform;
-  }
-
   .home-hero-content {
     position: relative;
     z-index: 2;
@@ -485,35 +476,6 @@
   .home-page-content {
     position: relative;
     z-index: 2;
-  }
-
-  .home-page-orb {
-    position: fixed;
-    inset: -12vh -12vw;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0.24;
-    mix-blend-mode: screen;
-    filter: saturate(1.18) blur(0.2px);
-  }
-
-  .home-page-orb::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: radial-gradient(circle at 50% 50%, transparent 0 58%, rgba(8, 10, 12, 0.52) 78%, var(--color-bg) 100%);
-  }
-
-  /* Light-mode orb: switch from screen to multiply so it tints the ivory base */
-  [data-theme="light"] .home-page-orb {
-    opacity: 0.55;
-    mix-blend-mode: multiply;
-    filter: saturate(0.82) blur(0.5px);
-  }
-
-  [data-theme="light"] .home-page-orb::after {
-    background: radial-gradient(circle at 50% 50%, transparent 0 52%, rgba(247, 245, 240, 0.72) 72%, #F7F5F0 100%);
   }
 
   .hero-heading {
@@ -1826,7 +1788,7 @@
     transparent 75%
   );
   mix-blend-mode: multiply;
-  filter: blur(120px);
+  filter: none;
   pointer-events: none;
   z-index: 1;
 }
@@ -1845,7 +1807,7 @@
     transparent 72%
   );
   mix-blend-mode: multiply;
-  filter: blur(90px);
+  filter: none;
   pointer-events: none;
   z-index: 1;
 }
@@ -1853,10 +1815,6 @@
 /* ─────────────────────────────────────────────────────────────
    HOME HERO GRID — soften the dot pattern for light mode
    ───────────────────────────────────────────────────────────── */
-[data-theme="light"] .home-hero-grid {
-  background-image: radial-gradient(circle, rgba(7, 109, 135, 0.07) 1px, transparent 1px) !important;
-}
-
 /* ─────────────────────────────────────────────────────────────
    SCROLL STORY PANELS — deep dark panel gradient → ivory cards
    ───────────────────────────────────────────────────────────── */
@@ -2083,14 +2041,10 @@
 }
 [data-theme="light"] .home-hero-section::before,
 [data-theme="light"] .home-hero-section::after {
-  position: absolute !important; /* must be absolute, never fixed */
-}
-
-/* Hero orb canvas (HomeOrbBackground) — clip to hero bounds */
-[data-theme="light"] .home-hero-section > canvas,
-[data-theme="light"] .home-hero-section > [data-orb] {
-  overflow: hidden;
-  clip-path: inset(0);
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  filter: none !important;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -2350,4 +2304,3 @@ a.footer-contact-line:hover {
     max-width: 42rem;
   }
 }
-

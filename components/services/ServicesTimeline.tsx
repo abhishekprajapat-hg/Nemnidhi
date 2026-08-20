@@ -1,48 +1,9 @@
 "use client";
 
-import { useRef, lazy, Suspense } from "react";
-import type { FC, CSSProperties } from "react";
+import { useRef } from "react";
 import Link from "next/link";
 import Container from "@/components/layout/Container";
 import { useSectionLabel, useTimelineGrow } from "@/lib/useGsapAnimations";
-
-interface UndrawProps {
-  primaryColor?: string;
-  height?: string;
-  style?: CSSProperties;
-}
-
-// ─── Lazy-load illustrations (tree-shaken, below-the-fold safe) ───
-const UndrawDashboard = lazy(() =>
-  import("react-undraw-illustrations/lib/components/UndrawDashboard").then(
-    (m) => ({ default: (m.UndrawDashboard ?? m.default) as FC<UndrawProps> })
-  )
-);
-const UndrawDevices = lazy(() =>
-  import("react-undraw-illustrations/lib/components/UndrawDevices").then(
-    (m) => ({ default: (m.UndrawDevices ?? m.default) as FC<UndrawProps> })
-  )
-);
-const UndrawServer = lazy(() =>
-  import("react-undraw-illustrations/lib/components/UndrawServer").then(
-    (m) => ({ default: (m.UndrawServer ?? m.default) as FC<UndrawProps> })
-  )
-);
-const UndrawData = lazy(() =>
-  import("react-undraw-illustrations/lib/components/UndrawData").then(
-    (m) => ({ default: (m.UndrawData ?? m.default) as FC<UndrawProps> })
-  )
-);
-const UndrawBrainstorming = lazy(() =>
-  import("react-undraw-illustrations/lib/components/UndrawBrainstorming").then(
-    (m) => ({ default: (m.UndrawBrainstorming ?? m.default) as FC<UndrawProps> })
-  )
-);
-const UndrawWireframing = lazy(() =>
-  import("react-undraw-illustrations/lib/components/UndrawWireframing").then(
-    (m) => ({ default: (m.UndrawWireframing ?? m.default) as FC<UndrawProps> })
-  )
-);
 
 const BRAND_CYAN = "#67e8f9";
 
@@ -76,20 +37,19 @@ const S = {
 function ServiceIllustration({ illustrationKey }: { illustrationKey: Service["illustrationKey"] }) {
   if (!illustrationKey) return null;
 
-  const sharedProps = {
-    primaryColor: BRAND_CYAN,
-    style: { width: "100%", height: "auto", maxWidth: 220 },
+  const labels: Record<NonNullable<Service["illustrationKey"]>, string> = {
+    dashboard: "WEB",
+    devices: "APP",
+    server: "CLOUD",
+    data: "DATA",
+    brainstorming: "PLAN",
+    wireframing: "UX",
   };
 
   return (
-    <Suspense fallback={<div style={{ width: 220, height: 180 }} />}>
-      {illustrationKey === "dashboard" && <UndrawDashboard {...sharedProps} />}
-      {illustrationKey === "devices" && <UndrawDevices {...sharedProps} />}
-      {illustrationKey === "server" && <UndrawServer {...sharedProps} />}
-      {illustrationKey === "data" && <UndrawData {...sharedProps} />}
-      {illustrationKey === "brainstorming" && <UndrawBrainstorming {...sharedProps} />}
-      {illustrationKey === "wireframing" && <UndrawWireframing {...sharedProps} />}
-    </Suspense>
+    <div className="service-timeline-mark" aria-hidden="true">
+      <span>{labels[illustrationKey]}</span>
+    </div>
   );
 }
 
@@ -291,6 +251,22 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
 
         [data-theme="light"] .service-page-card {
           background: var(--color-bg-elevated) !important;
+        }
+
+        .service-timeline-mark {
+          display: grid;
+          width: 200px;
+          min-height: 160px;
+          place-items: center;
+          border: 1px solid color-mix(in srgb, ${BRAND_CYAN} 32%, transparent);
+          background:
+            radial-gradient(circle at 50% 50%, color-mix(in srgb, ${BRAND_CYAN} 18%, transparent), transparent 58%),
+            repeating-linear-gradient(90deg, color-mix(in srgb, ${BRAND_CYAN} 12%, transparent) 0 1px, transparent 1px 22px);
+          color: var(--color-accent);
+          font-family: var(--font-mono, monospace);
+          font-size: 0.76rem;
+          font-weight: 700;
+          letter-spacing: 0.16em;
         }
       `}</style>
     </section>

@@ -1,48 +1,25 @@
 "use client";
 
-import { useRef, lazy, Suspense } from "react";
-import type { FC } from "react";
+import { useRef } from "react";
 import Container from "@/components/layout/Container";
 import { useScrollReveal, useSectionLabel } from "@/lib/useGsapAnimations";
-
-// ─── PERF FIX: Lazy-loaded via direct paths (tree-shaken, deferred from initial bundle)
-// Previously eager imports from main entry point added ~90kB to initial JS
-interface IllustrationProps { primaryColor?: string; height?: string; }
-
-const UndrawCoding = lazy(() =>
-  import("react-undraw-illustrations/lib/components/UndrawCoding").then(
-    (m) => ({ default: (m.UndrawCoding ?? m.default) as FC<IllustrationProps> })
-  )
-);
-const UndrawMobileApps = lazy(() =>
-  import("react-undraw-illustrations/lib/components/UndrawMobileApps").then(
-    (m) => ({ default: (m.UndrawMobileApps ?? m.default) as FC<IllustrationProps> })
-  )
-);
-const UndrawCloudHosting = lazy(() =>
-  import("react-undraw-illustrations/lib/components/UndrawCloudHosting").then(
-    (m) => ({ default: (m.UndrawCloudHosting ?? m.default) as FC<IllustrationProps> })
-  )
-);
-const UndrawArtificialIntelligence = lazy(() =>
-  import("react-undraw-illustrations/lib/components/UndrawArtificialIntelligence").then(
-    (m) => ({ default: (m.UndrawArtificialIntelligence ?? m.default) as FC<IllustrationProps> })
-  )
-);
 
 const SERVICE_ILLUSTRATION_KEYS = ["coding", "mobile", "cloud", "ai"] as const;
 type IllustrationKey = typeof SERVICE_ILLUSTRATION_KEYS[number];
 
 function ServiceCardIllustration({ index }: { index: number }) {
   const key: IllustrationKey = SERVICE_ILLUSTRATION_KEYS[index % SERVICE_ILLUSTRATION_KEYS.length];
-  const props: IllustrationProps = { primaryColor: BRAND_CYAN, height: "160px" };
+  const labels: Record<IllustrationKey, string> = {
+    coding: "WEB",
+    mobile: "APP",
+    cloud: "CLOUD",
+    ai: "AI",
+  };
+
   return (
-    <Suspense fallback={<div style={{ height: "160px" }} />}>
-      {key === "coding" && <UndrawCoding {...props} />}
-      {key === "mobile" && <UndrawMobileApps {...props} />}
-      {key === "cloud" && <UndrawCloudHosting {...props} />}
-      {key === "ai" && <UndrawArtificialIntelligence {...props} />}
-    </Suspense>
+    <div className="service-card-mark" aria-hidden="true">
+      <span>{labels[key]}</span>
+    </div>
   );
 }
 
@@ -103,6 +80,7 @@ export default function ServicesSection({
       id="services"
       ref={sectionRef}
       data-scroll-chapter
+      suppressHydrationWarning
       className="section-padding"
     >
       <Container size="wide">
@@ -172,7 +150,6 @@ export default function ServicesSection({
                 transition: "background 0.2s",
               }}
             >
-              {/* Illustration — lazy-loaded, deferred from initial render */}
               <div style={{ marginBottom: "1.5rem", opacity: 0.9 }}>
                 <ServiceCardIllustration index={i} />
               </div>
@@ -254,6 +231,20 @@ export default function ServicesSection({
       <style>{`
         .service-card-hover:hover {
           background: var(--color-bg-card-hover) !important;
+        }
+        .service-card-mark {
+          display: grid;
+          min-height: 160px;
+          place-items: center;
+          border: 1px solid color-mix(in srgb, ${BRAND_CYAN} 32%, transparent);
+          background:
+            linear-gradient(135deg, color-mix(in srgb, ${BRAND_CYAN} 18%, transparent), transparent 48%),
+            repeating-linear-gradient(90deg, color-mix(in srgb, ${BRAND_CYAN} 12%, transparent) 0 1px, transparent 1px 22px);
+          color: var(--color-accent);
+          font-family: var(--font-mono, monospace);
+          font-size: 0.78rem;
+          font-weight: 700;
+          letter-spacing: 0.16em;
         }
         @media (max-width: 768px) {
           .services-grid-responsive {

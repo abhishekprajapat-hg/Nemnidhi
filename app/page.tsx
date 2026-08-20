@@ -1,6 +1,5 @@
 // app/page.tsx
 import Hero from "@/components/home/Hero";
-import HomeOrbBackground from "@/components/home/HomeOrbBackground";
 import ScrollStorySection from "@/components/home/ScrollStorySection";
 import TickerStrip from "@/components/home/TickerStrip";
 import StatsSection from "@/components/home/StatsSection";
@@ -63,7 +62,6 @@ export default async function HomePage() {
 
   return (
     <>
-      <HomeOrbBackground />
       <div className="home-page-content">
         <Hero hero={hero} />
         <TickerStrip />

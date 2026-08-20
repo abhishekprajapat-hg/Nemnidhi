@@ -1,39 +1,8 @@
 "use client";
 
-import { useRef, lazy, Suspense } from "react";
-import type { FC } from "react";
+import { useRef } from "react";
 import Container from "@/components/layout/Container";
 import { useSectionLabel, useTimelineGrow } from "@/lib/useGsapAnimations";
-
-// ─── PERF FIX: All 5 illustrations lazy-loaded via direct paths (tree-shaken)
-// Previously imported eagerly from main entry point — added ~120kB to initial bundle
-interface IllustrationProps { primaryColor?: string; height?: string; }
-
-const UndrawBrainstorming = lazy(() =>
-  import("react-undraw-illustrations/lib/components/UndrawBrainstorming").then(
-    (m) => ({ default: (m.UndrawBrainstorming ?? m.default) as FC<IllustrationProps> })
-  )
-);
-const UndrawWireframing = lazy(() =>
-  import("react-undraw-illustrations/lib/components/UndrawWireframing").then(
-    (m) => ({ default: (m.UndrawWireframing ?? m.default) as FC<IllustrationProps> })
-  )
-);
-const UndrawProgramming = lazy(() =>
-  import("react-undraw-illustrations/lib/components/UndrawProgramming").then(
-    (m) => ({ default: (m.UndrawProgramming ?? m.default) as FC<IllustrationProps> })
-  )
-);
-const UndrawQaEngineers = lazy(() =>
-  import("react-undraw-illustrations/lib/components/UndrawQaEngineers").then(
-    (m) => ({ default: (m.UndrawQaEngineers ?? m.default) as FC<IllustrationProps> })
-  )
-);
-const UndrawRising = lazy(() =>
-  import("react-undraw-illustrations/lib/components/UndrawRising").then(
-    (m) => ({ default: (m.UndrawRising ?? m.default) as FC<IllustrationProps> })
-  )
-);
 
 const BRAND_CYAN = "#67e8f9";
 
@@ -73,15 +42,18 @@ const steps: { num: string; title: string; desc: string; illustrationKey: Illust
 ];
 
 function StepIllustration({ illustrationKey }: { illustrationKey: IllustrationKey }) {
-  const props: IllustrationProps = { primaryColor: BRAND_CYAN, height: "120px" };
+  const labels: Record<IllustrationKey, string> = {
+    brainstorming: "DISCOVER",
+    wireframing: "DESIGN",
+    programming: "BUILD",
+    qa: "TEST",
+    rising: "LAUNCH",
+  };
+
   return (
-    <Suspense fallback={<div style={{ height: "120px" }} />}>
-      {illustrationKey === "brainstorming" && <UndrawBrainstorming {...props} />}
-      {illustrationKey === "wireframing" && <UndrawWireframing {...props} />}
-      {illustrationKey === "programming" && <UndrawProgramming {...props} />}
-      {illustrationKey === "qa" && <UndrawQaEngineers {...props} />}
-      {illustrationKey === "rising" && <UndrawRising {...props} />}
-    </Suspense>
+    <div className="process-step-mark" aria-hidden="true">
+      <span>{labels[illustrationKey]}</span>
+    </div>
   );
 }
 
@@ -96,6 +68,7 @@ export default function ProcessSection() {
       id="process"
       ref={sectionRef}
       data-scroll-chapter
+      suppressHydrationWarning
       className="section-padding"
       style={{
         background: "transparent",
@@ -246,6 +219,23 @@ export default function ProcessSection() {
           .process-timeline-intro {
             position: static !important;
           }
+        }
+
+        .process-step-mark {
+          display: grid;
+          min-height: 120px;
+          place-items: center;
+          border: 1px solid color-mix(in srgb, ${BRAND_CYAN} 32%, transparent);
+          background:
+            linear-gradient(90deg, color-mix(in srgb, ${BRAND_CYAN} 16%, transparent) 1px, transparent 1px),
+            linear-gradient(0deg, color-mix(in srgb, ${BRAND_CYAN} 12%, transparent) 1px, transparent 1px),
+            radial-gradient(circle at 50% 50%, color-mix(in srgb, ${BRAND_CYAN} 18%, transparent), transparent 58%);
+          background-size: 26px 26px, 26px 26px, 100% 100%;
+          color: var(--color-accent);
+          font-family: var(--font-mono, monospace);
+          font-size: 0.7rem;
+          font-weight: 700;
+          letter-spacing: 0.14em;
         }
       `}</style>
     </section>

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Container from "@/components/layout/Container";
 import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
-import HeroLightfall from "@/components/services/HeroLightfall";
+import HeroImageBackdrop from "@/components/services/HeroImageBackdrop";
 import { projects, getProjectBySlug } from "@/lib/data/projects";
 
 const siteUrl = "https://www.nemnidhi.com";
@@ -27,6 +27,14 @@ const processSteps = [
   { num: "04", title: "Testing", desc: "We validated performance, responsive behavior, edge cases, integrations, and release readiness." },
   { num: "05", title: "Launch", desc: "We shipped with monitoring, deployment confidence, documentation, and a clear plan for the next iteration." },
 ];
+
+const projectHeroImages: Record<string, string> = {
+  "nemnidhi-com": "/images/hero/project-nemnidhi-com.jpg",
+  "samvid-os": "/images/hero/project-samvid-os.jpg",
+  "nemnidhi-glam": "/images/hero/project-nemnidhi-glam.jpg",
+  "finedge-academy": "/images/hero/project-finedge-academy.jpg",
+  "punyanidhi": "/images/hero/project-punyanidhi.jpg",
+};
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -75,13 +83,15 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
     keywords: project.stack.join(", "),
   };
 
+  const heroImage = projectHeroImages[project.slug] ?? "/images/hero/project-fallback.jpg";
+
   return (
     <div style={{ background: S.bg, minHeight: "100svh" }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(caseStudySchema) }} />
 
       {/* ─── Hero ─── */}
       <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", padding: "7rem 0 4rem", background: "#05080b" }}>
-        <HeroLightfall />
+        <HeroImageBackdrop src={heroImage} focus="center" />
         <Container size="wide" className="hero-content-layer">
           <Link
             href="/projects"

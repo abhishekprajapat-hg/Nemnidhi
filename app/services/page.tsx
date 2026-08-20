@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Container from "@/components/layout/Container";
 import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
-import HeroLightfall from "@/components/services/HeroLightfall";
+import HeroImageBackdrop from "@/components/services/HeroImageBackdrop";
 import ServicesTimeline from "@/components/services/ServicesTimeline";
 import { services } from "@/lib/data/services";
 
@@ -29,7 +29,7 @@ export default function ServicesPage() {
     <div style={{ background: S.bg, minHeight: "100svh" }}>
       {/* ─── Hero ─── */}
       <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", padding: "7rem 0 4rem", background: "#05080b" }}>
-        <HeroLightfall />
+        <HeroImageBackdrop src="/images/hero/services-capabilities.jpg" focus="center" />
         <Container size="wide" className="hero-content-layer">
           <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: "#67e8f9", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
             [ NEMNIDHI.COM ] — CAPABILITIES

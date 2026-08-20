@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Container from "@/components/layout/Container";
 import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
-import HeroLightfall from "@/components/services/HeroLightfall";
+import HeroImageBackdrop from "@/components/services/HeroImageBackdrop";
 import { dbConnect } from "@/lib/mongodb";
 import { Blog, IBlog } from "@/models/Blog";
 
@@ -17,6 +17,19 @@ const S = {
   mono: "var(--font-mono, monospace)",
   heading: "var(--font-display, var(--font-heading, sans-serif))",
 };
+
+const blogHeroImages = [
+  "/images/hero/blog-detail-editorial.jpg",
+  "/images/hero/blog-detail-growth.jpg",
+  "/images/hero/blog-detail-security.jpg",
+  "/images/hero/blog-detail-strategy.jpg",
+  "/images/hero/blog-detail-analytics.jpg",
+] as const;
+
+function getBlogHeroImage(slug: string) {
+  const hash = [...slug].reduce((value, char) => value + char.charCodeAt(0), 0);
+  return blogHeroImages[hash % blogHeroImages.length];
+}
 
 export const revalidate = 0;
 
@@ -55,11 +68,13 @@ export default async function DynamicBlogPage({ params }: { params: Promise<{ sl
     notFound();
   }
 
+  const heroImage = getBlogHeroImage(slug);
+
   return (
     <div style={{ background: S.bg, minHeight: "100svh", paddingBottom: "5rem" }}>
       {/* ─── Hero / Header ─── */}
       <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", paddingTop: "7rem", paddingBottom: "3rem", borderBottom: `1px solid ${S.line}`, background: "#05080b" }}>
-        <HeroLightfall />
+        <HeroImageBackdrop src={heroImage} focus="center" />
         <Container size="default" className="hero-content-layer" style={{ maxWidth: "800px", margin: "0 auto" }}>
           <Link
             href="/blogs"

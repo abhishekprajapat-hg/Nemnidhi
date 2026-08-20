@@ -28,26 +28,12 @@ const chapters = [
 
 const heading = "Scroll through the way we turn software into momentum.";
 
-function SplitWords({ text }: { text: string }) {
-  const words = text.trim().split(/\s+/);
-
-  return (
-    <>
-      {words.map((word, index) => (
-        <span key={`${word}-${index}`} className="split-word" aria-hidden="true">
-          <span className="split-word-inner">{word}</span>
-          {index < words.length - 1 ? " " : null}
-        </span>
-      ))}
-    </>
-  );
-}
-
 export default function ScrollStorySection() {
   return (
     <section
       id="protocol"
       data-scroll-chapter
+      suppressHydrationWarning
       className="scroll-story-section"
       aria-labelledby="protocol-heading"
     >
@@ -57,8 +43,8 @@ export default function ScrollStorySection() {
             <span className="section-label-number">[ 00 ]</span>
             Delivery protocol
           </p>
-          <h2 id="protocol-heading" data-split className="scroll-story-heading" aria-label={heading}>
-            <SplitWords text={heading} />
+          <h2 id="protocol-heading" data-split className="scroll-story-heading" suppressHydrationWarning>
+            {heading}
           </h2>
         </div>
 

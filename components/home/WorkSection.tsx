@@ -63,6 +63,7 @@ export default function WorkSection() {
       id="work"
       ref={sectionRef}
       data-scroll-chapter
+      suppressHydrationWarning
       className="project-showcase-section section-padding"
       style={{
         background: "transparent",

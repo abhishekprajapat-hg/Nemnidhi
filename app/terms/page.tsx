@@ -1,6 +1,6 @@
 import Container from "@/components/layout/Container";
 import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
-import HeroLightfall from "@/components/services/HeroLightfall";
+import HeroImageBackdrop from "@/components/services/HeroImageBackdrop";
 
 const SECTIONS = [
   {
@@ -58,7 +58,7 @@ export default function TermsPage() {
     <section className="theme-section min-h-screen">
       <Container className="py-10 md:py-14">
         <header className="relative isolate mb-8 overflow-hidden py-8 bg-[#05080b] rounded-sm">
-          <HeroLightfall />
+          <HeroImageBackdrop src="/images/hero/legal-documents.jpg" focus="center" />
           <div className="hero-content-layer space-y-4">
             <p className="section-eyebrow">Legal</p>
             <HeroBlurTitle className="section-title" lines={[{ text: "Terms and Conditions" }]} lineStyle={{ display: "block" }} />
@@ -91,4 +91,3 @@ export default function TermsPage() {
     </section>
   );
 }
-

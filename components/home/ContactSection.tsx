@@ -121,6 +121,7 @@ export default function ContactSection() {
       id="contact"
       ref={sectionRef}
       data-scroll-chapter
+      suppressHydrationWarning
       className="section-padding"
       style={{
         background: "transparent",
@@ -203,7 +204,7 @@ export default function ContactSection() {
               className="text-body text-prose mb-10"
               style={{ maxWidth: "26rem" }}
             >
-              Tell us what you're working on. We respond within 24 hours and move fast from there.
+              Tell us what you&apos;re working on. We respond within 24 hours and move fast from there.
             </p>
 
             {/* Contact rows */}

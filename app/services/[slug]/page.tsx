@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Container from "@/components/layout/Container";
 import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
-import HeroLightfall from "@/components/services/HeroLightfall";
+import HeroImageBackdrop from "@/components/services/HeroImageBackdrop";
 import { services, getServiceBySlug } from "@/lib/data/services";
 
 const siteUrl = "https://www.nemnidhi.com";
@@ -34,6 +34,15 @@ const whyChoose = [
   "Fixed-scope delivery with weekly demos and full source-code ownership",
   "Post-launch support included on every project, not sold as an upsell",
 ];
+
+const serviceHeroImages: Record<string, string> = {
+  "web-engineering": "/images/hero/service-web-engineering.jpg",
+  "mobile-development": "/images/hero/mobile-apps.jpg",
+  "cloud-devops": "/images/hero/service-cloud-devops.jpg",
+  "ai-integration": "/images/hero/service-ai-integration.jpg",
+  "product-strategy": "/images/hero/service-product-strategy.jpg",
+  "ui-ux-design": "/images/hero/service-ui-ux-design.jpg",
+} as const;
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -100,6 +109,8 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
     })),
   };
 
+  const heroImage = serviceHeroImages[service.slug];
+
   return (
     <div style={{ background: S.bg, minHeight: "100svh" }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
@@ -107,7 +118,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
 
       {/* ─── Hero ─── */}
       <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", padding: "7rem 0 4rem", background: "#05080b" }}>
-        <HeroLightfall />
+        <HeroImageBackdrop src={heroImage} focus="center" />
         <Container size="wide" className="hero-content-layer">
           <Link
             href="/services"
