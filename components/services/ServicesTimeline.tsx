@@ -2,7 +2,6 @@
 
 import { useRef, type ReactElement } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import Container from "@/components/layout/Container";
 import { useSectionLabel, useTimelineGrow } from "@/lib/useGsapAnimations";
 
@@ -106,29 +105,6 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
             OUR CAPABILITIES
           </span>
           <div style={{ flex: 1, height: "1px", background: S.line }} />
-        </div>
-
-        <div
-          aria-hidden="true"
-          style={{
-            position: "relative",
-            width: "100%",
-            aspectRatio: "1998 / 667",
-            borderRadius: "12px",
-            overflow: "hidden",
-            border: `1px solid ${S.line}`,
-            background: "#F7F5F0",
-            boxShadow: "0 16px 40px -16px rgba(0,0,0,0.55)",
-            marginBottom: "3rem",
-          }}
-        >
-          <Image
-            src="/images/illustrations/capabilities-hub.png"
-            alt=""
-            fill
-            sizes="100vw"
-            style={{ objectFit: "cover", objectPosition: "center" }}
-          />
         </div>
 
         <div
