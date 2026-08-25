@@ -3,38 +3,12 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Container from "@/components/layout/Container";
 import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
-import HeroImageBackdrop from "@/components/services/HeroImageBackdrop";
+import TechStackIcons from "@/components/projects/TechStackIcons";
 import { projects, getProjectBySlug } from "@/lib/data/projects";
 
 const siteUrl = "https://www.nemnidhi.com";
 
-const S = {
-  bg: "var(--color-bg)",
-  bgCard: "var(--color-bg-elevated)",
-  line: "var(--color-line)",
-  accent: "var(--color-accent)",
-  white: "var(--color-heading)",
-  muted: "var(--color-text-muted)",
-  faint: "var(--color-text-faint)",
-  mono: "var(--font-mono, monospace)",
-  heading: "var(--font-display, var(--font-heading, sans-serif))",
-};
-
-const processSteps = [
-  { num: "01", title: "Discovery", desc: "We mapped requirements, constraints, success metrics, and the commercial outcome the software had to create." },
-  { num: "02", title: "Design", desc: "We shaped product flows, visual systems, data models, and technical architecture before heavy engineering began." },
-  { num: "03", title: "Development", desc: "Senior engineers built in focused sprints with frequent demos, clean handoffs, and deployable increments." },
-  { num: "04", title: "Testing", desc: "We validated performance, responsive behavior, edge cases, integrations, and release readiness." },
-  { num: "05", title: "Launch", desc: "We shipped with monitoring, deployment confidence, documentation, and a clear plan for the next iteration." },
-];
-
-const projectHeroImages: Record<string, string> = {
-  "nemnidhi-com": "/images/hero/project-nemnidhi-com.jpg",
-  "samvid-os": "/images/hero/project-samvid-os.jpg",
-  "nemnidhi-glam": "/images/hero/project-nemnidhi-glam.jpg",
-  "finedge-academy": "/images/hero/project-finedge-academy.jpg",
-  "punyanidhi": "/images/hero/project-punyanidhi.jpg",
-};
+import { S } from "@/lib/styleTokens";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -83,16 +57,16 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
     keywords: project.stack.join(", "),
   };
 
-  const heroImage = projectHeroImages[project.slug] ?? "/images/hero/project-fallback.jpg";
+  const currentIndex = projects.findIndex((p) => p.slug === project.slug);
+  const nextProject = projects[(currentIndex + 1) % projects.length];
 
   return (
     <div style={{ background: S.bg, minHeight: "100svh" }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(caseStudySchema) }} />
 
       {/* ─── Hero ─── */}
-      <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", padding: "7rem 0 4rem", background: "#05080b" }}>
-        <HeroImageBackdrop src={heroImage} focus="center" />
-        <Container size="wide" className="hero-content-layer">
+      <section style={{ position: "relative", overflow: "hidden", padding: "7rem 0 4rem", background: S.bg, borderBottom: `1px solid ${S.line}` }}>
+        <Container size="wide">
           <Link
             href="/projects"
             style={{
@@ -100,7 +74,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               fontFamily: S.mono,
               fontSize: "0.7rem",
               fontWeight: 600,
-              color: "#67e8f9",
+              color: S.accent,
               letterSpacing: "0.12em",
               textTransform: "uppercase",
               textDecoration: "none",
@@ -109,15 +83,15 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           >
             ← Back to Work
           </Link>
-          <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: "#67e8f9", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
+          <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: S.accent, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
             [ NEMNIDHI.COM ] — CASE STUDY {project.id}
           </p>
           <HeroBlurTitle
-            lines={[{ text: project.h1, color: "#f0f4f8" }]}
+            lines={[{ text: project.h1, color: S.white }]}
             style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(1.9rem, 4.4vw, 3.4rem)", textTransform: "uppercase", lineHeight: 1.05, letterSpacing: "-0.015em", marginBottom: "2rem" }}
             lineStyle={{ display: "block" }}
           />
-          <p style={{ color: "#94a3b8", fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.7, maxWidth: "40rem", marginBottom: "2rem" }}>
+          <p style={{ color: S.muted, fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.7, maxWidth: "40rem", marginBottom: "2rem" }}>
             {project.desc}
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "center" }}>
@@ -125,7 +99,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               href={project.href}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.75rem 1.5rem", background: S.accent, color: "#080a0c", fontFamily: S.mono, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "none" }}
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.75rem 1.5rem", background: S.accent, color: "var(--color-bg)", fontFamily: S.mono, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "none" }}
             >
               VISIT LIVE PROJECT ↗
             </a>
@@ -181,32 +155,34 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             <div>
               <h2 className="text-h2 uppercase">Technology stack.</h2>
             </div>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-              {project.stack.map((t) => (
-                <span key={t} style={{ padding: "0.4rem 0.85rem", border: `1px solid ${S.line}`, fontFamily: S.mono, fontSize: "0.7rem", color: S.muted }}>
-                  {t}
-                </span>
-              ))}
-            </div>
+            <TechStackIcons items={project.stack} size="md" />
           </div>
         </Container>
       </section>
 
       <div style={{ width: "100%", height: "1px", background: S.line }} />
 
-      {/* ─── Process ─── */}
+      {/* ─── Next Project ─── */}
       <section className="section-padding">
         <Container size="wide">
-          <h2 className="text-h2 uppercase" style={{ marginBottom: "2.5rem" }}>How we delivered it.</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "1.5rem" }}>
-            {processSteps.map((step) => (
-              <div key={step.num} style={{ border: `1px solid ${S.line}`, background: S.bgCard, padding: "1.5rem" }}>
-                <span style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 700, color: S.accent }}>{step.num}</span>
-                <h3 className="text-h4 uppercase" style={{ marginTop: "0.5rem" }}>{step.title}</h3>
-                <p style={{ fontSize: "0.85rem", lineHeight: 1.6, color: S.muted, marginTop: "0.5rem" }}>{step.desc}</p>
-              </div>
-            ))}
-          </div>
+          <Link
+            href={`/projects/${nextProject.slug}`}
+            className="next-project-link"
+            style={{ display: "block", textDecoration: "none" }}
+          >
+            <span style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 600, color: S.accent, letterSpacing: "0.12em", textTransform: "uppercase" }}>
+              Next Project →
+            </span>
+            <h2
+              className="text-h2 uppercase"
+              style={{ marginTop: "0.75rem" }}
+            >
+              {nextProject.title}
+            </h2>
+            <p style={{ color: S.muted, marginTop: "0.75rem", fontSize: "0.95rem", maxWidth: "40rem" }}>
+              {nextProject.desc}
+            </p>
+          </Link>
         </Container>
       </section>
 
@@ -224,7 +200,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                 Tell us what you&apos;re building. We respond within 24 hours.
               </p>
             </div>
-            <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "1rem 2rem", background: S.accent, color: "#080a0c", fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "none" }}>
+            <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "1rem 2rem", background: S.accent, color: "var(--color-bg)", fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "none" }}>
               DISCUSS A PROJECT →
             </Link>
           </div>
@@ -236,6 +212,12 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           .case-detail-grid {
             grid-template-columns: 1fr !important;
           }
+        }
+        .next-project-link h2 {
+          transition: color 0.15s;
+        }
+        .next-project-link:hover h2 {
+          color: var(--color-accent);
         }
       `}</style>
     </div>

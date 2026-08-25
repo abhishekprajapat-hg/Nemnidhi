@@ -1,7 +1,6 @@
 import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
-import HeroImageBackdrop from "@/components/services/HeroImageBackdrop";
 
 type SolutionItem = {
   id: string;
@@ -106,7 +105,7 @@ const SOLUTIONS: SolutionItem[] = [
       "Less rework from choosing the wrong delivery path",
       "Clear visibility from first release to long-term scale",
     ],
-    highlight: "Tailored fit",
+    highlight: "Custom scope",
     ctaLabel: "Discuss a custom solution",
   },
 ];
@@ -115,9 +114,8 @@ export default function SolutionsPage() {
   return (
     <section className="theme-section min-h-screen">
       <Container className="py-10 md:py-14">
-        <header className="relative isolate mb-10 overflow-hidden py-8 bg-[#05080b] rounded-sm">
-          <HeroImageBackdrop src="/images/hero/solutions-operations.jpg" focus="center" />
-          <div className="hero-content-layer space-y-4">
+        <header className="relative isolate mb-10 overflow-hidden py-8 rounded-sm" style={{ background: "var(--color-bg)", border: "1px solid var(--color-line)" }}>
+          <div className="space-y-4">
             <p className="section-eyebrow">Partners</p>
             <HeroBlurTitle
               className="section-title max-w-4xl"
@@ -140,25 +138,25 @@ export default function SolutionsPage() {
             >
               <div className="space-y-4">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-md border border-[#2A3E56] bg-[#111a28] px-2.5 py-1 text-xs text-[#8095AC]">
+                  <span className="rounded-md border border-[color:var(--color-line)] bg-[color:var(--color-bg-elevated)] px-2.5 py-1 text-xs text-[color:var(--color-text-faint)]">
                     {solution.label}
                   </span>
-                  <span className="rounded-md bg-[#152338] px-2.5 py-1 text-xs font-semibold text-[#CFE3FF]">
+                  <span className="rounded-md bg-[color:var(--color-accent-bg)] px-2.5 py-1 text-xs font-semibold text-[color:var(--color-accent)]">
                     {solution.highlight}
                   </span>
                 </div>
 
                 <div className="space-y-2">
-                  <h2 className="text-2xl font-semibold text-[#E7F0FF]">{solution.name}</h2>
-                  <p className="text-sm font-semibold text-[#66AAFF]">{solution.tagline}</p>
+                  <h2 className="text-2xl font-semibold text-[color:var(--color-heading)]">{solution.name}</h2>
+                  <p className="text-sm font-semibold text-[color:var(--color-accent)]">{solution.tagline}</p>
                 </div>
 
                 <div>
                   <p className="mb-2 section-eyebrow">Best For</p>
-                  <ul className="space-y-1.5 text-sm text-[#AABFD4]">
+                  <ul className="space-y-1.5 text-sm text-[color:var(--color-text-muted)]">
                     {solution.bestFor.map((item) => (
                       <li key={item} className="flex gap-2">
-                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[#66AAFF]" />
+                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[color:var(--color-accent)]" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -172,13 +170,13 @@ export default function SolutionsPage() {
                 </Button>
               </div>
 
-              <div className="space-y-5 border-t border-[#2A3E56] pt-5 md:border-l md:border-t-0 md:pl-6 md:pt-0">
+              <div className="space-y-5 border-t border-[color:var(--color-line)] pt-5 md:border-l md:border-t-0 md:pl-6 md:pt-0">
                 <div>
                   <p className="mb-2 section-eyebrow">What We Build</p>
-                  <ul className="space-y-1.5 text-sm text-[#AABFD4]">
+                  <ul className="space-y-1.5 text-sm text-[color:var(--color-text-muted)]">
                     {solution.whatWeDo.map((item) => (
                       <li key={item} className="flex gap-2">
-                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[#3A5675]" />
+                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[color:var(--color-text-faint)]" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -187,10 +185,10 @@ export default function SolutionsPage() {
 
                 <div>
                   <p className="mb-2 section-eyebrow">Expected Outcomes</p>
-                  <ul className="space-y-1.5 text-sm text-[#AABFD4]">
+                  <ul className="space-y-1.5 text-sm text-[color:var(--color-text-muted)]">
                     {solution.outcomes.map((item) => (
                       <li key={item} className="flex gap-2">
-                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[#E7F0FF]" />
+                        <span className="mt-[8px] h-1.5 w-1.5 rounded-full bg-[color:var(--color-heading)]" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -202,8 +200,8 @@ export default function SolutionsPage() {
         </div>
 
         <div className="theme-card mt-10 p-6 text-center">
-          <p className="text-base text-[#AABFD4]">Not sure which path fits your current stage?</p>
-          <p className="mt-1 text-sm text-[#8095AC]">
+          <p className="text-base text-[color:var(--color-text-muted)]">Not sure which path fits your current stage?</p>
+          <p className="mt-1 text-sm text-[color:var(--color-text-faint)]">
             Share your context and we will recommend the simplest starting point.
           </p>
           <Button asChild className="mt-4">

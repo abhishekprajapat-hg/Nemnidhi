@@ -32,11 +32,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   applicationName: "Nemnidhi",
   title: {
-    default: "Nemnidhi | Engineering Software That Scales",
+    default: "Nemnidhi | Software Engineering Studio in Indore, India",
     template: "%s | Nemnidhi",
   },
   description:
-    "We build production-grade software for startups and enterprises — from architecture to deployment. Precision engineering, zero compromise.",
+    "Nemnidhi is a software engineering studio in Indore, India, building web platforms, mobile apps, automation, and cloud infrastructure for startups and enterprises — from system architecture through production deployment.",
   keywords: [
     "software engineering",
     "web development",

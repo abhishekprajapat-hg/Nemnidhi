@@ -1,22 +1,11 @@
 import Link from "next/link";
 import Container from "@/components/layout/Container";
 import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
-import HeroImageBackdrop from "@/components/services/HeroImageBackdrop";
 import ServicesTimeline from "@/components/services/ServicesTimeline";
 import { services } from "@/lib/data/services";
 
 // ─── shared design tokens ───
-const S = {
-  bg: "var(--color-bg)",
-  bgCard: "var(--color-bg-elevated)",
-  line: "var(--color-line)",
-  accent: "var(--color-accent)",
-  white: "var(--color-heading)",
-  muted: "var(--color-text-muted)",
-  faint: "var(--color-text-faint)",
-  mono: "var(--font-mono, monospace)",
-  heading: "var(--font-display, var(--font-heading, sans-serif))",
-};
+import { S } from "@/lib/styleTokens";
 
 export const metadata = {
   title: "Software Development Company in Indore & India",
@@ -28,18 +17,17 @@ export default function ServicesPage() {
   return (
     <div style={{ background: S.bg, minHeight: "100svh" }}>
       {/* ─── Hero ─── */}
-      <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", padding: "7rem 0 4rem", background: "#05080b" }}>
-        <HeroImageBackdrop src="/images/hero/services-platform-hero.png" focus="center" />
-        <Container size="wide" className="hero-content-layer">
-          <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: "#67e8f9", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
+      <section style={{ position: "relative", overflow: "hidden", padding: "7rem 0 4rem", background: S.bg, borderBottom: `1px solid ${S.line}` }}>
+        <Container size="wide">
+          <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: S.accent, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
             [ NEMNIDHI.COM ] — CAPABILITIES
           </p>
           <HeroBlurTitle
-            lines={[{ text: "WHAT WE", color: "#f0f4f8" }, { text: "BUILD.", color: "#67e8f9" }]}
+            lines={[{ text: "WHAT WE", color: S.white }, { text: "BUILD.", color: S.accent }]}
             style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(2.35rem, 5.8vw, 5.2rem)", textTransform: "uppercase", lineHeight: 0.95, letterSpacing: "-0.015em", marginBottom: "2rem" }}
             lineStyle={{ display: "block" }}
           />
-          <p style={{ color: "#94a3b8", fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.7, maxWidth: "36rem" }}>
+          <p style={{ color: S.muted, fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.7, maxWidth: "36rem" }}>
             Full-spectrum software engineering — from architecture to deployment. Six core capabilities, one integrated team.
           </p>
         </Container>

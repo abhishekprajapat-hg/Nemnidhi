@@ -271,39 +271,6 @@ export function useHorizontalScroll(ref: SectionRef) {
   );
 }
 
-export function useCountUp(ref: SectionRef) {
-  useScheduledGsap(
-    ref,
-    (scope, { gsap }) => {
-      const ctx = gsap.context(() => {
-        const counters = gsap.utils.toArray<HTMLElement>("[data-count-target]");
-
-        counters.forEach((counter) => {
-          const target = Number(counter.dataset.countTarget ?? 0);
-          const suffix = counter.dataset.countSuffix ?? "";
-          const state = { value: 0 };
-
-          gsap.to(state, {
-            value: target,
-            duration: 1.8,
-            ease: "power1.out",
-            onUpdate: () => {
-              counter.textContent = `${Math.round(state.value)}${suffix}`;
-            },
-            scrollTrigger: {
-              trigger: counter,
-              start: "top 86%",
-              once: true,
-            },
-          });
-        });
-      }, scope);
-
-      return () => ctx.revert();
-    },
-    [ref],
-  );
-}
 
 export function useStaggerScale(ref: SectionRef, { stagger = 0.08 }: { stagger?: number } = {}) {
   useScheduledGsap(

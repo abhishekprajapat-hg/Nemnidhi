@@ -2,34 +2,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Container from "@/components/layout/Container";
 import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
-import HeroImageBackdrop from "@/components/services/HeroImageBackdrop";
 import { dbConnect } from "@/lib/mongodb";
 import { Blog, IBlog } from "@/models/Blog";
 
-const S = {
-  bg: "var(--color-bg)",
-  bgCard: "var(--color-bg-elevated)",
-  line: "var(--color-line)",
-  accent: "var(--color-accent)",
-  white: "var(--color-heading)",
-  muted: "var(--color-text-muted)",
-  faint: "var(--color-text-faint)",
-  mono: "var(--font-mono, monospace)",
-  heading: "var(--font-display, var(--font-heading, sans-serif))",
-};
-
-const blogHeroImages = [
-  "/images/hero/blog-detail-editorial.jpg",
-  "/images/hero/blog-detail-growth.jpg",
-  "/images/hero/blog-detail-security.jpg",
-  "/images/hero/blog-detail-strategy.jpg",
-  "/images/hero/blog-detail-analytics.jpg",
-] as const;
-
-function getBlogHeroImage(slug: string) {
-  const hash = [...slug].reduce((value, char) => value + char.charCodeAt(0), 0);
-  return blogHeroImages[hash % blogHeroImages.length];
-}
+import { S } from "@/lib/styleTokens";
 
 export const revalidate = 0;
 
@@ -68,14 +44,11 @@ export default async function DynamicBlogPage({ params }: { params: Promise<{ sl
     notFound();
   }
 
-  const heroImage = getBlogHeroImage(slug);
-
   return (
     <div style={{ background: S.bg, minHeight: "100svh", paddingBottom: "5rem" }}>
       {/* ─── Hero / Header ─── */}
-      <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", paddingTop: "7rem", paddingBottom: "3rem", borderBottom: `1px solid ${S.line}`, background: "#05080b" }}>
-        <HeroImageBackdrop src={heroImage} focus="center" />
-        <Container size="default" className="hero-content-layer" style={{ maxWidth: "800px", margin: "0 auto" }}>
+      <section style={{ position: "relative", overflow: "hidden", paddingTop: "7rem", paddingBottom: "3rem", borderBottom: `1px solid ${S.line}`, background: S.bg }}>
+        <Container size="default" style={{ maxWidth: "800px", margin: "0 auto" }}>
           <Link
             href="/blogs"
             style={{
@@ -83,7 +56,7 @@ export default async function DynamicBlogPage({ params }: { params: Promise<{ sl
               fontFamily: S.mono,
               fontSize: "0.7rem",
               fontWeight: 600,
-              color: "#67e8f9",
+              color: S.accent,
               letterSpacing: "0.12em",
               textTransform: "uppercase",
               textDecoration: "none",
@@ -94,20 +67,20 @@ export default async function DynamicBlogPage({ params }: { params: Promise<{ sl
           </Link>
 
           <HeroBlurTitle
-            lines={[{ text: blog.title, color: "#f0f4f8" }]}
+            lines={[{ text: blog.title, color: S.white }]}
             style={{
               fontFamily: S.heading,
               fontWeight: 900,
               fontSize: "clamp(2.5rem, 4.5vw, 4rem)",
               textTransform: "uppercase",
               lineHeight: 1.05,
-              color: "#f0f4f8",
+              color: S.white,
               marginBottom: "1.5rem",
               fontStyle: "normal",
             }}
             lineStyle={{ display: "block" }}
           />
-          <div style={{ display: "flex", gap: "1.5rem", fontFamily: S.mono, fontSize: "0.7rem", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+          <div style={{ display: "flex", gap: "1.5rem", fontFamily: S.mono, fontSize: "0.7rem", color: S.faint, textTransform: "uppercase", letterSpacing: "0.05em" }}>
             <span>{blog.date}</span>
           </div>
         </Container>

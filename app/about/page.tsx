@@ -1,19 +1,9 @@
 import Link from "next/link";
 import Container from "@/components/layout/Container";
 import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
-import HeroImageBackdrop from "@/components/services/HeroImageBackdrop";
+import { companyStats } from "@/lib/data/stats";
 
-const S = {
-  bg: "var(--color-bg)",
-  bgCard: "var(--color-bg-elevated)",
-  line: "var(--color-line)",
-  accent: "var(--color-accent)",
-  white: "var(--color-heading)",
-  muted: "var(--color-text-muted)",
-  faint: "var(--color-text-faint)",
-  mono: "var(--font-mono, monospace)",
-  heading: "var(--font-display, var(--font-heading, sans-serif))",
-};
+import { S } from "@/lib/styleTokens";
 
 function SectionLabel({ number, text }: { number: string; text: string }) {
   return (
@@ -25,12 +15,10 @@ function SectionLabel({ number, text }: { number: string; text: string }) {
   );
 }
 
-const stats = [
-  { value: "6+", label: "YEARS OPERATING" },
-  { value: "120+", label: "PROJECTS SHIPPED" },
-  { value: "40+", label: "ENGINEERING TALENT" },
-  { value: "98%", label: "CLIENT RETENTION" },
-];
+const stats = companyStats.map((s) => ({
+  value: `${s.value}${s.suffix}`,
+  label: s.label,
+}));
 
 const principles = [
   { num: "01", title: "CLARITY OVER COMPLEXITY", desc: "We simplify architecture, flows, and tooling so your team can move faster with less friction. Every system we build is designed to be maintained." },
@@ -55,19 +43,18 @@ export default function AboutPage() {
   return (
     <div style={{ background: S.bg, minHeight: "100svh" }}>
       {/* ─── Hero ─── */}
-      <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", padding: "7rem 0 4rem", background: "#05080b" }}>
-        <HeroImageBackdrop src="/images/hero/about-platform-hero.png" focus="center" />
-        <Container size="wide" className="hero-content-layer">
-          <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: "#67e8f9", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
+      <section style={{ position: "relative", overflow: "hidden", padding: "7rem 0 4rem", background: S.bg, borderBottom: `1px solid ${S.line}` }}>
+        <Container size="wide">
+          <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: S.accent, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
             [ NEMNIDHI.COM ] — EST. 2025
           </p>
           <HeroBlurTitle
-            lines={[{ text: "WHO", color: "#f0f4f8" }, { text: "WE ARE.", color: "#67e8f9" }]}
+            lines={[{ text: "WHO", color: S.white }, { text: "WE ARE.", color: S.accent }]}
             style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(2.35rem, 5.8vw, 5.2rem)", textTransform: "uppercase", lineHeight: 0.95, letterSpacing: "-0.015em", marginBottom: "2rem" }}
             lineStyle={{ display: "block" }}
           />
-          <p style={{ color: "#94a3b8", fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.7, maxWidth: "36rem" }}>
-            A focused software engineering studio building production-grade systems for startups and enterprises. Precision engineering, zero compromise.
+          <p style={{ color: S.muted, fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.7, maxWidth: "36rem" }}>
+            A focused software engineering studio building production systems for startups and enterprises — from system architecture and data models through frontend implementation, infrastructure, and post-launch support.
           </p>
         </Container>
       </section>
@@ -165,7 +152,7 @@ export default function AboutPage() {
       <div style={{ width: "100%", height: "1px", background: S.line }} />
 
       {/* ─── CTA ─── */}
-      <section className="section-padding" style={{ background: "#05080b" }}>
+      <section className="section-padding" style={{ background: S.bg }}>
         <Container size="wide">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "2rem" }}>
             <div>
@@ -176,7 +163,7 @@ export default function AboutPage() {
                 We respond within 24 hours and move fast from there.
               </p>
             </div>
-            <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "1rem 2rem", background: S.accent, color: "#080a0c", fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "none" }}>
+            <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "1rem 2rem", background: S.accent, color: "var(--color-bg)", fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "none" }}>
               LET&apos;S TALK →
             </Link>
           </div>

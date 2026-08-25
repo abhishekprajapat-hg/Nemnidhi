@@ -4,58 +4,44 @@ import { useRef } from "react";
 import Container from "@/components/layout/Container";
 import { useSectionLabel, useTimelineGrow } from "@/lib/useGsapAnimations";
 
-const BRAND_CYAN = "#67e8f9";
-
-type IllustrationKey = "brainstorming" | "wireframing" | "programming" | "qa" | "rising";
-
-const steps: { num: string; title: string; desc: string; illustrationKey: IllustrationKey }[] = [
+const steps: { num: string; title: string; desc: string; outputs: string[] }[] = [
   {
     num: "01",
-    title: "Discovery",
-    desc: "We map requirements, constraints, success metrics, and the commercial outcome the software has to create.",
-    illustrationKey: "brainstorming",
+    title: "Understand",
+    desc: "We map requirements, constraints, and success metrics against how your business actually operates today.",
+    outputs: ["Requirements map", "Existing workflow analysis", "Business constraints", "Feature scope"],
   },
   {
     num: "02",
-    title: "Design",
-    desc: "We shape product flows, visual systems, data models, and technical architecture before heavy engineering begins.",
-    illustrationKey: "wireframing",
+    title: "Architect",
+    desc: "System design before a single line of code — the technical blueprint the rest of the build follows.",
+    outputs: ["System architecture", "Database design", "API contracts", "Infrastructure plan", "Security model"],
   },
   {
     num: "03",
-    title: "Development",
-    desc: "Senior engineers build in focused sprints with frequent demos, clean handoffs, and deployable increments.",
-    illustrationKey: "programming",
+    title: "Prototype",
+    desc: "We validate flows and interaction design before committing engineering time to the wrong shape.",
+    outputs: ["User flows", "Wireframes", "Design direction", "Interaction prototype"],
   },
   {
     num: "04",
-    title: "Testing",
-    desc: "We validate performance, responsive behavior, edge cases, integrations, and release readiness.",
-    illustrationKey: "qa",
+    title: "Engineer",
+    desc: "Two-week sprint cycles with continuous delivery — daily standups, weekly demos, reviewed code.",
+    outputs: ["Sprint development", "Code reviews", "Automated tests", "Staging releases"],
   },
   {
     num: "05",
-    title: "Launch",
-    desc: "We ship with monitoring, deployment confidence, documentation, and a clear plan for the next iteration.",
-    illustrationKey: "rising",
+    title: "Validate",
+    desc: "We test what we built against real conditions, not just the happy path, before it reaches production.",
+    outputs: ["QA", "Performance testing", "Security review", "Stakeholder validation"],
+  },
+  {
+    num: "06",
+    title: "Ship & Operate",
+    desc: "Launch is the start of operating the system, not the end of the engagement.",
+    outputs: ["Production deployment", "Monitoring", "Error tracking", "Documentation", "Maintenance"],
   },
 ];
-
-function StepIllustration({ illustrationKey }: { illustrationKey: IllustrationKey }) {
-  const labels: Record<IllustrationKey, string> = {
-    brainstorming: "DISCOVER",
-    wireframing: "DESIGN",
-    programming: "BUILD",
-    qa: "TEST",
-    rising: "LAUNCH",
-  };
-
-  return (
-    <div className="process-step-mark" aria-hidden="true">
-      <span>{labels[illustrationKey]}</span>
-    </div>
-  );
-}
 
 export default function ProcessSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -106,7 +92,7 @@ export default function ProcessSection() {
               color: "var(--color-text)",
             }}
           >
-            PROCESS TIMELINE
+            DELIVERY SYSTEM
           </span>
           <div style={{ flex: 1, height: "1px", background: "var(--color-line)" }} />
         </div>
@@ -125,7 +111,7 @@ export default function ProcessSection() {
               From signal to shipped software.
             </h2>
             <p className="text-body text-prose mt-6 text-[var(--color-text-muted)]">
-              A lean delivery rhythm that keeps strategy, design, engineering, and release quality moving together.
+              Six phases, each with a defined output — architecture and data models are settled before implementation, not discovered during it.
             </p>
           </div>
 
@@ -196,13 +182,17 @@ export default function ProcessSection() {
                     }}
                   >
                     <h3 className="text-h4 uppercase">{step.title}</h3>
-                    {/* Lazy illustration — deferred until React hydrates this card */}
-                    <div style={{ margin: "0.9rem 0", opacity: 0.85 }}>
-                      <StepIllustration illustrationKey={step.illustrationKey} />
-                    </div>
                     <p className="text-body text-prose mt-2 text-[var(--color-text-muted)]">
                       {step.desc}
                     </p>
+                    <div className="process-outputs">
+                      <span className="process-outputs-label">Outputs</span>
+                      <ul>
+                        {step.outputs.map((output) => (
+                          <li key={output}>{output}</li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </article>
               ))}
@@ -221,21 +211,35 @@ export default function ProcessSection() {
           }
         }
 
-        .process-step-mark {
-          display: grid;
-          min-height: 120px;
-          place-items: center;
-          border: 1px solid color-mix(in srgb, ${BRAND_CYAN} 32%, transparent);
-          background:
-            linear-gradient(90deg, color-mix(in srgb, ${BRAND_CYAN} 16%, transparent) 1px, transparent 1px),
-            linear-gradient(0deg, color-mix(in srgb, ${BRAND_CYAN} 12%, transparent) 1px, transparent 1px),
-            radial-gradient(circle at 50% 50%, color-mix(in srgb, ${BRAND_CYAN} 18%, transparent), transparent 58%);
-          background-size: 26px 26px, 26px 26px, 100% 100%;
-          color: var(--color-accent);
+        .process-outputs {
+          margin-top: 1.25rem;
+          padding-top: 1.1rem;
+          border-top: 1px solid var(--color-line);
+        }
+        .process-outputs-label {
+          display: block;
           font-family: var(--font-mono, monospace);
-          font-size: 0.7rem;
-          font-weight: 700;
-          letter-spacing: 0.14em;
+          font-size: 0.62rem;
+          font-weight: 600;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: var(--color-accent);
+          margin-bottom: 0.6rem;
+        }
+        .process-outputs ul {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+        .process-outputs li {
+          padding: 0.3rem 0.7rem;
+          border: 1px solid var(--color-line);
+          font-family: var(--font-mono, monospace);
+          font-size: 0.62rem;
+          color: var(--color-text-muted);
         }
       `}</style>
     </section>

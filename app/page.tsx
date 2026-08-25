@@ -2,10 +2,10 @@
 import Hero from "@/components/home/Hero";
 import ScrollStorySection from "@/components/home/ScrollStorySection";
 import TickerStrip from "@/components/home/TickerStrip";
-import StatsSection from "@/components/home/StatsSection";
 import ServicesSection from "@/components/home/ServicesSection";
 import WorkSection from "@/components/home/WorkSection";
 import ProcessSection from "@/components/home/ProcessSection";
+import HowWeEngineerSection from "@/components/home/HowWeEngineerSection";
 import TechStackStrip from "@/components/home/TechStackStrip";
 import PortalCTASection from "@/components/home/PortalCTASection";
 import ContactSection from "@/components/home/ContactSection";
@@ -74,11 +74,11 @@ export default async function HomePage() {
       <div className="home-page-content">
         <Hero hero={hero} />
         <TickerStrip />
-        <StatsSection />
         <ScrollStorySection />
         <ServicesSection services={services} />
         <WorkSection />
         <ProcessSection />
+        <HowWeEngineerSection />
         <TechStackStrip />
         <PortalCTASection />
         <FAQSection />

@@ -8,10 +8,10 @@ export default function NotFound() {
     <Container size="wide" className="grid min-h-[72vh] place-items-center py-20">
       <Card variant="strong" className="max-w-2xl p-8 text-center md:p-10">
         <p className="section-eyebrow">404</p>
-        <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-[#F8FBFF] md:text-6xl">
+        <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-[color:var(--color-heading)] md:text-6xl">
           This page is outside the operating map.
         </h1>
-        <p className="mx-auto mt-5 max-w-xl text-base leading-8 text-[#AFC0D6]">
+        <p className="mx-auto mt-5 max-w-xl text-base leading-8 text-[color:var(--color-text-muted)]">
           The page may have moved, or the link may be incorrect. Return to the homepage or contact Nemnidhi for help.
         </p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">

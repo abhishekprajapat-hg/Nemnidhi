@@ -4,17 +4,7 @@ import { useRef, useState } from "react";
 import Container from "@/components/layout/Container";
 import { useFinalCtaAnimation, useSectionLabel } from "@/lib/useGsapAnimations";
 
-const S = {
-  bg: "var(--color-bg)",
-  bgCard: "var(--color-bg-elevated)",
-  line: "var(--color-line)",
-  accent: "var(--color-accent)",
-  white: "var(--color-heading)",
-  muted: "var(--color-text-muted)",
-  faint: "var(--color-text-faint)",
-  mono: "var(--font-mono, monospace)",
-  heading: "var(--font-display, var(--font-heading, sans-serif))",
-};
+import { S } from "@/lib/styleTokens";
 
 const contactInfo = [
   { label: "GENERAL INQUIRIES", value: "info@nemnidhi.com", href: "mailto:info@nemnidhi.com" },

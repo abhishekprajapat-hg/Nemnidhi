@@ -20,8 +20,8 @@ const variants: Record<ButtonVariant, string> = {
   solid:
     "border border-[rgba(214,190,124,0.72)] bg-[#D6BE7C] text-[#07111F] hover:bg-[#F0D991]",
   outline:
-    "border border-slate-300/18 bg-white/[0.035] text-[#F8FBFF] hover:border-[rgba(214,190,124,0.5)] hover:text-[#F0D991]",
-  ghost: "border border-transparent bg-transparent text-[#D9E2EF] hover:bg-white/[0.06] hover:text-white",
+    "border border-[color:var(--color-line-strong)] bg-transparent text-[color:var(--color-text)] hover:border-[rgba(214,190,124,0.5)] hover:text-[#F0D991]",
+  ghost: "border border-transparent bg-transparent text-[color:var(--color-text-muted)] hover:bg-[color:var(--color-bg-elevated)] hover:text-[color:var(--color-heading)]",
 };
 
 const sizes: Record<ButtonSize, string> = {

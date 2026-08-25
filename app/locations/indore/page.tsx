@@ -2,21 +2,10 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import Container from "@/components/layout/Container";
 import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
-import HeroImageBackdrop from "@/components/services/HeroImageBackdrop";
 
 const siteUrl = "https://www.nemnidhi.com";
 
-const S = {
-  bg: "var(--color-bg)",
-  bgCard: "var(--color-bg-elevated)",
-  line: "var(--color-line)",
-  accent: "var(--color-accent)",
-  white: "var(--color-heading)",
-  muted: "var(--color-text-muted)",
-  faint: "var(--color-text-faint)",
-  mono: "var(--font-mono, monospace)",
-  heading: "var(--font-display, var(--font-heading, sans-serif))",
-};
+import { S } from "@/lib/styleTokens";
 
 const ADDRESS = {
   street: "B20, 5th Floor Gravity Mall, Mechanic Nagar",
@@ -120,18 +109,17 @@ export default function IndoreLocationPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       {/* ─── Hero ─── */}
-      <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", padding: "7rem 0 4rem", background: "#05080b" }}>
-        <HeroImageBackdrop src="/images/hero/location-indore.jpg" focus="center" />
-        <Container size="wide" className="hero-content-layer">
-          <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: "#67e8f9", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
+      <section style={{ position: "relative", overflow: "hidden", padding: "7rem 0 4rem", background: S.bg, borderBottom: `1px solid ${S.line}` }}>
+        <Container size="wide">
+          <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: S.accent, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
             [ NEMNIDHI.COM ] — INDORE, INDIA
           </p>
           <HeroBlurTitle
-            lines={[{ text: "SOFTWARE DEVELOPMENT", color: "#f0f4f8" }, { text: "COMPANY IN INDORE.", color: "#67e8f9" }]}
+            lines={[{ text: "SOFTWARE DEVELOPMENT", color: S.white }, { text: "COMPANY IN INDORE.", color: S.accent }]}
             style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(2rem, 4.6vw, 3.8rem)", textTransform: "uppercase", lineHeight: 1.02, letterSpacing: "-0.015em", marginBottom: "2rem" }}
             lineStyle={{ display: "block" }}
           />
-          <p style={{ color: "#94a3b8", fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.7, maxWidth: "38rem" }}>
+          <p style={{ color: S.muted, fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.7, maxWidth: "38rem" }}>
             Nemnidhi is a software engineering studio headquartered in Indore, Madhya Pradesh, building production-grade web, mobile, cloud, and AI systems for startups and enterprises across India.
           </p>
         </Container>

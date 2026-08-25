@@ -3,19 +3,8 @@
 import { useState } from "react";
 import Container from "@/components/layout/Container";
 import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
-import HeroImageBackdrop from "@/components/services/HeroImageBackdrop";
 
-const S = {
-  bg: "var(--color-bg)",
-  bgCard: "var(--color-bg-elevated)",
-  line: "var(--color-line)",
-  accent: "var(--color-accent)",
-  white: "var(--color-heading)",
-  muted: "var(--color-text-muted)",
-  faint: "var(--color-text-faint)",
-  mono: "var(--font-mono, monospace)",
-  heading: "var(--font-display, var(--font-heading, sans-serif))",
-};
+import { S } from "@/lib/styleTokens";
 
 const contactInfo = [
   { label: "GENERAL INQUIRIES", value: "info@nemnidhi.com", href: "mailto:info@nemnidhi.com" },
@@ -115,14 +104,13 @@ export default function ContactPage() {
   return (
     <div style={{ background: S.bg, minHeight: "100svh" }}>
       {/* ─── Hero ─── */}
-      <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", padding: "7rem 0 4rem", background: "#05080b" }}>
-        <HeroImageBackdrop src="/images/hero/contact-platform-hero.png" focus="center" />
-        <Container size="wide" className="hero-content-layer">
-          <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: "#67e8f9", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
+      <section style={{ position: "relative", overflow: "hidden", padding: "7rem 0 4rem", background: S.bg, borderBottom: `1px solid ${S.line}` }}>
+        <Container size="wide">
+          <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: S.accent, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
             [ NEMNIDHI.COM ] — GET IN TOUCH
           </p>
           <HeroBlurTitle
-            lines={[{ text: "READY TO", color: "#f0f4f8" }, { text: "BUILD?", color: "#67e8f9" }]}
+            lines={[{ text: "READY TO", color: S.white }, { text: "BUILD?", color: S.accent }]}
             style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(2.35rem, 5.8vw, 5.2rem)", textTransform: "uppercase", lineHeight: 0.95, letterSpacing: "-0.015em", marginBottom: "2rem" }}
             lineStyle={{ display: "block" }}
           />
@@ -182,6 +170,25 @@ export default function ContactPage() {
                       {card.label}
                     </p>
                     <p style={{ color: S.white, fontSize: "0.875rem", fontWeight: 600 }}>{card.value}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* What happens after you submit */}
+              <div style={{ marginTop: "2.5rem" }}>
+                <p style={{ fontFamily: S.mono, fontSize: "0.62rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: S.faint, marginBottom: "1rem" }}>
+                  What happens next
+                </p>
+                {[
+                  "We read your brief personally — no ticket queue or auto-router.",
+                  "We sign an NDA before any substantive project discussion.",
+                  "You get a 30-minute discovery call and a scoped estimate within 48 hours.",
+                ].map((step, i) => (
+                  <div key={step} style={{ display: "flex", gap: "0.85rem", padding: "0.6rem 0" }}>
+                    <span style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 700, color: S.accent, flexShrink: 0 }}>
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span style={{ color: S.muted, fontSize: "0.82rem", lineHeight: 1.6 }}>{step}</span>
                   </div>
                 ))}
               </div>

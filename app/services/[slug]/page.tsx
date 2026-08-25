@@ -3,30 +3,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Container from "@/components/layout/Container";
 import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
-import HeroImageBackdrop from "@/components/services/HeroImageBackdrop";
 import { services, getServiceBySlug } from "@/lib/data/services";
 
 const siteUrl = "https://www.nemnidhi.com";
 
-const S = {
-  bg: "var(--color-bg)",
-  bgCard: "var(--color-bg-elevated)",
-  line: "var(--color-line)",
-  accent: "var(--color-accent)",
-  white: "var(--color-heading)",
-  muted: "var(--color-text-muted)",
-  faint: "var(--color-text-faint)",
-  mono: "var(--font-mono, monospace)",
-  heading: "var(--font-display, var(--font-heading, sans-serif))",
-};
-
-const processSteps = [
-  { num: "01", title: "Discovery", desc: "We map requirements, constraints, success metrics, and the commercial outcome the software has to create." },
-  { num: "02", title: "Design", desc: "We shape product flows, visual systems, data models, and technical architecture before heavy engineering begins." },
-  { num: "03", title: "Development", desc: "Senior engineers build in focused sprints with frequent demos, clean handoffs, and deployable increments." },
-  { num: "04", title: "Testing", desc: "We validate performance, responsive behavior, edge cases, integrations, and release readiness." },
-  { num: "05", title: "Launch", desc: "We ship with monitoring, deployment confidence, documentation, and a clear plan for the next iteration." },
-];
+import { S } from "@/lib/styleTokens";
 
 const whyChoose = [
   "Indore-based engineering studio delivering to startups and enterprises across India",
@@ -34,15 +15,6 @@ const whyChoose = [
   "Fixed-scope delivery with weekly demos and full source-code ownership",
   "Post-launch support included on every project, not sold as an upsell",
 ];
-
-const serviceHeroImages: Record<string, string> = {
-  "web-engineering": "/images/hero/service-web-engineering.jpg",
-  "mobile-development": "/images/hero/mobile-apps.jpg",
-  "cloud-devops": "/images/hero/service-cloud-devops.jpg",
-  "ai-integration": "/images/hero/service-ai-integration.jpg",
-  "product-strategy": "/images/hero/service-product-strategy.jpg",
-  "ui-ux-design": "/images/hero/service-ui-ux-design.jpg",
-} as const;
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -109,17 +81,14 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
     })),
   };
 
-  const heroImage = serviceHeroImages[service.slug];
-
   return (
     <div style={{ background: S.bg, minHeight: "100svh" }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       {/* ─── Hero ─── */}
-      <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", padding: "7rem 0 4rem", background: "#05080b" }}>
-        <HeroImageBackdrop src={heroImage} focus="center" />
-        <Container size="wide" className="hero-content-layer">
+      <section style={{ position: "relative", overflow: "hidden", padding: "7rem 0 4rem", background: S.bg, borderBottom: `1px solid ${S.line}` }}>
+        <Container size="wide">
           <Link
             href="/services"
             style={{
@@ -127,7 +96,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
               fontFamily: S.mono,
               fontSize: "0.7rem",
               fontWeight: 600,
-              color: "#67e8f9",
+              color: S.accent,
               letterSpacing: "0.12em",
               textTransform: "uppercase",
               textDecoration: "none",
@@ -136,15 +105,15 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
           >
             ← Back to Services
           </Link>
-          <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: "#67e8f9", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
+          <p style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 500, color: S.accent, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
             [ NEMNIDHI.COM ] — SERVICE {service.num}
           </p>
           <HeroBlurTitle
-            lines={[{ text: service.h1, color: "#f0f4f8" }]}
+            lines={[{ text: service.h1, color: S.white }]}
             style={{ fontFamily: S.heading, fontWeight: 900, fontStyle: "normal", fontSize: "clamp(2rem, 4.6vw, 3.6rem)", textTransform: "uppercase", lineHeight: 1.05, letterSpacing: "-0.015em", marginBottom: "2rem" }}
             lineStyle={{ display: "block" }}
           />
-          <p style={{ color: "#94a3b8", fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.7, maxWidth: "40rem" }}>
+          <p style={{ color: S.muted, fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.7, maxWidth: "40rem" }}>
             {service.intro}
           </p>
         </Container>
@@ -163,7 +132,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "1.5rem" }}>
                 {service.tags.map((tag) => (
-                  <span key={tag} style={{ padding: "0.3rem 0.7rem", border: "1px solid rgba(255,255,255,0.1)", fontFamily: S.mono, fontSize: "0.62rem", color: "#94a3b8" }}>
+                  <span key={tag} style={{ padding: "0.3rem 0.7rem", border: `1px solid ${S.line}`, fontFamily: S.mono, fontSize: "0.62rem", color: S.muted }}>
                     {tag}
                   </span>
                 ))}
@@ -177,24 +146,6 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                 </li>
               ))}
             </ul>
-          </div>
-        </Container>
-      </section>
-
-      <div style={{ width: "100%", height: "1px", background: S.line }} />
-
-      {/* ─── Process ─── */}
-      <section className="section-padding">
-        <Container size="wide">
-          <h2 className="text-h2 uppercase" style={{ marginBottom: "2.5rem" }}>Our development process.</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "1.5rem" }}>
-            {processSteps.map((step) => (
-              <div key={step.num} style={{ border: `1px solid ${S.line}`, background: S.bgCard, padding: "1.5rem" }}>
-                <span style={{ fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 700, color: S.accent }}>{step.num}</span>
-                <h3 className="text-h4 uppercase" style={{ marginTop: "0.5rem" }}>{step.title}</h3>
-                <p style={{ fontSize: "0.85rem", lineHeight: 1.6, color: S.muted, marginTop: "0.5rem" }}>{step.desc}</p>
-              </div>
-            ))}
           </div>
         </Container>
       </section>
@@ -284,7 +235,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                 Tell us what you&apos;re building. We respond within 24 hours.
               </p>
             </div>
-            <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "1rem 2rem", background: S.accent, color: "#080a0c", fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "none" }}>
+            <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "1rem 2rem", background: S.accent, color: "var(--color-bg)", fontFamily: S.mono, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "none" }}>
               START A PROJECT →
             </Link>
           </div>

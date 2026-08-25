@@ -1183,11 +1183,7 @@
     z-index: 1;
   }
 
-  .magic-bento-card::after {
-    display: none;
-  }
-
-  .magic-bento-card > *:not(.magic-bento-particle):not(.magic-bento-ripple) {
+  .magic-bento-card > * {
     position: relative;
     z-index: 2;
   }
@@ -1203,18 +1199,6 @@
     background-position:
       100% 100%,
       0 0;
-  }
-
-  .magic-bento-particle {
-    display: none;
-  }
-
-  .magic-bento-ripple {
-    display: none;
-  }
-
-  .magic-bento-spotlight {
-    display: none;
   }
 
   /* Surface overrides */
@@ -1736,41 +1720,25 @@
 }
 
 /* ── Hero section headings ── */
-[data-theme="light"] .home-hero-section { background: transparent !important; }
-
-/* ─────────────────────────────────────────────────────────────
-   HERO INLINE STYLE OVERRIDES
-   Hero.tsx uses hardcoded inline styles we can't change w/o
-   touching JSX — these CSS attribute selectors override them.
-   ───────────────────────────────────────────────────────────── */
-
-/* Sub-paragraph text: hardcoded #f0f4f8 → soft near-black */
-[data-theme="light"] .home-hero-section p[style*="color: \"#f0f4f8\""],
-[data-theme="light"] .home-hero-section p[style*="color: #f0f4f8"] {
-  color: #3D3A31 !important;
+[data-theme="light"] .home-hero-section {
+  --color-bg: #F7F5F0;
+  --color-bg-elevated: #FFFFFF;
+  --color-bg-card: #FFFFFF;
+  --color-line: rgba(15, 15, 10, 0.1);
+  --color-line-strong: rgba(7, 109, 135, 0.24);
+  --color-text: #252217;
+  --color-text-muted: #3D3A31;
+  --color-text-faint: #5E5A4D;
+  --color-heading: #050505;
+  --color-accent: #2F91AE;
+  background:
+    radial-gradient(circle at 72% 42%, rgba(47, 145, 174, 0.08), transparent 38%),
+    linear-gradient(135deg, #F7F5F0 0%, #FFFFFF 54%, #F2EFEB 100%) !important;
+  color-scheme: light;
 }
 
-/* Catch all hero text that's white/near-white */
-[data-theme="light"] .home-hero-content p {
-  color: #3D3A31 !important;
-}
-
-/* Secondary CTA button (border: rgba(255,255,255,0.18)) */
-[data-theme="light"] .home-hero-section a[style*="rgba(255,255,255,0.18)"],
-[data-theme="light"] .home-hero-section a[style*="rgba(255, 255, 255, 0.18)"] {
-  border-color: rgba(15, 15, 10, 0.22) !important;
-  color: #1A1A1A !important;
-  background: transparent !important;
-}
-
-/* Primary CTA button: keep solid style, swap cyan fill for deep teal */
-[data-theme="light"] .home-hero-section a[style*="background: \"#67e8f9\""],
-[data-theme="light"] .home-hero-section a[style*="background: #67e8f9"],
-[data-theme="light"] .home-hero-section a[style*="border: 1px solid #67e8f9"] {
-  background: #076D87 !important;
-  border-color: #076D87 !important;
-  color: #F7F5F0 !important;
-}
+/* Hero.tsx styles itself via --color-* custom properties now, which
+   already resolve per theme — no attribute-selector overrides needed. */
 
 
 /* ─────────────────────────────────────────────────────────────
@@ -2053,6 +2021,9 @@
    ───────────────────────────────────────────────────────────── */
 [data-theme="light"] .home-hero-section {
   overflow: hidden !important;
+  background:
+    radial-gradient(circle at 72% 42%, rgba(47, 145, 174, 0.08), transparent 38%),
+    linear-gradient(135deg, #F7F5F0 0%, #FFFFFF 54%, #F2EFEB 100%) !important;
 }
 [data-theme="light"] .home-hero-section::before,
 [data-theme="light"] .home-hero-section::after {
@@ -2251,10 +2222,9 @@ a.footer-contact-line:hover {
 
   .home-hero-section .hero-bottom-row p {
     max-width: 20rem !important;
-    color: #d8e5f0 !important;
+    color: var(--color-text-muted) !important;
     font-size: 0.95rem !important;
     line-height: 1.62 !important;
-    text-shadow: 0 1px 18px rgba(0, 0, 0, 0.65);
   }
 
   .home-hero-section .hero-bottom-row > div {

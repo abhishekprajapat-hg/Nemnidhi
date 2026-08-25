@@ -1,6 +1,5 @@
 import Container from "@/components/layout/Container";
 import HeroBlurTitle from "@/components/motion/HeroBlurTitle";
-import HeroImageBackdrop from "@/components/services/HeroImageBackdrop";
 
 const SECTIONS = [
   {
@@ -57,9 +56,8 @@ export default function TermsPage() {
   return (
     <section className="theme-section min-h-screen">
       <Container className="py-10 md:py-14">
-        <header className="relative isolate mb-8 overflow-hidden py-8 bg-[#05080b] rounded-sm">
-          <HeroImageBackdrop src="/images/hero/legal-documents.jpg" focus="center" />
-          <div className="hero-content-layer space-y-4">
+        <header className="relative isolate mb-8 overflow-hidden py-8 rounded-sm" style={{ background: "var(--color-bg)", border: "1px solid var(--color-line)" }}>
+          <div className="space-y-4">
             <p className="section-eyebrow">Legal</p>
             <HeroBlurTitle className="section-title" lines={[{ text: "Terms and Conditions" }]} lineStyle={{ display: "block" }} />
             <p className="max-w-3xl section-copy">
@@ -75,10 +73,10 @@ export default function TermsPage() {
           <div className="space-y-7">
             {SECTIONS.map((section) => (
               <section key={section.title} className="space-y-3">
-                <h2 className="text-xl font-semibold text-[#E7F0FF]">{section.title}</h2>
+                <h2 className="text-xl font-semibold" style={{ color: "var(--color-heading)" }}>{section.title}</h2>
                 <div className="space-y-2">
                   {section.body.map((paragraph) => (
-                    <p key={paragraph} className="text-sm leading-7 text-[#AABFD4]">
+                    <p key={paragraph} className="text-sm leading-7" style={{ color: "var(--color-text-muted)" }}>
                       {paragraph}
                     </p>
                   ))}

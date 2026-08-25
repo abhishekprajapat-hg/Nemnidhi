@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type ReactElement } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Container from "@/components/layout/Container";
 import { useSectionLabel, useTimelineGrow } from "@/lib/useGsapAnimations";
 
@@ -21,19 +22,46 @@ type ServicesTimelineProps = {
   services: Service[];
 };
 
-const S = {
-  bg: "var(--color-bg)",
-  bgCard: "var(--color-bg-elevated)",
-  line: "var(--color-line)",
-  accent: "var(--color-accent)",
-  white: "var(--color-heading)",
-  muted: "var(--color-text-muted)",
-  faint: "var(--color-text-faint)",
-  mono: "var(--font-mono, monospace)",
-  heading: "var(--font-display, var(--font-heading, sans-serif))",
-};
+import { S } from "@/lib/styleTokens";
 
 // ─── Illustration dispatcher ───
+const TIMELINE_ICONS: Record<NonNullable<Service["illustrationKey"]>, ReactElement> = {
+  dashboard: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+      <path d="M9 8 4.5 12 9 16M15 8l4.5 4-4.5 4M13.5 6 10.5 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  devices: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+      <rect x="6.5" y="2.5" width="11" height="19" rx="2" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M10.5 18.5h3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  ),
+  server: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+      <rect x="3.5" y="4" width="17" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
+      <rect x="3.5" y="14" width="17" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M7 7h.01M7 17h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  ),
+  data: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+      <path d="M5 19V11M12 19V5M19 19v-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  brainstorming: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+      <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.44.95 1.14.95 1.85V16h5.1v-.25c0-.71.35-1.4.95-1.85A6 6 0 0 0 12 3Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  wireframing: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+      <rect x="3.5" y="4.5" width="17" height="12" rx="1" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M3.5 9h17M8 16.5V20M16 16.5V20M6 20h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  ),
+};
+
 function ServiceIllustration({ illustrationKey }: { illustrationKey: Service["illustrationKey"] }) {
   if (!illustrationKey) return null;
 
@@ -48,6 +76,7 @@ function ServiceIllustration({ illustrationKey }: { illustrationKey: Service["il
 
   return (
     <div className="service-timeline-mark" aria-hidden="true">
+      {TIMELINE_ICONS[illustrationKey]}
       <span>{labels[illustrationKey]}</span>
     </div>
   );
@@ -80,6 +109,29 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
         </div>
 
         <div
+          aria-hidden="true"
+          style={{
+            position: "relative",
+            width: "100%",
+            aspectRatio: "1998 / 667",
+            borderRadius: "12px",
+            overflow: "hidden",
+            border: `1px solid ${S.line}`,
+            background: "#F7F5F0",
+            boxShadow: "0 16px 40px -16px rgba(0,0,0,0.55)",
+            marginBottom: "3rem",
+          }}
+        >
+          <Image
+            src="/images/illustrations/capabilities-hub.png"
+            alt=""
+            fill
+            sizes="100vw"
+            style={{ objectFit: "cover", objectPosition: "center" }}
+          />
+        </div>
+
+        <div
           className="services-timeline-layout"
           style={{
             display: "grid",
@@ -95,6 +147,14 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
             <p className="text-body text-prose mt-6 text-[var(--color-text-muted)]">
               Explore the core service tracks we combine to plan, build, launch, and improve production-grade digital systems.
             </p>
+            <nav aria-label="Capability index" className="capability-index">
+              {services.map((svc) => (
+                <a key={svc.num} href={`#cap-${svc.num}`} className="capability-index-item">
+                  <span style={{ color: S.accent, fontFamily: S.mono, fontSize: "0.68rem" }}>{svc.num}</span>
+                  <span>{svc.title}</span>
+                </a>
+              ))}
+            </nav>
           </div>
 
           <div style={{ position: "relative" }}>
@@ -128,6 +188,7 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
               {services.map((svc) => (
                 <article
                   key={svc.num}
+                  id={`cap-${svc.num}`}
                   data-timeline-step
                   style={{
                     display: "grid",
@@ -220,12 +281,36 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
       </Container>
 
       <style>{`
+        .capability-index {
+          display: flex;
+          flex-direction: column;
+          margin-top: 2.5rem;
+          border-top: 1px solid ${S.line};
+        }
+        .capability-index-item {
+          display: flex;
+          align-items: baseline;
+          gap: 0.85rem;
+          padding: 0.85rem 0;
+          border-bottom: 1px solid ${S.line};
+          text-decoration: none;
+          color: ${S.muted};
+          font-size: 0.85rem;
+          transition: color 0.15s;
+        }
+        .capability-index-item:hover {
+          color: ${S.white};
+        }
+
         @media (max-width: 900px) {
           .services-timeline-layout {
             grid-template-columns: 1fr !important;
           }
           .services-timeline-intro {
             position: static !important;
+          }
+          .capability-index {
+            display: none;
           }
         }
 
@@ -254,10 +339,13 @@ export default function ServicesTimeline({ services }: ServicesTimelineProps) {
         }
 
         .service-timeline-mark {
-          display: grid;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 0.7rem;
           width: 200px;
           min-height: 160px;
-          place-items: center;
           border: 1px solid color-mix(in srgb, ${BRAND_CYAN} 32%, transparent);
           background:
             radial-gradient(circle at 50% 50%, color-mix(in srgb, ${BRAND_CYAN} 18%, transparent), transparent 58%),

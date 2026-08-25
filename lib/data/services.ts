@@ -29,7 +29,7 @@ export const services: ServiceEntry[] = [
     num: "01",
     slug: "web-engineering",
     title: "WEB ENGINEERING",
-    desc: "Full-stack web applications built for scale and performance. From architecture to deployment — React, Next.js, Node, and the modern web stack.",
+    desc: "Full-stack web applications, architected before they're coded. React, Next.js, Node, and the modern web stack — from database design to production deployment.",
     tags: ["React", "Next.js", "Node.js", "PostgreSQL", "TypeScript"],
     details: [
       "Custom SaaS platforms & dashboards",
@@ -64,7 +64,7 @@ export const services: ServiceEntry[] = [
     illustrationKey: "dashboard",
     seoTitle: "Web Development Company in Indore & India",
     metaDescription:
-      "Custom web engineering services from a software development company in Indore, India. React, Next.js and Node.js applications built for scale — full-stack SaaS, e-commerce, and API systems.",
+      "Custom web engineering services from a software development company in Indore, India. React, Next.js and Node.js applications architected from database to deployment — full-stack SaaS, e-commerce, and API systems.",
     h1: "Custom Web Engineering Services for Startups & Enterprises in Indore, India",
     intro:
       "Nemnidhi is a software engineering studio based in Indore, India, building full-stack web applications for startups and enterprises across the country. If your team needs production-grade architecture — not a template with extra steps — this is where we start.",
@@ -117,7 +117,7 @@ export const services: ServiceEntry[] = [
     num: "03",
     slug: "cloud-devops",
     title: "CLOUD & DEVOPS",
-    desc: "Infrastructure that scales with your business. CI/CD pipelines, container orchestration, zero-downtime deployments, and full observability.",
+    desc: "CI/CD pipelines, container orchestration, zero-downtime deployments, and full observability — infrastructure your team can operate, not just deploy once.",
     tags: ["AWS", "Docker", "Kubernetes", "Terraform", "GitHub Actions"],
     details: [
       "Cloud architecture & migration",
