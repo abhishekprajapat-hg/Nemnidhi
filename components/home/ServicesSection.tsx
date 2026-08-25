@@ -10,10 +10,10 @@ const SERVICE_ILLUSTRATION_KEYS = ["coding", "mobile", "cloud", "ai"] as const;
 type IllustrationKey = typeof SERVICE_ILLUSTRATION_KEYS[number];
 
 const SERVICE_IMAGES: Record<IllustrationKey, string> = {
-  coding: "/images/illustrations/web-engineering-local-20260825.png",
-  mobile: "/images/illustrations/mobile-development-local-20260825.png",
-  cloud: "/images/illustrations/cloud-devops-local-20260825.png",
-  ai: "/images/illustrations/ai-integration-local-20260825.png",
+  coding: "/images/illustrations/web-engineering.png",
+  mobile: "/images/illustrations/mobile-development.png",
+  cloud: "/images/illustrations/cloud-devops.png",
+  ai: "/images/illustrations/ai-integration.png",
 };
 
 function ServiceCardIllustration({ index }: { index: number }) {
