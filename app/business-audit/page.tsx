@@ -18,27 +18,38 @@ type Question = {
   options?: QuestionOption[];
 };
 
+type Department = "marketing" | "sales" | "operations" | "billing";
+
 type RecommendedComponentLine = {
   code: string;
   title: string;
   rationale: string;
-  oneTimePrice: number;
-  monthlyPrice: number;
+  department: Department;
+  deliveryWeeksMin: number;
+  deliveryWeeksMax: number;
 };
 
 type SubmitResult = {
   leadId: string;
   blueprint: {
+    industry: string;
+    industryLabel: string;
+    segment: string | null;
+    productBrand: string;
     components: RecommendedComponentLine[];
-    estimate: {
-      oneTimeMin: number;
-      oneTimeMax: number;
-      monthlyMin: number;
-      monthlyMax: number;
-      currency: string;
-    };
+    deliveryWeeksMin: number;
+    deliveryWeeksMax: number;
     assumptions: string[];
   };
+};
+
+const DEPARTMENT_ORDER: Department[] = ["marketing", "sales", "operations", "billing"];
+
+const DEPARTMENT_META: Record<Department, { label: string; blurb: string }> = {
+  marketing: { label: "Marketing", blurb: "Gets found and reaches the right prospects" },
+  sales: { label: "Sales", blurb: "Turns an enquiry into a signed client" },
+  operations: { label: "Operations", blurb: "Delivers the work once someone signs" },
+  billing: { label: "Billing", blurb: "Invoices, collects and tracks payment" },
 };
 
 type Step = "industry" | "contact" | "questions" | "result";
@@ -65,8 +76,115 @@ const labelStyle: React.CSSProperties = {
   marginBottom: "0.5rem",
 };
 
-function formatInr(value: number) {
-  return `₹${value.toLocaleString("en-IN")}`;
+function groupByDepartment(components: RecommendedComponentLine[]) {
+  const groups = new Map<Department, RecommendedComponentLine[]>();
+  for (const component of components) {
+    const list = groups.get(component.department) ?? [];
+    list.push(component);
+    groups.set(component.department, list);
+  }
+  return DEPARTMENT_ORDER.map((key) => ({ key, items: groups.get(key) ?? [] }));
+}
+
+/** The business-flow diagram: a lead moves through these four stages before
+ * becoming a recurring client. Stages with a recommendation are highlighted;
+ * empty stages stay faint rather than disappearing, so the shape of the
+ * business stays visible even when nothing was recommended for it. */
+function BusinessFlowDiagram({ groups }: { groups: { key: Department; items: RecommendedComponentLine[] }[] }) {
+  return (
+    <div style={{ display: "flex", alignItems: "stretch", marginBottom: "2.5rem" }}>
+      {groups.map((group, i) => {
+        const active = group.items.length > 0;
+        return (
+          <div key={group.key} style={{ display: "flex", alignItems: "center", flex: i === groups.length - 1 ? "0 0 auto" : "1 1 auto" }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.6rem", minWidth: "5.5rem" }}>
+              <div
+                style={{
+                  width: "0.65rem",
+                  height: "0.65rem",
+                  borderRadius: "50%",
+                  background: active ? S.accent : "transparent",
+                  border: `1.5px solid ${active ? S.accent : S.line}`,
+                }}
+              />
+              <p
+                style={{
+                  fontFamily: S.mono,
+                  fontSize: "0.62rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: active ? S.white : S.faint,
+                  textAlign: "center",
+                }}
+              >
+                {DEPARTMENT_META[group.key].label}
+              </p>
+              <p style={{ fontFamily: S.mono, fontSize: "0.65rem", color: active ? S.accent : S.faint }}>
+                {group.items.length || "—"}
+              </p>
+            </div>
+            {i < groups.length - 1 ? (
+              <div style={{ flex: "1 1 auto", height: "1px", background: active ? S.accent : S.line, opacity: active ? 0.5 : 1, margin: "0 0.25rem 1.85rem" }} />
+            ) : null}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function ResultView({ result }: { result: SubmitResult }) {
+  const { blueprint } = result;
+  const groups = groupByDepartment(blueprint.components);
+  const activeGroups = groups.filter((g) => g.items.length > 0);
+
+  return (
+    <div>
+      <p style={{ ...labelStyle, marginBottom: "0.75rem" }}>YOUR RECOMMENDATION</p>
+      <p style={{ color: S.white, fontSize: "1.1rem", lineHeight: 1.6, maxWidth: "38rem", marginBottom: "2rem" }}>
+        {blueprint.components.length} thing{blueprint.components.length === 1 ? "" : "s"} worth building for a{" "}
+        {blueprint.industryLabel.toLowerCase()} business like yours - grouped by who at Nemnidhi does the work.
+      </p>
+
+      <BusinessFlowDiagram groups={groups} />
+
+      <div style={{ display: "grid", gap: "2.25rem", marginBottom: "2rem" }}>
+        {activeGroups.map((group) => (
+          <div key={group.key}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: "0.6rem", marginBottom: "1rem", borderBottom: `1px solid ${S.line}`, paddingBottom: "0.6rem" }}>
+              <p style={{ ...labelStyle, marginBottom: 0, color: S.accent }}>{DEPARTMENT_META[group.key].label}</p>
+              <p style={{ color: S.faint, fontSize: "0.75rem" }}>{DEPARTMENT_META[group.key].blurb}</p>
+            </div>
+            <div style={{ display: "grid", gap: "1rem" }}>
+              {group.items.map((component) => (
+                <div key={component.code}>
+                  <p style={{ color: S.white, fontWeight: 600, fontSize: "0.9rem" }}>{component.title}</p>
+                  <p style={{ color: S.muted, fontSize: "0.8rem", marginTop: "0.3rem" }}>{component.rationale}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <p style={{ color: S.faint, fontSize: "0.75rem", marginBottom: "2rem" }}>
+        Typically delivered in {blueprint.deliveryWeeksMin}–{blueprint.deliveryWeeksMax} weeks once scope is confirmed.
+      </p>
+
+      <div style={{ border: `1px solid ${S.line}`, background: S.bgCard, padding: "1.25rem 1.5rem", marginBottom: "2rem" }}>
+        <p style={{ ...labelStyle, marginBottom: "0.4rem" }}>BUILT ON</p>
+        <p style={{ color: S.white, fontSize: "1rem", fontWeight: 700 }}>{blueprint.productBrand}</p>
+        <p style={{ color: S.muted, fontSize: "0.8rem", marginTop: "0.4rem", lineHeight: 1.6 }}>
+          One connected system, not a stitched-together set of tools - Nemnidhi builds and runs it end to end.
+        </p>
+      </div>
+
+      {blueprint.assumptions.map((assumption, i) => (
+        <p key={i} style={{ color: S.faint, fontSize: "0.75rem", fontStyle: "italic" }}>{assumption}</p>
+      ))}
+    </div>
+  );
 }
 
 export default function BusinessAuditPage() {
@@ -185,8 +303,8 @@ export default function BusinessAuditPage() {
             lineStyle={{ display: "block" }}
           />
           <p style={{ color: S.muted, fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.7, maxWidth: "36rem" }}>
-            Answer a few questions about how your business runs today. We&apos;ll show you what&apos;s
-            worth building and an indicative price - no call required to see it.
+            Answer a few questions about how your business runs today. We&apos;ll show you exactly what&apos;s
+            worth building and why - no call required to see it.
           </p>
         </Container>
       </section>
@@ -359,36 +477,7 @@ export default function BusinessAuditPage() {
           )}
 
           {step === "result" && result && (
-            <div>
-              <p style={{ ...labelStyle, marginBottom: "1.25rem" }}>YOUR INDICATIVE RECOMMENDATION</p>
-              <div style={{ border: `1px solid ${S.line}`, padding: "1.5rem", marginBottom: "1.5rem" }}>
-                <p style={{ color: S.faint, fontSize: "0.7rem", fontFamily: S.mono, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "0.5rem" }}>
-                  ESTIMATED SETUP
-                </p>
-                <p style={{ color: S.white, fontSize: "1.6rem", fontWeight: 700, marginBottom: "1rem" }}>
-                  {formatInr(result.blueprint.estimate.oneTimeMin)} – {formatInr(result.blueprint.estimate.oneTimeMax)}
-                </p>
-                <p style={{ color: S.faint, fontSize: "0.7rem", fontFamily: S.mono, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "0.5rem" }}>
-                  ESTIMATED MONTHLY
-                </p>
-                <p style={{ color: S.white, fontSize: "1.2rem", fontWeight: 700 }}>
-                  {formatInr(result.blueprint.estimate.monthlyMin)} – {formatInr(result.blueprint.estimate.monthlyMax)}
-                </p>
-              </div>
-
-              <div style={{ display: "grid", gap: "1rem", marginBottom: "1.5rem" }}>
-                {result.blueprint.components.map((component) => (
-                  <div key={component.code} style={{ borderBottom: `1px solid ${S.line}`, paddingBottom: "1rem" }}>
-                    <p style={{ color: S.white, fontWeight: 600, fontSize: "0.9rem" }}>{component.title}</p>
-                    <p style={{ color: S.muted, fontSize: "0.8rem", marginTop: "0.3rem" }}>{component.rationale}</p>
-                  </div>
-                ))}
-              </div>
-
-              {result.blueprint.assumptions.map((assumption, i) => (
-                <p key={i} style={{ color: S.faint, fontSize: "0.75rem", fontStyle: "italic" }}>{assumption}</p>
-              ))}
-            </div>
+            <ResultView result={result} />
           )}
         </Container>
       </section>
