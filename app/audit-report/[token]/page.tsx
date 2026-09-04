@@ -33,7 +33,6 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import Container from "@/components/layout/Container";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import BlurText from "@/components/motion/BlurText";
 import { TodayFlow, AutomationFlow } from "@/components/audit-report/AuditFlowDiagram";
@@ -64,11 +63,16 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   };
 }
 
-const TIER_TONE: Record<string, { badge: "success" | "gold" | "blue" | "neutral"; accent: string; ring: string }> = {
-  A: { badge: "neutral", accent: "#ef4444", ring: "rgba(239,68,68,0.35)" },
-  B: { badge: "gold", accent: "#f59e0b", ring: "rgba(245,158,11,0.35)" },
-  C: { badge: "blue", accent: "#38bdf8", ring: "rgba(56,189,248,0.35)" },
-  D: { badge: "success", accent: "#34d399", ring: "rgba(52,211,153,0.35)" },
+// Solid fill + a text color chosen for that specific fill (not the theme) - a tinted-text-on-
+// tinted-background pill reads fine in dark mode but goes near-invisible in light mode (the
+// exact bug reported: pale gold/blue text on an equally pale background). A solid saturated fill
+// with a fixed high-contrast text color is safe in both themes because it never depends on the
+// page's own background luminance.
+const TIER_TONE: Record<string, { fill: string; on: string }> = {
+  A: { fill: "#dc2626", on: "#ffffff" },
+  B: { fill: "#d97706", on: "#1c1300" },
+  C: { fill: "#0369a1", on: "#ffffff" },
+  D: { fill: "#15803d", on: "#ffffff" },
 };
 
 const DEPARTMENT_ICON: Record<string, typeof Megaphone> = {
@@ -120,12 +124,15 @@ export default async function AuditReportPage({ params }: { params: Params }) {
           <Container as="section" style={{ padding: "3.5rem 0 2.5rem" }}>
             <div className="flex items-center justify-between gap-4">
               <div className="flex flex-wrap items-center gap-3">
-                <Badge tone="gold">
-                  <Sparkles className="h-3 w-3" aria-hidden /> Digital presence audit
-                </Badge>
                 <span
-                  className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[0.7rem] font-extrabold uppercase tracking-[0.16em]"
-                  style={{ borderColor: tone.ring, background: `${tone.accent}1a`, color: tone.accent }}
+                  className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[0.7rem] font-extrabold uppercase tracking-[0.16em]"
+                  style={{ background: "#D6BE7C", color: "#07111f" }}
+                >
+                  <Sparkles className="h-3 w-3" aria-hidden /> Digital presence audit
+                </span>
+                <span
+                  className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[0.7rem] font-extrabold uppercase tracking-[0.16em]"
+                  style={{ background: tone.fill, color: tone.on }}
                 >
                   Tier {report.tier.category} · {report.tier.label}
                 </span>
@@ -146,8 +153,14 @@ export default async function AuditReportPage({ params }: { params: Params }) {
             ) : null}
 
             <p
-              className="mt-6 max-w-3xl text-balance"
-              style={{ fontSize: "clamp(1.15rem, 2.2vw, 1.45rem)", fontWeight: 600, color: tone.accent, lineHeight: 1.4 }}
+              className="mt-6 max-w-3xl text-balance border-l-4 pl-4"
+              style={{
+                fontSize: "clamp(1.15rem, 2.2vw, 1.45rem)",
+                fontWeight: 600,
+                color: "var(--color-heading)",
+                borderColor: tone.fill,
+                lineHeight: 1.4,
+              }}
             >
               {report.hookText}
             </p>
@@ -322,12 +335,12 @@ export default async function AuditReportPage({ params }: { params: Params }) {
               className="rounded-[var(--radius-lg)] border p-6 sm:p-8"
               style={{ borderColor: "rgba(214,190,124,0.3)", background: "rgba(214,190,124,0.05)" }}
             >
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="h-5 w-5" style={{ color: "#D6BE7C" }} aria-hidden />
-                <p className="text-xs font-extrabold uppercase tracking-[0.16em]" style={{ color: "#D6BE7C" }}>
-                  Built on {report.productBrand}
-                </p>
-              </div>
+              <span
+                className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-extrabold uppercase tracking-[0.16em]"
+                style={{ background: "#D6BE7C", color: "#07111f" }}
+              >
+                <ShieldCheck className="h-3.5 w-3.5" aria-hidden /> Built on {report.productBrand}
+              </span>
               <p className="mt-2 max-w-2xl text-sm" style={{ color: "var(--color-text-muted)" }}>
                 Everything recommended above comes from one connected platform - built and run by Nemnidhi, not
                 stitched together from outside vendors.
