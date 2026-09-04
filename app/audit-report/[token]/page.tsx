@@ -261,23 +261,31 @@ export default async function AuditReportPage({ params }: { params: Params }) {
               ))}
             </ul>
           ) : null}
-          <TodayFlow intro={report.todayIntro} stages={report.todayFlowStages} />
+          {report.todayFlowStages?.length ? (
+            <TodayFlow intro={report.todayIntro} stages={report.todayFlowStages} />
+          ) : null}
         </Container>
 
-        {/* ─── WHERE AUTOMATION PLUGS IN ─── */}
-        <Container as="section" style={{ paddingBottom: "2.5rem" }}>
-          <h2 className="mb-1" style={{ fontSize: "1.35rem", fontWeight: 600, color: "var(--color-heading)" }}>
-            Where automation plugs in
-          </h2>
-          <p className="mb-5 text-sm" style={{ color: "var(--color-text-muted)" }}>
-            The same lead, handled automatically from first contact.
-          </p>
-          <AutomationFlow
-            entryChain={report.automationFlow.entryChain}
-            interested={report.automationFlow.interested}
-            noReply={report.automationFlow.noReply}
-          />
-        </Container>
+        {/* ─── WHERE AUTOMATION PLUGS IN ───
+             Older reports (generated before this field existed) won't have automationFlow at
+             all - a real report from before today's redeploy hit exactly this as a hard crash
+             (undefined.entryChain), guard against it rather than assuming every stored
+             reportData has today's shape. */}
+        {report.automationFlow ? (
+          <Container as="section" style={{ paddingBottom: "2.5rem" }}>
+            <h2 className="mb-1" style={{ fontSize: "1.35rem", fontWeight: 600, color: "var(--color-heading)" }}>
+              Where automation plugs in
+            </h2>
+            <p className="mb-5 text-sm" style={{ color: "var(--color-text-muted)" }}>
+              The same lead, handled automatically from first contact.
+            </p>
+            <AutomationFlow
+              entryChain={report.automationFlow.entryChain}
+              interested={report.automationFlow.interested}
+              noReply={report.automationFlow.noReply}
+            />
+          </Container>
+        ) : null}
 
         {/* ─── RECOMMENDED FOR YOUR BUSINESS ─── */}
         {report.departments.length > 0 ? (
