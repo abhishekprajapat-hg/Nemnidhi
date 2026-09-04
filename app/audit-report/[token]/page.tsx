@@ -4,19 +4,23 @@
 // when a link (not a PDF attachment) is pasted into their WhatsApp conversation - no portal
 // login, keyed only by the report's own unguessable share token.
 //
-// Deliberately uses its own body font (Plus Jakarta Sans) rather than the site-wide serif
-// (Bona Nova SC, --font-body) - direct feedback was that dense report prose in that font reads
-// as dry and hard to scan. Headings/badges/buttons stay on the site's existing premium
-// components (Heading/Badge/Button) so this still feels native to nemnidhi.com, not a bolt-on.
+// Typography is Poppins/Open Sans ("Modern Professional" pairing, chosen for professional
+// services/SaaS/corporate reports) rather than the site-wide serif (Bona Nova SC) - direct
+// feedback was that dense report prose in that font reads as dry and hard to scan. Brand identity
+// stays on the site's real teal accent + gold CTA color and the real logo mark, and the two flow
+// diagrams (today / where automation plugs in) reuse the same connected-node + traveling-signal
+// animation technique already proven on the homepage (HeroSystemDiagram), not a static mockup.
 
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import Image from "next/image";
+import { Poppins, Open_Sans } from "next/font/google";
 import {
   CheckCircle2,
   XCircle,
   Clock3,
   AlertTriangle,
   MessageCircle,
+  CalendarClock,
   Phone,
   Mail,
   Download,
@@ -29,15 +33,23 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import Container from "@/components/layout/Container";
-import { Heading } from "@/components/ui/Heading";
+import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import BlurText from "@/components/motion/BlurText";
+import { TodayFlow, AutomationFlow } from "@/components/audit-report/AuditFlowDiagram";
 import { getPublicAuditReport } from "@/lib/audit-report";
 
-const jakarta = Plus_Jakarta_Sans({
+const poppins = Poppins({
+  subsets: ["latin"],
+  variable: "--font-audit-heading",
+  weight: ["500", "600", "700"],
+});
+
+const openSans = Open_Sans({
   subsets: ["latin"],
   variable: "--font-audit-body",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
 });
 
 type Params = Promise<{ token: string }>;
@@ -74,9 +86,9 @@ export default async function AuditReportPage({ params }: { params: Params }) {
   if (!report) {
     return (
       <Container as="section" style={{ padding: "6rem 0", textAlign: "center", minHeight: "60vh" }}>
-        <Heading as="h1" size="section">
+        <h1 style={{ fontFamily: "var(--font-heading)", fontSize: "1.75rem", color: "var(--color-heading)" }}>
           Report not found
-        </Heading>
+        </h1>
         <p className="mt-4 text-[color:var(--color-text-muted)]">
           This link may have expired or been typed incorrectly. Message us on WhatsApp and we&apos;ll send it
           again.
@@ -86,53 +98,62 @@ export default async function AuditReportPage({ params }: { params: Params }) {
   }
 
   const tone = TIER_TONE[report.tier.category] ?? TIER_TONE.C;
+  const bookCallLink = `${report.whatsappLink}?text=${encodeURIComponent(
+    `Hi, I'd like to book a strategy call to discuss the audit for ${report.businessName}.`,
+  )}`;
 
   return (
-    <div className={jakarta.variable}>
+    <div className={`${poppins.variable} ${openSans.variable}`}>
       <style>{`
-        .audit-report-body, .audit-report-body p, .audit-report-body li {
-          font-family: var(--font-audit-body), system-ui, sans-serif;
+        .audit-report-body { font-family: var(--font-audit-body), system-ui, sans-serif; }
+        .audit-report-body h1, .audit-report-body h2, .audit-report-body h3 {
+          font-family: var(--font-audit-heading), system-ui, sans-serif;
         }
       `}</style>
       <div className="audit-report-body">
         {/* ─── HERO ─── */}
-        <Container as="section" style={{ padding: "4rem 0 2.5rem" }}>
-          <div className="flex flex-wrap items-center gap-3">
-            <Badge tone="gold">
-              <Sparkles className="h-3 w-3" aria-hidden /> Digital Presence Audit
-            </Badge>
-            <span
-              className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[0.7rem] font-extrabold uppercase tracking-[0.16em]"
-              style={{ borderColor: tone.ring, background: `${tone.accent}1a`, color: tone.accent }}
+        <div
+          style={{
+            background:
+              "radial-gradient(circle at 15% 0%, color-mix(in srgb, var(--color-accent) 10%, transparent), transparent 55%)",
+          }}
+        >
+          <Container as="section" style={{ padding: "3.5rem 0 2.5rem" }}>
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex flex-wrap items-center gap-3">
+                <Badge tone="gold">
+                  <Sparkles className="h-3 w-3" aria-hidden /> Digital presence audit
+                </Badge>
+                <span
+                  className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[0.7rem] font-extrabold uppercase tracking-[0.16em]"
+                  style={{ borderColor: tone.ring, background: `${tone.accent}1a`, color: tone.accent }}
+                >
+                  Tier {report.tier.category} · {report.tier.label}
+                </span>
+              </div>
+              <Image src="/images/logo.png" alt="Nemnidhi" width={36} height={36} style={{ flexShrink: 0 }} />
+            </div>
+
+            <h1
+              className="mt-5 text-balance"
+              style={{ fontSize: "clamp(2.25rem, 5vw, 3.5rem)", fontWeight: 600, lineHeight: 1.08, color: "var(--color-heading)" }}
             >
-              Tier {report.tier.category} · {report.tier.label}
-            </span>
-          </div>
+              <BlurText as="span" text={report.businessName} delay={60} stepDuration={0.32} />
+            </h1>
+            {report.location ? (
+              <p className="mt-2 flex items-center gap-1.5 text-sm text-[color:var(--color-text-muted)]">
+                <MapPin className="h-4 w-4" aria-hidden /> {report.location}
+              </p>
+            ) : null}
 
-          <h1
-            className="mt-5 text-balance"
-            style={{
-              fontFamily: "var(--font-heading)",
-              fontSize: "clamp(2.25rem, 5vw, 3.5rem)",
-              lineHeight: 1.08,
-              color: "var(--color-heading)",
-            }}
-          >
-            {report.businessName}
-          </h1>
-          {report.location ? (
-            <p className="mt-2 flex items-center gap-1.5 text-sm text-[color:var(--color-text-muted)]">
-              <MapPin className="h-4 w-4" aria-hidden /> {report.location}
+            <p
+              className="mt-6 max-w-3xl text-balance"
+              style={{ fontSize: "clamp(1.15rem, 2.2vw, 1.45rem)", fontWeight: 600, color: tone.accent, lineHeight: 1.4 }}
+            >
+              {report.hookText}
             </p>
-          ) : null}
-
-          <p
-            className="mt-6 max-w-3xl text-balance"
-            style={{ fontSize: "clamp(1.15rem, 2.2vw, 1.45rem)", fontWeight: 600, color: tone.accent, lineHeight: 1.4 }}
-          >
-            {report.hookText}
-          </p>
-        </Container>
+          </Container>
+        </div>
 
         {/* ─── ASSESSMENT ─── */}
         <Container as="section" style={{ paddingBottom: "2.5rem" }}>
@@ -212,14 +233,14 @@ export default async function AuditReportPage({ params }: { params: Params }) {
 
         {/* ─── HOW THIS PLAYS OUT TODAY ─── */}
         <Container as="section" style={{ paddingBottom: "2.5rem" }}>
-          <Heading as="h2" size="card" className="mb-3">
+          <h2 className="mb-3" style={{ fontSize: "1.35rem", fontWeight: 600, color: "var(--color-heading)" }}>
             How this plays out today
-          </Heading>
-          <p className="max-w-3xl text-[0.95rem] leading-relaxed" style={{ color: "var(--color-text)" }}>
+          </h2>
+          <p className="max-w-3xl text-[0.95rem] leading-relaxed mb-4" style={{ color: "var(--color-text)" }}>
             {report.painPoints}
           </p>
           {report.revenueLeaks.length > 0 ? (
-            <ul className="mt-4 space-y-2">
+            <ul className="mb-6 space-y-2">
               {report.revenueLeaks.map((leak) => (
                 <li key={leak} className="flex items-start gap-2.5 text-sm" style={{ color: "var(--color-text-muted)" }}>
                   <AlertTriangle className="mt-0.5 h-4 w-4 flex-shrink-0" style={{ color: "#ef4444" }} aria-hidden />
@@ -228,14 +249,30 @@ export default async function AuditReportPage({ params }: { params: Params }) {
               ))}
             </ul>
           ) : null}
+          <TodayFlow intro={report.todayIntro} stages={report.todayFlowStages} />
+        </Container>
+
+        {/* ─── WHERE AUTOMATION PLUGS IN ─── */}
+        <Container as="section" style={{ paddingBottom: "2.5rem" }}>
+          <h2 className="mb-1" style={{ fontSize: "1.35rem", fontWeight: 600, color: "var(--color-heading)" }}>
+            Where automation plugs in
+          </h2>
+          <p className="mb-5 text-sm" style={{ color: "var(--color-text-muted)" }}>
+            The same lead, handled automatically from first contact.
+          </p>
+          <AutomationFlow
+            entryChain={report.automationFlow.entryChain}
+            interested={report.automationFlow.interested}
+            noReply={report.automationFlow.noReply}
+          />
         </Container>
 
         {/* ─── RECOMMENDED FOR YOUR BUSINESS ─── */}
         {report.departments.length > 0 ? (
           <Container as="section" style={{ paddingBottom: "2.5rem" }}>
-            <Heading as="h2" size="card" className="mb-1">
+            <h2 className="mb-1" style={{ fontSize: "1.35rem", fontWeight: 600, color: "var(--color-heading)" }}>
               Recommended for your business
-            </Heading>
+            </h2>
             <p className="mb-5 text-sm" style={{ color: "var(--color-text-muted)" }}>
               Matched only against what this audit actually measured - grouped by who at Nemnidhi does the
               work.
@@ -244,35 +281,33 @@ export default async function AuditReportPage({ params }: { params: Params }) {
               {report.departments.map((dept) => {
                 const Icon = DEPARTMENT_ICON[dept.key] ?? Sparkles;
                 return (
-                  <div
-                    key={dept.key}
-                    className="rounded-[var(--radius-lg)] border p-5"
-                    style={{ borderColor: "var(--color-line)", background: "var(--color-bg-card)" }}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <span
-                        className="flex h-9 w-9 items-center justify-center rounded-full"
-                        style={{ background: "var(--color-accent-bg)" }}
-                      >
-                        <Icon className="h-[18px] w-[18px]" style={{ color: "var(--color-accent)" }} aria-hidden />
-                      </span>
-                      <p className="text-sm font-extrabold uppercase tracking-[0.1em]" style={{ color: "var(--color-heading)" }}>
-                        {dept.label}
-                      </p>
+                  <Card key={dept.key} variant="default">
+                    <div className="p-5">
+                      <div className="flex items-center gap-2.5">
+                        <span
+                          className="flex h-9 w-9 items-center justify-center rounded-full"
+                          style={{ background: "var(--color-accent-bg)" }}
+                        >
+                          <Icon className="h-[18px] w-[18px]" style={{ color: "var(--color-accent)" }} aria-hidden />
+                        </span>
+                        <p className="text-sm font-extrabold uppercase tracking-[0.1em]" style={{ color: "var(--color-heading)" }}>
+                          {dept.label}
+                        </p>
+                      </div>
+                      <ul className="mt-4 space-y-3">
+                        {dept.items.map((item) => (
+                          <li key={item.code}>
+                            <p className="text-sm font-semibold" style={{ color: "var(--color-text)" }}>
+                              {item.title}
+                            </p>
+                            <p className="mt-0.5 text-[0.85rem] leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
+                              {item.rationale}
+                            </p>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <ul className="mt-4 space-y-3">
-                      {dept.items.map((item) => (
-                        <li key={item.code}>
-                          <p className="text-sm font-semibold" style={{ color: "var(--color-text)" }}>
-                            {item.title}
-                          </p>
-                          <p className="mt-0.5 text-[0.85rem] leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
-                            {item.rationale}
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  </Card>
                 );
               })}
             </div>
@@ -282,40 +317,39 @@ export default async function AuditReportPage({ params }: { params: Params }) {
         {/* ─── PLATFORM APPENDIX ─── */}
         {report.productBrand ? (
           <Container as="section" style={{ paddingBottom: "3rem" }}>
-            <div
-              className="rounded-[var(--radius-lg)] border p-6 sm:p-8"
-              style={{ borderColor: "rgba(214,190,124,0.3)", background: "rgba(214,190,124,0.05)" }}
-            >
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="h-5 w-5" style={{ color: "#D6BE7C" }} aria-hidden />
-                <p className="text-xs font-extrabold uppercase tracking-[0.16em]" style={{ color: "#D6BE7C" }}>
-                  Built on {report.productBrand}
+            <Card variant="default">
+              <div className="p-6 sm:p-8">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="h-5 w-5" style={{ color: "#D6BE7C" }} aria-hidden />
+                  <p className="text-xs font-extrabold uppercase tracking-[0.16em]" style={{ color: "#D6BE7C" }}>
+                    Built on {report.productBrand}
+                  </p>
+                </div>
+                <p className="mt-2 max-w-2xl text-sm" style={{ color: "var(--color-text-muted)" }}>
+                  Everything recommended above comes from one connected platform - built and run by Nemnidhi, not
+                  stitched together from outside vendors.
                 </p>
-              </div>
-              <p className="mt-2 max-w-2xl text-sm" style={{ color: "var(--color-text-muted)" }}>
-                Everything recommended above comes from one connected platform - built and run by Nemnidhi, not
-                stitched together from outside vendors.
-              </p>
-              <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                {report.platformPillars.map((pillar) => (
-                  <div key={pillar.title} className="flex gap-3">
-                    <span
-                      className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full"
-                      style={{ background: "#D6BE7C" }}
-                      aria-hidden
-                    />
-                    <div>
-                      <p className="text-sm font-semibold" style={{ color: "var(--color-heading)" }}>
-                        {pillar.title}
-                      </p>
-                      <p className="mt-0.5 text-[0.85rem] leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
-                        {pillar.body}
-                      </p>
+                <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                  {report.platformPillars.map((pillar) => (
+                    <div key={pillar.title} className="flex gap-3">
+                      <span
+                        className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full"
+                        style={{ background: "#D6BE7C" }}
+                        aria-hidden
+                      />
+                      <div>
+                        <p className="text-sm font-semibold" style={{ color: "var(--color-heading)" }}>
+                          {pillar.title}
+                        </p>
+                        <p className="mt-0.5 text-[0.85rem] leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
+                          {pillar.body}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            </Card>
           </Container>
         ) : null}
 
@@ -337,7 +371,10 @@ export default async function AuditReportPage({ params }: { params: Params }) {
               <Button href={report.whatsappLink} variant="solid">
                 <MessageCircle className="h-4 w-4" aria-hidden /> Chat on WhatsApp
               </Button>
-              <Button href={`/api/audit-report/${token}/pdf`} variant="outline">
+              <Button href={bookCallLink} variant="outline">
+                <CalendarClock className="h-4 w-4" aria-hidden /> Book a strategy call
+              </Button>
+              <Button href={`/api/audit-report/${token}/pdf`} variant="ghost">
                 <Download className="h-4 w-4" aria-hidden /> Download PDF
               </Button>
             </div>

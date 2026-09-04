@@ -27,8 +27,17 @@ export type PublicAuditReportData = {
   platformPillars: { title: string; body: string }[];
   company: { legalName: string; phone: string; email: string };
   whatsappLink: string;
+  todayIntro: string;
+  todayFlowStages: string[];
+  automationFlow: {
+    entryChain: FlowStepData[];
+    interested: { label: string; steps: FlowStepData[] };
+    noReply: { label: string; steps: FlowStepData[] };
+  };
   generatedAt: string;
 };
+
+export type FlowStepData = { title: string; subtitle: string | null };
 
 export async function getPublicAuditReport(token: string): Promise<PublicAuditReportData | null> {
   try {
