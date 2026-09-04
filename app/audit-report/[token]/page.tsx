@@ -33,7 +33,6 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import Container from "@/components/layout/Container";
-import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import BlurText from "@/components/motion/BlurText";
@@ -281,33 +280,35 @@ export default async function AuditReportPage({ params }: { params: Params }) {
               {report.departments.map((dept) => {
                 const Icon = DEPARTMENT_ICON[dept.key] ?? Sparkles;
                 return (
-                  <Card key={dept.key} variant="default">
-                    <div className="p-5">
-                      <div className="flex items-center gap-2.5">
-                        <span
-                          className="flex h-9 w-9 items-center justify-center rounded-full"
-                          style={{ background: "var(--color-accent-bg)" }}
-                        >
-                          <Icon className="h-[18px] w-[18px]" style={{ color: "var(--color-accent)" }} aria-hidden />
-                        </span>
-                        <p className="text-sm font-extrabold uppercase tracking-[0.1em]" style={{ color: "var(--color-heading)" }}>
-                          {dept.label}
-                        </p>
-                      </div>
-                      <ul className="mt-4 space-y-3">
-                        {dept.items.map((item) => (
-                          <li key={item.code}>
-                            <p className="text-sm font-semibold" style={{ color: "var(--color-text)" }}>
-                              {item.title}
-                            </p>
-                            <p className="mt-0.5 text-[0.85rem] leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
-                              {item.rationale}
-                            </p>
-                          </li>
-                        ))}
-                      </ul>
+                  <div
+                    key={dept.key}
+                    className="rounded-[var(--radius-lg)] border p-5"
+                    style={{ borderColor: "var(--color-line)", background: "var(--color-bg-card)" }}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <span
+                        className="flex h-9 w-9 items-center justify-center rounded-full"
+                        style={{ background: "var(--color-accent-bg)" }}
+                      >
+                        <Icon className="h-[18px] w-[18px]" style={{ color: "var(--color-accent)" }} aria-hidden />
+                      </span>
+                      <p className="text-sm font-extrabold uppercase tracking-[0.1em]" style={{ color: "var(--color-heading)" }}>
+                        {dept.label}
+                      </p>
                     </div>
-                  </Card>
+                    <ul className="mt-4 space-y-3">
+                      {dept.items.map((item) => (
+                        <li key={item.code}>
+                          <p className="text-sm font-semibold" style={{ color: "var(--color-text)" }}>
+                            {item.title}
+                          </p>
+                          <p className="mt-0.5 text-[0.85rem] leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
+                            {item.rationale}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 );
               })}
             </div>
@@ -317,46 +318,47 @@ export default async function AuditReportPage({ params }: { params: Params }) {
         {/* ─── PLATFORM APPENDIX ─── */}
         {report.productBrand ? (
           <Container as="section" style={{ paddingBottom: "3rem" }}>
-            <Card variant="default">
-              <div className="p-6 sm:p-8">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="h-5 w-5" style={{ color: "#D6BE7C" }} aria-hidden />
-                  <p className="text-xs font-extrabold uppercase tracking-[0.16em]" style={{ color: "#D6BE7C" }}>
-                    Built on {report.productBrand}
-                  </p>
-                </div>
-                <p className="mt-2 max-w-2xl text-sm" style={{ color: "var(--color-text-muted)" }}>
-                  Everything recommended above comes from one connected platform - built and run by Nemnidhi, not
-                  stitched together from outside vendors.
+            <div
+              className="rounded-[var(--radius-lg)] border p-6 sm:p-8"
+              style={{ borderColor: "rgba(214,190,124,0.3)", background: "rgba(214,190,124,0.05)" }}
+            >
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="h-5 w-5" style={{ color: "#D6BE7C" }} aria-hidden />
+                <p className="text-xs font-extrabold uppercase tracking-[0.16em]" style={{ color: "#D6BE7C" }}>
+                  Built on {report.productBrand}
                 </p>
-                <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                  {report.platformPillars.map((pillar) => (
-                    <div key={pillar.title} className="flex gap-3">
-                      <span
-                        className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full"
-                        style={{ background: "#D6BE7C" }}
-                        aria-hidden
-                      />
-                      <div>
-                        <p className="text-sm font-semibold" style={{ color: "var(--color-heading)" }}>
-                          {pillar.title}
-                        </p>
-                        <p className="mt-0.5 text-[0.85rem] leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
-                          {pillar.body}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
               </div>
-            </Card>
+              <p className="mt-2 max-w-2xl text-sm" style={{ color: "var(--color-text-muted)" }}>
+                Everything recommended above comes from one connected platform - built and run by Nemnidhi, not
+                stitched together from outside vendors.
+              </p>
+              <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                {report.platformPillars.map((pillar) => (
+                  <div key={pillar.title} className="flex gap-3">
+                    <span
+                      className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full"
+                      style={{ background: "#D6BE7C" }}
+                      aria-hidden
+                    />
+                    <div>
+                      <p className="text-sm font-semibold" style={{ color: "var(--color-heading)" }}>
+                        {pillar.title}
+                      </p>
+                      <p className="mt-0.5 text-[0.85rem] leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
+                        {pillar.body}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </Container>
         ) : null}
 
         {/* ─── CTA ─── */}
         <Container as="section" style={{ paddingBottom: "4rem" }}>
           <div
-            className="flex flex-col items-start gap-5 rounded-[var(--radius-lg)] border p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8"
+            className="flex flex-col items-start gap-5 rounded-[var(--radius-lg)] border p-6 sm:p-8"
             style={{ borderColor: "var(--color-line-strong)", background: "var(--color-bg-elevated)" }}
           >
             <div>
@@ -367,7 +369,7 @@ export default async function AuditReportPage({ params }: { params: Params }) {
                 No obligation - a 15-minute call is enough to know if this is worth doing.
               </p>
             </div>
-            <div className="flex flex-shrink-0 flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3">
               <Button href={report.whatsappLink} variant="solid">
                 <MessageCircle className="h-4 w-4" aria-hidden /> Chat on WhatsApp
               </Button>
