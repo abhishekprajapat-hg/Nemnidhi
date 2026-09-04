@@ -20,7 +20,6 @@ import {
   Clock3,
   AlertTriangle,
   MessageCircle,
-  CalendarClock,
   Phone,
   Mail,
   Download,
@@ -36,6 +35,7 @@ import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 import BlurText from "@/components/motion/BlurText";
 import { TodayFlow, AutomationFlow } from "@/components/audit-report/AuditFlowDiagram";
+import { BookingWidget } from "@/components/audit-report/BookingWidget";
 import { getPublicAuditReport } from "@/lib/audit-report";
 
 const poppins = Poppins({
@@ -101,9 +101,6 @@ export default async function AuditReportPage({ params }: { params: Params }) {
   }
 
   const tone = TIER_TONE[report.tier.category] ?? TIER_TONE.C;
-  const bookCallLink = `${report.whatsappLink}?text=${encodeURIComponent(
-    `Hi, I'd like to book a strategy call to discuss the audit for ${report.businessName}.`,
-  )}`;
 
   return (
     <div className={`${poppins.variable} ${openSans.variable}`}>
@@ -390,13 +387,11 @@ export default async function AuditReportPage({ params }: { params: Params }) {
                 No obligation - a 15-minute call is enough to know if this is worth doing.
               </p>
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap items-start gap-3">
               <Button href={report.whatsappLink} variant="solid">
                 <MessageCircle className="h-4 w-4" aria-hidden /> Chat on WhatsApp
               </Button>
-              <Button href={bookCallLink} variant="outline">
-                <CalendarClock className="h-4 w-4" aria-hidden /> Book a strategy call
-              </Button>
+              <BookingWidget token={token} whatsappLink={report.whatsappLink} />
               <Button href={`/api/audit-report/${token}/pdf`} variant="ghost">
                 <Download className="h-4 w-4" aria-hidden /> Download PDF
               </Button>
