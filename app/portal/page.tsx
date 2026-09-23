@@ -37,6 +37,23 @@ type DashboardData = {
     projectSummary?: string;
     timeline?: string;
   } | null;
+  services: Array<{
+    product: string;
+    plan: string | null;
+    billingStatus: string | null;
+    linkedAt: string | null;
+  }>;
+};
+
+// Dashboard's own billingStatus vocabulary (trial/pending/active/halted/cancelling/cancelled) shown
+// in plain terms a client should recognize, not raw backend values.
+const BILLING_STATUS_LABEL: Record<string, string> = {
+  trial: "Trial",
+  pending: "Payment pending",
+  active: "Active",
+  halted: "Payment issue",
+  cancelling: "Cancelling",
+  cancelled: "Cancelled",
 };
 
 export default function PortalDashboardPage() {
@@ -206,6 +223,38 @@ export default function PortalDashboardPage() {
           </button>
         </div>
       </div>
+
+      {data?.services && data.services.length > 0 ? (
+        <div style={cardStyle}>
+          <h2 style={{ fontFamily: S.heading, fontSize: "1.1rem", color: S.white, marginBottom: "1rem" }}>
+            Your services
+          </h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1rem" }}>
+            {data.services.map((service) => (
+              <div key={service.product}>
+                <div style={{ fontSize: "0.7rem", color: S.faint, marginBottom: "0.25rem" }}>{service.product}</div>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                  <span
+                    style={{
+                      fontSize: "0.75rem",
+                      fontWeight: 600,
+                      padding: "0.15rem 0.6rem",
+                      borderRadius: "999px",
+                      color: service.billingStatus === "active" ? S.accent : S.white,
+                      border: `1px solid ${service.billingStatus === "active" ? S.accent : S.faint}`,
+                    }}
+                  >
+                    {(service.billingStatus && BILLING_STATUS_LABEL[service.billingStatus]) || "Unknown"}
+                  </span>
+                  {service.plan ? (
+                    <span style={{ color: S.muted, fontSize: "0.8rem", textTransform: "capitalize" }}>{service.plan} plan</span>
+                  ) : null}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
 
       {!data?.lead ? (
         <div style={cardStyle}>
