@@ -12,7 +12,15 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const isDashboardRoute = pathname.startsWith("/dashboard");
-  const isApiDashboardRoute = pathname.startsWith("/api/dashboard");
+  // These three API surfaces were never behind the admin gate: /api/contact GET/PATCH exposed every
+  // contact submission, /api/upload let anyone write files into public/images, and /api/services let
+  // anyone edit or delete services. Only the public contact-form POST and read-only services GET stay open.
+  const method = request.method.toUpperCase();
+  const isAdminOnlyApi =
+    pathname.startsWith("/api/upload") ||
+    (pathname.startsWith("/api/contact") && method !== "POST") ||
+    (pathname.startsWith("/api/services") && method !== "GET");
+  const isApiDashboardRoute = pathname.startsWith("/api/dashboard") || isAdminOnlyApi;
   const isLoginRoute = pathname === "/dashboard/login";
 
   const isPortalRoute = pathname.startsWith("/portal") && !PORTAL_PUBLIC_PAGES.includes(pathname);
@@ -77,5 +85,13 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/api/dashboard/:path*", "/portal/:path*", "/api/portal/:path*"],
+  matcher: [
+    "/dashboard/:path*",
+    "/api/dashboard/:path*",
+    "/api/contact/:path*",
+    "/api/upload/:path*",
+    "/api/services/:path*",
+    "/portal/:path*",
+    "/api/portal/:path*",
+  ],
 };
